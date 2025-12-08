@@ -19,6 +19,7 @@ user = User.create!(email: "inventei@example.com", password: "123456")
 puts "Criando restaurantes do Chef Léo Paixão..."
 
 Restaurant.create!(
+  user: user,
   name: "Ninita",
   category: "Italiano",
   infos: <<~INFOS
@@ -44,6 +45,7 @@ Restaurant.create!(
 )
 
 Restaurant.create!(
+  user: user,
   name: "Glouton",
   category: "Francês",
   infos: <<~INFOS
@@ -67,6 +69,7 @@ Restaurant.create!(
 )
 
 Restaurant.create!(
+  user: user,
   name: "Nicolau Bar da Esquina",
   category: "Brasileiro",
   infos: <<~INFOS
@@ -92,6 +95,7 @@ Restaurant.create!(
 )
 
 Restaurant.create!(
+  user: user,
   name: "Macaréu",
   category: "Português",
   infos: <<~INFOS
