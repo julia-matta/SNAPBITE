@@ -5,4 +5,17 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
+
+  ROLES = %w[customer owner].freeze
+
+  validates :role, inclusion: { in: ROLES }
+
+  def customer?
+    role == "customer"
+  end
+
+  def owner?
+    role == "owner"
+  end
+
 end
