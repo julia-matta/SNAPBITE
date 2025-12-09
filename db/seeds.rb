@@ -13,8 +13,10 @@ puts "Limpando banco..."
 Restaurant.destroy_all
 User.destroy_all
 
-puts "Criando usuário padrão..."
-user = User.create!(email: "inventei@example.com", password: "123456")
+puts "Criando usuário owner..."
+user = User.create!(email: "inventei@example.com", password: "123456", role: :owner)
+puts "Criando usuário customer..."
+customer = User.create!(email: "inventei2@example.com", password: "123456", role: :customer)
 
 puts "Criando restaurantes do Chef Léo Paixão..."
 

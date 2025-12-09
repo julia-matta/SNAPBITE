@@ -1,1 +1,20 @@
+<h1>Restaurantes</h1>
 
+<%= link_to "Novo restaurante", new_restaurant_path if policy(Restaurant).new? %>
+
+<ul>
+  <% @restaurants.each do |restaurant| %>
+    <li>
+      <%= link_to restaurant.name, restaurant_path(restaurant) %>
+      <% if policy(restaurant).edit? %>
+        | <%= link_to "Editar", edit_restaurant_path(restaurant) %>
+      <% end %>
+      <% if policy(restaurant).destroy? %>
+        | <%= button_to "Apagar",
+                        restaurant_path(restaurant),
+                        method: :delete,
+                        data: { confirm: "Tem certeza?" } %>
+      <% end %>
+    </li>
+  <% end %>
+</ul>

@@ -1,0 +1,21 @@
+<h1><%= @restaurant.name %></h1>
+
+<p><strong>Categoria:</strong> <%= @restaurant.category %></p>
+
+<p>
+  <strong>Infos:</strong><br>
+  <pre><%= @restaurant.infos %></pre>
+</p>
+
+<%= link_to "Voltar", restaurants_path %>
+
+<% if policy(@restaurant).edit? %>
+  | <%= link_to "Editar", edit_restaurant_path(@restaurant) %>
+<% end %>
+
+<% if policy(@restaurant).destroy? %>
+  | <%= button_to "Apagar",
+                  @restaurant,
+                  method: :delete,
+                  data: { confirm: "Tem certeza?" } %>
+<% end %>
