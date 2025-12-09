@@ -10,3 +10,21 @@
 // Your CSS partials
 @import "components/index";
 @import "pages/index";
+
+.profile-menu {
+  display: flex;
+  gap: 20px;
+  list-style: none;
+  padding: 0;
+  margin: 20px 0;
+}
+
+.profile-menu li a {
+  text-decoration: none;
+  font-weight: bold;
+  color: #333;
+}
+
+.profile-menu li a:hover {
+  color: #007bff;
+}
