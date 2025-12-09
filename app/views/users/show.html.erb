@@ -1,0 +1,61 @@
+<h2>Perfil de <%= @user.username || @user.email %></h2>
+
+<p><strong>Tipo de conta:</strong>
+  <%= @user.owner? ? "Restaurante" : "Cliente" %>
+</p>
+
+<% if current_user != @user %>
+  <% if current_user.following?(@user) %>
+    <%= button_to "Deixar de seguir",
+                  friendship_path(@user),
+                  method: :delete,
+                  class: "btn btn-outline-danger mb-3" %>
+
+  <% else %>
+    <%= button_to "Seguir",
+                  friendships_path(friend_id: @user.id),
+                  method: :post,
+                  class: "btn btn-primary mb-3" %>
+  <% end %>
+<% end %>
+
+<hr>
+
+<h3>Avaliações feitas por <%= @user.username || @user.email %></h3>
+
+<% if @user.ratings.any? %>
+  <% @ratings_by_restaurant.each do |restaurant, ratings| %>
+    <div class="card mb-3">
+      <div class="card-body">
+        <h5><%= link_to restaurant.name, restaurant_path(restaurant) %></h5>
+
+        <ul class="mt-2">
+          <% ratings.each do |rating| %>
+            <li>
+              <strong><%= rating.score %>/5</strong>
+              <% if rating.recommended == true %> - Recomendo <% end %>
+              <% if rating.recommended == false %> - Não recomendo <% end %>
+
+              <% if rating.comment.present? %>
+                <br>
+                <em><%= rating.comment %></em>
+              <% end %>
+
+              <small class="text-muted d-block">
+                <%= time_ago_in_words(rating.created_at) %> atrás
+              </small>
+            </li>
+            <hr>
+          <% end %>
+        </ul>
+
+      </div>
+    </div>
+  <% end %>
+<% else %>
+  <p>Este usuário ainda não publicou avaliações.</p>
+<% end %>
+
+<div class="mt-3">
+  <%= link_to "Voltar para a Timeline", timeline_path, class: "btn btn-outline-secondary" %>
+</div>

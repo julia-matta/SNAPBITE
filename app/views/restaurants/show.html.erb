@@ -1,21 +1,45 @@
-<h1><%= @restaurant.name %></h1>
-
+<h2><%= @restaurant.name %></h2>
 <p><strong>Categoria:</strong> <%= @restaurant.category %></p>
 
-<p>
-  <strong>Infos:</strong><br>
-  <pre><%= @restaurant.infos %></pre>
-</p>
+<div class="mb-3">
+  <%= link_to "Mapa", "#", class: "btn btn-outline-primary me-2" %>
+  <%= link_to "Avaliações", "#avaliacoes", class: "btn btn-outline-primary me-2" %>
+  <%= link_to "Informações", "#informacoes", class: "btn btn-outline-primary" %>
+</div>
 
-<%= link_to "Voltar", restaurants_path %>
+<div id="informacoes" class="mb-4">
+  <h3>Informações</h3>
+  <% if @restaurant.address.present? %>
+    <p><strong>Endereço:</strong> <%= @restaurant.address %></p>
+  <% end %>
+  <% if @restaurant.opening_hours.present? %>
+    <p><strong>Horário de funcionamento:</strong><br><%= simple_format(@restaurant.opening_hours) %></p>
+  <% end %>
+  <% if @restaurant.infos.present? %>
+    <p><%= simple_format(@restaurant.infos) %></p>
+  <% end %>
+</div>
 
-<% if policy(@restaurant).edit? %>
-  | <%= link_to "Editar", edit_restaurant_path(@restaurant) %>
-<% end %>
+<div id="avaliacoes">
+  <h3>Avaliações</h3>
+  <% @restaurant.ratings.each do |rating| %>
+    <div class="card mb-2">
+      <div class="card-body">
+        <p><strong><%= rating.user.username || rating.user.email %></strong></p>
+        <p>Score geral: <%= rating.score %>/5</p>
+        <% if rating.recommended == true %>
+          <p>✅ Recomendo</p>
+        <% elsif rating.recommended == false %>
+          <p>❌ Não recomendo</p>
+        <% end %>
+        <% if rating.comment.present? %>
+          <p><%= rating.comment %></p>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
 
-<% if policy(@restaurant).destroy? %>
-  | <%= button_to "Apagar",
-                  @restaurant,
-                  method: :delete,
-                  data: { confirm: "Tem certeza?" } %>
-<% end %>
+  <% if current_user.customer? %>
+    <%= link_to "Publicar avaliação", publish_path(restaurant_id: @restaurant.id), class: "btn btn-primary mt-3" %>
+  <% end %>
+</div>

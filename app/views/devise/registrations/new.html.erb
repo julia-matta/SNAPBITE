@@ -1,25 +1,16 @@
-<h2>Sign up</h2>
+<h2>Criar conta</h2>
 
 <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-  <%= f.error_notification %>
+  <%= f.input :email, required: true %>
+  <%= f.input :password, required: true %>
+  <%= f.input :password_confirmation, required: true %>
 
-  <div class="form-inputs">
-    <%= f.input :email,
-                required: true,
-                autofocus: true,
-                input_html: { autocomplete: "email" }%>
-    <%= f.input :password,
-                required: true,
-                hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length),
-                input_html: { autocomplete: "new-password" } %>
-    <%= f.input :password_confirmation,
-                required: true,
-                input_html: { autocomplete: "new-password" } %>
-  </div>
+  <%= f.input :role, as: :radio_buttons,
+              collection: [["Sou cliente", "customer"], ["Sou restaurante", "owner"]] %>
 
-  <div class="form-actions">
-    <%= f.button :submit, "Sign up" %>
-  </div>
+  <%= f.button :submit, "Cadastrar", class: "btn btn-primary" %>
 <% end %>
 
-<%= render "devise/shared/links" %>
+<p>
+  <%= link_to "Já tenho conta", new_user_session_path %>
+</p>
