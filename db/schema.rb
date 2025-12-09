@@ -10,9 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_12_09_140603) do
+ActiveRecord::Schema[7.1].define(version: 2025_12_09_154701) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "friendships", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "friend_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["friend_id"], name: "index_friendships_on_friend_id"
+    t.index ["user_id", "friend_id"], name: "index_friendships_on_user_id_and_friend_id", unique: true
+    t.index ["user_id"], name: "index_friendships_on_user_id"
+  end
 
   create_table "ratings", force: :cascade do |t|
     t.integer "enviroment"
@@ -25,6 +35,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_12_09_140603) do
     t.bigint "user_id", null: false
     t.bigint "restaurant_id", null: false
     t.integer "score"
+    t.boolean "recommended", default: true
     t.index ["restaurant_id"], name: "index_ratings_on_restaurant_id"
     t.index ["user_id"], name: "index_ratings_on_user_id"
   end
@@ -36,6 +47,9 @@ ActiveRecord::Schema[7.1].define(version: 2025_12_09_140603) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
+    t.string "address"
+    t.text "opening_hours"
+    t.integer "price_range"
     t.index ["user_id"], name: "index_restaurants_on_user_id"
   end
 
@@ -48,10 +62,13 @@ ActiveRecord::Schema[7.1].define(version: 2025_12_09_140603) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "role"
+    t.string "username"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "friendships", "users"
+  add_foreign_key "friendships", "users", column: "friend_id"
   add_foreign_key "ratings", "restaurants"
   add_foreign_key "ratings", "users"
   add_foreign_key "restaurants", "users"

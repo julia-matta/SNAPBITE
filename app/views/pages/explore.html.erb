@@ -1,0 +1,45 @@
+<h2>Explorar restaurantes</h2>
+
+<%= form_with url: explore_path, method: :get, local: true do %>
+  <div class="row mb-3">
+    <div class="col">
+      <%= label_tag :query, "Buscar por nome" %>
+      <%= text_field_tag :query, params[:query], class: "form-control" %>
+    </div>
+
+    <div class="col">
+      <%= label_tag :category, "Categoria" %>
+      <%= select_tag :category,
+            options_for_select(Restaurant::CATEGORIES, selected: params[:category]),
+            include_blank: "Todas",
+            class: "form-select" %>
+    </div>
+
+    <div class="col">
+      <%= label_tag :price_range, "Faixa de preço" %>
+      <%= select_tag :price_range,
+            options_for_select([["Barato (1)", 1], ["Médio (2)", 2], ["Caro (3)", 3]], selected: params[:price_range]),
+            include_blank: "Qualquer",
+            class: "form-select" %>
+    </div>
+  </div>
+
+  <%= submit_tag "Filtrar", class: "btn btn-primary" %>
+<% end %>
+
+<hr>
+
+<% @restaurants.each do |restaurant| %>
+  <div class="card mb-3">
+    <div class="card-body">
+      <h5><%= restaurant.name %> (<%= restaurant.category %>)</h5>
+      <% if restaurant.address.present? %>
+        <p><strong>Endereço:</strong> <%= restaurant.address %></p>
+      <% end %>
+      <% if restaurant.infos.present? %>
+        <p><%= simple_format(restaurant.infos) %></p>
+      <% end %>
+      <%= link_to "Ver detalhes", restaurant_path(restaurant), class: "btn btn-sm btn-outline-secondary" %>
+    </div>
+  </div>
+<% end %>

@@ -1,0 +1,16 @@
+<h2>Configurações da Conta</h2>
+
+<%= simple_form_for(@user) do |f| %>
+  <div class="mb-3">
+    <%= f.input :username, label: "Nome de usuário", placeholder: "Ex: julia_matta" %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.input :role,
+                as: :radio_buttons,
+                collection: [["Sou cliente", "customer"], ["Sou restaurante", "owner"]],
+                label: "Tipo de conta" %>
+  </div>
+
+  <%= f.button :submit, "Salvar", class: "btn btn-primary" %>
+<% end %>

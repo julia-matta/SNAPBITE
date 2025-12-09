@@ -1,0 +1,38 @@
+<h2>Publicar avaliação</h2>
+
+<%= simple_form_for(@rating) do |f| %>
+
+  <%= f.association :restaurant,
+        collection: @restaurants,
+        label_method: :name,
+        value_method: :id,
+        prompt: "Selecione o restaurante",
+        label: "Restaurante" %>
+
+  <%= f.input :score,
+        label: "Nota geral (1 a 5)",
+        input_html: { min: 1, max: 5 } %>
+
+  <%= f.input :recommended,
+              as: :radio_buttons,
+              collection: [["Recomendo", true], ["Não recomendo", false]],
+              label: "Recomendação" %>
+
+  <hr>
+
+  <p><strong>Avaliar aspectos específicos (opcional):</strong></p>
+
+  <%= f.input :enviroment, label: "Ambiente (1 a 5)", input_html: { min: 1, max: 5 } %>
+  <%= f.input :service, label: "Serviço (1 a 5)", input_html: { min: 1, max: 5 } %>
+  <%= f.input :price, label: "Preço / custo-benefício (1 a 5)", input_html: { min: 1, max: 5 } %>
+  <%= f.input :food_text, label: "Sabor da comida (texto livre)" %>
+
+  <%= f.input :comment, as: :text, label: "Comentário geral" %>
+
+  <%= f.button :submit, "Publicar", class: "btn btn-primary mt-3" %>
+
+<% end %>
+
+<div class="mt-3">
+  <%= link_to "Cancelar", timeline_path, class: "btn btn-outline-secondary" %>
+</div>

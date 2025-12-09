@@ -1,0 +1,38 @@
+<h2>Timeline</h2>
+
+<% @ratings.each do |rating| %>
+  <div class="card mb-3">
+    <div class="card-body">
+      <p><strong><%= rating.user.username || rating.user.email %></strong> avaliou</p>
+      <p>
+        <strong><%= rating.restaurant.name %></strong>
+        (<%= rating.restaurant.category %>)
+      </p>
+
+      <p><strong>Score geral:</strong> <%= rating.score %>/5</p>
+
+      <% if rating.recommended == true %>
+        <p>✅ Recomendo</p>
+      <% elsif rating.recommended == false %>
+        <p>❌ Não recomendo</p>
+      <% end %>
+
+      <% if rating.comment.present? %>
+        <p><strong>Comentário:</strong> <%= rating.comment %></p>
+      <% end %>
+
+      <% if rating.enviroment.present? || rating.service.present? || rating.food_text.present? || rating.price.present? %>
+        <ul>
+          <% if rating.enviroment.present? %><li>Ambiente: <%= rating.enviroment %>/5</li><% end %>
+          <% if rating.service.present? %><li>Serviço: <%= rating.service %>/5</li><% end %>
+          <% if rating.food_text.present? %><li>Sabor da comida: <%= rating.food_text %></li><% end %>
+          <% if rating.price.present? %><li>Preço (custo-benefício): <%= rating.price %>/5</li><% end %>
+        </ul>
+      <% end %>
+
+      <% if rating.user == current_user %>
+        <%= link_to "Excluir", rating_path(rating), data: { turbo_method: :delete, turbo_confirm: "Tem certeza?" }, class: "btn btn-sm btn-outline-danger" %>
+      <% end %>
+    </div>
+  </div>
+<% end %>

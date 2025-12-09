@@ -1,0 +1,31 @@
+<h2>Meu perfil</h2>
+
+<p><strong>Usuário:</strong> <%= @user.username || @user.email %></p>
+<p><strong>Tipo:</strong> <%= @user.owner? ? "Restaurante" : "Cliente" %></p>
+
+<%= link_to "Editar configurações", edit_user_path(@user), class: "btn btn-sm btn-outline-primary mb-3" %>
+
+<hr>
+
+<h3>Minhas avaliações por categoria</h3>
+
+<% @ratings_by_category.each do |category, ratings| %>
+  <h4><%= category %></h4>
+
+  <% ratings.group_by(&:restaurant).each do |restaurant, restaurant_ratings| %>
+    <div class="card mb-2">
+      <div class="card-body">
+        <h5><%= restaurant.name %></h5>
+        <ul>
+          <% restaurant_ratings.each do |rating| %>
+            <li>
+              <strong><%= rating.score %>/5</strong>
+              <% if rating.recommended == true %> (Recomendo)<% end %>
+              <% if rating.recommended == false %> (Não recomendo)<% end %>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+<% end %>
