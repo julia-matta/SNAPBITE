@@ -1,6 +1,10 @@
 .navbar-lewagon {
   justify-content: space-between;
-  background: #737373;
+  background: #05627A;
+}
+
+body {
+  background-color: #Fbfbf1;
 }
 
 .navbar-lewagon .navbar-collapse {
@@ -35,7 +39,7 @@
 
 
 .navbar-lewagon .nav-link i {
-  color: #FDFAF4;
+  color: #Fbfbf1;
   font-size: 28px;
 }
 
@@ -56,5 +60,33 @@
 
 .publicar-btn .nav-icon-img {
   position: relative;
-  top: 4px; 
+  top: 4px;
+}
+
+.navbar-lewagon .nav-link {
+  color: #Fbfbf1;
+  justify-content: center;
+}
+
+.navbar-lewagon .nav-link i {
+  color: #Fbfbf1;
+  font-size: 28px;
+}
+
+.navbar-lewagon .nav-item {
+  margin: 0 20px;
+}
+
+.navbar-lewagon .nav-link span {
+  display: none;
+}
+
+.nav-icon-img {
+  width: 60px;
+  height: 60px;
+}
+
+.navbar {
+  padding-top: 1px;
+  padding-bottom: 1px;
 }
