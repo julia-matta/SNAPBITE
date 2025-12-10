@@ -24,6 +24,7 @@ Restaurant.create!(
   user: user,
   name: "Ninita",
   category: "Italiano",
+  average_price: 120, # R$ 120 por pessoa (exemplo)
   infos: <<~INFOS
     Cidade: Belo Horizonte
 
@@ -50,6 +51,7 @@ Restaurant.create!(
   user: user,
   name: "Glouton",
   category: "Francês",
+  average_price: 250, # exemplo
   infos: <<~INFOS
     Cidade: Belo Horizonte
 
@@ -74,6 +76,7 @@ Restaurant.create!(
   user: user,
   name: "Nicolau Bar da Esquina",
   category: "Brasileiro",
+  average_price: 80, # exemplo
   infos: <<~INFOS
     Cidade: Belo Horizonte
 
@@ -100,6 +103,7 @@ Restaurant.create!(
   user: user,
   name: "Macaréu",
   category: "Português",
+  average_price: 150, # exemplo
   infos: <<~INFOS
     Cidade: Belo Horizonte
 
