@@ -1,17 +1,22 @@
 class ApplicationController < ActionController::Base
-  before_action :authenticate_user!
+
   include Pundit::Authorization
 
+  before_action :authenticate_user!, unless: :devise_controller?
   before_action :configure_permitted_parameters, if: :devise_controller?
 
+  rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
   private
 
-  def after_sign_in_path_for(resource)
-    if resource.role.blank? || resource.username.blank?
-      edit_user_registration_path
-    else
-      timeline_path
-    end
+  def user_not_authorized
+    flash[:alert] = "Você não tem permissão para fazer isso."
+    redirect_to(request.referer || root_path)
+  end
+
+  def after_sign_in_path_for(_resource)
+    root_path
+    # ou, se preferir:
+    # restaurants_path
   end
 
   def configure_permitted_parameters
@@ -19,7 +24,4 @@ class ApplicationController < ActionController::Base
     devise_parameter_sanitizer.permit(:account_update, keys: %i[username role])
   end
 
-  def skip_pundit?
-    devise_controller? || params[:controller] =~ /(^(rails_)?admin)|(^pages$)/
-  end
 end

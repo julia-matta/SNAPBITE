@@ -6,6 +6,26 @@ class UsersController < ApplicationController
     @ratings_by_restaurant = @user.ratings.includes(:restaurant).group_by(&:restaurant)
   end
 
+  def show
+    @user = User.find(params[:id])
+  end
+
+  def categories
+    @user = User.find(params[:id])
+  end
+
+  def followers
+     @user = User.find(params[:id])
+  end
+
+  def following
+     @user = User.find(params[:id])
+  end
+
+  def friends
+     @user = User.find(params[:id])
+  end
+
   def edit
     authorize @user if defined?(UserPolicy)
   end
@@ -20,6 +40,8 @@ class UsersController < ApplicationController
     end
   end
 
+
+end
   private
 
   def set_user
@@ -27,6 +49,6 @@ class UsersController < ApplicationController
   end
 
   def user_params
-    params.require(:user).permit(:username, :role)
+    params.require(:user).permit(:username, :email, :role, :photo)
   end
 end

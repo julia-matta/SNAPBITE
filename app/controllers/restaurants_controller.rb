@@ -60,9 +60,9 @@ class RestaurantsController < ApplicationController
       :name,
       :category,
       :infos,
-      :address,
-      :opening_hours,
-      :price_range
+      # :address,
+      # :opening_hours,
+      # :price_range
     )
   end
 end

@@ -1,12 +1,92 @@
 .navbar-lewagon {
   justify-content: space-between;
-  background: white;
+  background: #F83B2F;
+}
+
+body {
+  background-color: #Fbfbf1;
 }
 
 .navbar-lewagon .navbar-collapse {
-  flex-grow: 0;
+  flex-grow: 1;
 }
 
-.navbar-lewagon .navbar-brand img {
-  width: 40px;
+
+.navbar-lewagon .navbar-nav {
+  margin: 0 auto;
+  max-width: 500px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navbar-lewagon .nav-item {
+  margin: 0;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.navbar-lewagon .nav-link {
+  color: #FDFAF4;
+  justify-content: center;
+}
+
+.navbar-lewagon .nav-link span {
+  display: none;
+}
+
+
+.navbar-lewagon .nav-link i {
+  color: #Fbfbf1;
+  font-size: 28px;
+}
+
+
+.publicar-btn .nav-icon-img {
+  width: 70px;
+  height: 70px;
+}
+
+.publicar-btn {
+  transform: translateY(-6px);
+}
+
+.navbar {
+  padding-top: 1px;
+  padding-bottom: 1px;
+}
+
+.publicar-btn .nav-icon-img {
+  position: relative;
+  top: 4px;
+}
+
+.navbar-lewagon .nav-link {
+  color: #Fbfbf1;
+  justify-content: center;
+}
+
+.navbar-lewagon .nav-link i {
+  color: #Fbfbf1;
+  font-size: 28px;
+}
+
+.navbar-lewagon .nav-item {
+  margin: 0 20px;
+}
+
+.navbar-lewagon .nav-link span {
+  display: none;
+}
+
+.nav-icon-img {
+  width: 60px;
+  height: 60px;
+}
+
+.navbar {
+  padding-top: 1px;
+  padding-bottom: 1px;
 }
