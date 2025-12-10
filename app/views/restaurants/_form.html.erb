@@ -22,6 +22,12 @@
     <%= f.text_area :infos, rows: 6 %>
   </div>
 
+  <div class="mb-3">
+  <%= f.label :average_price, "Preço médio por pessoa (R$)" %>
+  <%= f.number_field :average_price, class: "form-control", min: 0 %>
+  <small class="form-text text-muted">Opcional</small>
+  </div>
+
   <div>
     <%= f.submit %>
   </div>

@@ -3,8 +3,12 @@
 <%= form_with url: explore_path, method: :get, local: true do %>
   <div class="row mb-3">
     <div class="col">
-      <%= label_tag :query, "Buscar por nome" %>
-      <%= text_field_tag :query, params[:query], class: "form-control" %>
+      <%= label_tag :query, "Buscar" %>
+      <%= text_field_tag :query,
+            params[:query],
+            class: "form-control",
+            placeholder: "Nome, infos, endereço..."
+          %>
     </div>
 
     <div class="col">
@@ -16,11 +20,20 @@
     </div>
 
     <div class="col">
-      <%= label_tag :price_range, "Faixa de preço" %>
-      <%= select_tag :price_range,
-            options_for_select([["Barato (1)", 1], ["Médio (2)", 2], ["Caro (3)", 3]], selected: params[:price_range]),
-            include_blank: "Qualquer",
-            class: "form-select" %>
+      <%= label_tag :max_price, "Preço médio até (R$)" %>
+
+      <% price_options = [
+        ["Sem limite", ""],
+        ["Até R$ 50", 50],
+        ["Até R$ 100", 100],
+        ["Até R$ 150", 150],
+        ["Até R$ 200", 200]
+      ] %>
+
+      <%= select_tag :max_price,
+            options_for_select(price_options, params[:max_price]),
+            class: "form-select"
+          %>
     </div>
   </div>
 

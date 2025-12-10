@@ -59,6 +59,7 @@ class RestaurantsController < ApplicationController
     params.require(:restaurant).permit(
       :name,
       :category,
+      :average_price,
       :infos,
       # :address,
       # :opening_hours,
