@@ -1,0 +1,120 @@
+<div class="container mt-5">
+  <div class="card shadow-sm create-post-card">
+
+    <div class="card-header d-flex align-items-center gap-2 border-0 bg-white">
+      <button type="button" class="btn p-0 back-button" onclick="window.history.back()">
+        <i class="fas fa-arrow-left fs-4"></i>
+      </button>
+      <h5 class="mb-0 text-dark">Criar Publicação</h5>
+    </div>
+
+    <div class="card-body" data-controller="post-form">
+      <%= form_with model: @post, local: true, html: { multipart: true } do |f| %>
+
+            <!-- Upload -->
+    <div class="mb-3">
+      <label class="form-label fw-semibold text-dark">Fotos</label>
+
+      <label class="upload-box d-flex flex-column justify-content-center align-items-center gap-2">
+        <i class="fas fa-camera fa-lg text-muted"></i>
+        <span class="text-muted small">Clique ou arraste arquivos</span>
+        <input data-post-form-target="photoInput" type="file"
+              name="post[photos][]" multiple accept="image/*"
+              class="d-none"
+              data-action="change->post-form#previewPhotos">
+      </label>
+
+      <small class="text-muted">Máximo: 6 imagens</small>
+      <div class="d-flex gap-2 mt-2 flex-wrap"
+          data-post-form-target="previewContainer"></div>
+    </div>
+
+
+        <!-- Restaurante + Check-in -->
+        <div class="row mb-3">
+          <div class="col-md-8">
+            <%= f.label :restaurant_id, "Restaurante", class: "form-label fw-semibold text-dark" %>
+            <div class="restaurant-select-wrapper position-relative">
+  <i class="fas fa-map-marker-alt position-absolute start-3 top-50 translate-middle-y text-muted"></i>
+
+            <%= f.collection_select :restaurant_id, @restaurants, :id, :name,
+              { prompt: "Escolha um restaurante" },
+              class: "restaurant-select form-select text-dark" %>
+          </div>
+
+          </div>
+
+          <div class="col-md-4 d-flex align-items-end">
+            <button type="button"
+                    class="btn btn-outline-secondary rounded-3 w-100 checkin-btn"
+                    data-action="click->post-form#toggleCheckIn"
+                    data-post-form-target="checkInButton">
+              Check-in 📍
+            </button>
+            <%= f.hidden_field :check_in, value: false, data: { post_form_target: "checkInField" } %>
+          </div>
+        </div>
+
+        <!-- Curso -->
+        <div class="mb-3">
+          <label class="form-label fw-semibold text-dark">Tempo do Menu</label>
+          <div class="d-flex gap-2 flex-wrap" data-post-form-target="courseButtons">
+            <% [["Entrada", "entrada"], ["Principal", "principal"], ["Sobremesa", "sobremesa"], ["Bebida", "bebida"]].each do |label, value| %>
+              <button type="button"
+                      class="btn btn-outline-secondary rounded-3 menu-time-btn"
+                      data-value="<%= value %>"
+                      data-action="click->post-form#selectCourse">
+                <%= label %>
+              </button>
+            <% end %>
+          </div>
+          <%= f.hidden_field :course, data: { post_form_target: "courseField" } %>
+        </div>
+
+        <!-- Legenda -->
+        <div class="mb-3">
+          <%= f.label :caption, "Legenda", class: "form-label fw-semibold text-dark" %>
+          <%= f.text_area :caption, rows: 3,
+                class: "form-control rounded-3 text-dark",
+                placeholder: "Conte sobre sua experiência..." %>
+        </div>
+
+        <!-- Avaliação -->
+        <div class="p-3 border rounded-3 bg-light">
+          <div class="form-check form-switch mb-3">
+            <input class="form-check-input toggle-review" type="checkbox"
+                   data-action="change->post-form#toggleReview"
+                   data-post-form-target="reviewSwitch">
+            <label class="form-check-label text-dark">Adicionar avaliação privada ⭐</label>
+          </div>
+
+          <div class="review-section d-none" data-post-form-target="reviewSection">
+            <% {
+              ambiente: "Ambiente",
+              comida: "Comida",
+              atendimento: "Atendimento",
+              custo_beneficio: "Custo Benefício"
+            }.each do |field, label| %>
+              <div class="mb-2">
+                <label class="small fw-semibold text-dark"><%= label %></label>
+                <div class="rating-stars star-rating" data-field="<%= field %>">
+                  <% 5.times do |i| %>
+                    <i class="far fa-star me-1"
+                       data-value="<%= i + 1 %>"
+                       data-action="click->post-form#rate"></i>
+                  <% end %>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        </div>
+
+        <%= f.hidden_field :course, multiple: true, name: "post[course][]" , data: { post_form_target: "courseField" } %>
+
+        <%= f.submit "PUBLICAR",
+            class: "btn w-100 py-2 fw-semibold mt-3 publish-btn" %>
+
+      <% end %>
+    </div>
+  </div>
+</div>

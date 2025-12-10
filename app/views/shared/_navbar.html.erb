@@ -26,6 +26,7 @@
     </li>
 
     <!-- Botão central — Publicar -->
+
 <li class="nav-item flex-fill publicar-btn">
   <% if user_signed_in? && current_user.owner? %>
     <%= link_to new_restaurant_path, class: "nav-link d-flex flex-column align-items-center" do %>
@@ -34,11 +35,12 @@
     <% end %>
   <% elsif user_signed_in? && current_user.customer? %>
     <%= link_to publish_path, class: "nav-link d-flex flex-column align-items-center" do %>
-      <%= image_tag "mini.png", class: "nav-icon-img", alt: "Publicar avaliação" %>
+      <%= image_tag "mini.png", class: "nav-icon-img", alt: "Publicar" %>
       <span>Publicar</span>
     <% end %>
   <% end %>
 </li>
+
 
 
     <li class="nav-item flex-fill">

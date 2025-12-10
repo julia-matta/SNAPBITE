@@ -24,4 +24,6 @@ Rails.application.routes.draw do
       get :categories
     end
   end
+
+  resources :posts, only: [:new, :create]
 end
