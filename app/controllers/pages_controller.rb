@@ -1,4 +1,5 @@
- skip_before_action :authenticate_user!, only: [:home]
+ class PagesController < ApplicationController
+  skip_before_action :authenticate_user!, only: [:home]
 
   def home
     redirect_to timeline_path and return if user_signed_in?
