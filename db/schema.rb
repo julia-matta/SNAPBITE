@@ -90,6 +90,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_12_10_193232) do
     t.string "address"
     t.text "opening_hours"
     t.integer "price_range"
+    t.integer "average_price"
     t.index ["user_id"], name: "index_restaurants_on_user_id"
   end
 

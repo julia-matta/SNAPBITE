@@ -1,5 +1,4 @@
 class ApplicationController < ActionController::Base
-
   include Pundit::Authorization
 
   before_action :authenticate_user!, unless: :devise_controller?
@@ -23,5 +22,4 @@ class ApplicationController < ActionController::Base
     devise_parameter_sanitizer.permit(:sign_up, keys: %i[username role])
     devise_parameter_sanitizer.permit(:account_update, keys: %i[username role])
   end
-
 end

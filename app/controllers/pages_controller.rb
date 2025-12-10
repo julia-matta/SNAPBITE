@@ -28,14 +28,37 @@
     end
   end
 
-  def explore
-    @categories = Restaurant::CATEGORIES
-    @restaurants = Restaurant.all
+  # def explore
+  #   @categories = Restaurant::CATEGORIES
+  #   @restaurants = Restaurant.all
 
-    @restaurants = @restaurants.where(category: params[:category]) if params[:category].present?
-    @restaurants = @restaurants.where(price_range: params[:price_range]) if params[:price_range].present?
-    @restaurants = @restaurants.where("name ILIKE ?", "%#{params[:query]}%") if params[:query].present?
+  #   @restaurants = @restaurants.where(category: params[:category]) if params[:category].present?
+  #   @restaurants = @restaurants.where(price_range: params[:price_range]) if params[:price_range].present?
+  #   @restaurants = @restaurants.where("name ILIKE ?", "%#{params[:query]}%") if params[:query].present?
+  # end
+
+  def explore
+  @restaurants = Restaurant.all
+
+  if params[:query].present?
+    sql_query = <<~SQL
+      restaurants.name ILIKE :query
+      OR restaurants.infos ILIKE :query
+      OR restaurants.category ILIKE :query
+    SQL
+
+    @restaurants = @restaurants.where(sql_query, query: "%#{params[:query]}%")
   end
+
+  if params[:category].present?
+    @restaurants = @restaurants.where(category: params[:category])
+  end
+
+  if params[:max_price].present?
+    @restaurants = @restaurants.where("average_price <= ?", params[:max_price].to_i)
+  end
+end
+
 
   def profile
     @user = current_user
