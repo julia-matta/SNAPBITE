@@ -15,4 +15,13 @@ Rails.application.routes.draw do
   end
 
   resources :ratings, only: %i[new create destroy]
+
+  resources :users do
+    member do
+      get :followers
+      get :following
+      get :friends
+      get :categories
+    end
+  end
 end

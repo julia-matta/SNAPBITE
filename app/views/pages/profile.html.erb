@@ -3,8 +3,24 @@
 <p><strong>Usuário:</strong> <%= @user.username || @user.email %></p>
 <p><strong>Tipo:</strong> <%= @user.owner? ? "Restaurante" : "Cliente" %></p>
 
-<%= link_to "Editar configurações", edit_user_path(@user), class: "btn btn-sm btn-outline-primary mb-3" %>
+<%= link_to "Editar perfil", edit_user_path(@user), class: "btn btn-sm btn-outline-primary mb-3" %>
+<ul class="nav nav-tabs mb-3">
+  <li class="nav-item">
+    <%= link_to "Categorias", categories_user_path(@user), class: "nav-link" %>
+  </li>
 
+  <li class="nav-item">
+    <%= link_to "Seguidores", followers_user_path(@user), class: "nav-link" %>
+  </li>
+
+  <li class="nav-item">
+    <%= link_to "Seguindo", following_user_path(@user), class: "nav-link" %>
+  </li>
+
+  <li class="nav-item">
+    <%= link_to "Amigos", friends_user_path(@user), class: "nav-link" %>
+  </li>
+</ul>
 <hr>
 
 <h3>Minhas avaliações por categoria</h3>

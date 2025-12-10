@@ -1,2 +1,59 @@
-<h1>Pages#home</h1>
-<p>Find me in app/views/pages/home.html.erb</p>
+<h1>Snapbite</h1>
+
+<% if user_signed_in? %>
+  <% if current_user.owner? %>
+    <h2>Olá, dono de restaurante!</h2>
+
+    <h3>Meus restaurantes</h3>
+    <ul>
+      <% @my_restaurants.each do |restaurant| %>
+        <li>
+          <%= link_to restaurant.name, restaurant_path(restaurant) %>
+        </li>
+      <% end %>
+    </ul>
+
+    <h3>Últimas avaliações nos seus restaurantes</h3>
+    <ul>
+      <% @recent_ratings.each do |rating| %>
+        <li>
+          <strong><%= rating.restaurant.name %></strong> —
+          Nota: <%= rating.score %> —
+          <%= rating.comment.presence || "Sem comentário" %>
+        </li>
+      <% end %>
+    </ul>
+
+  <% else %> <%# customer %>
+    <h2>Olá! Veja o que o pessoal está avaliando</h2>
+
+    <h3>Restaurantes recém-cadastrados</h3>
+    <ul>
+      <% @recent_restaurants.each do |restaurant| %>
+        <li>
+          <%= link_to restaurant.name, restaurant_path(restaurant) %>
+          (<%= restaurant.category %>)
+        </li>
+      <% end %>
+    </ul>
+
+    <h3>Últimas avaliações</h3>
+    <ul>
+      <% @recent_ratings.each do |rating| %>
+        <li>
+          <strong><%= rating.restaurant.name %></strong> —
+          Nota: <%= rating.score %> —
+          <%= rating.comment.presence || "Sem comentário" %>
+        </li>
+      <% end %>
+    </ul>
+
+    <p>
+      <%= link_to "Ver todos os restaurantes", restaurants_path %>
+    </p>
+  <% end %>
+<% else %>
+  <h2>Bem-vindo ao Snapbite</h2>
+  <p>Faça login para ver o feed de restaurantes e avaliações.</p>
+  <%= link_to "Login", new_user_session_path, class: "btn btn-primary" %>
+<% end %>

@@ -2,7 +2,19 @@ class PagesController < ApplicationController
   skip_before_action :authenticate_user!, only: [:home]
 
   def home
-    redirect_to timeline_path if user_signed_in?
+    redirect_to timeline_path and return if user_signed_in?
+    # aqui você pode colocar conteúdo público da home, se quiser
+
+
+        #     if current_user.owner?
+        #       @my_restaurants = current_user.restaurants.limit(5)
+        #       @recent_ratings = Rating
+        #                           .where(restaurant: @my_restaurants)
+        #                           .order(created_at: :desc)
+        #                           .limit(10)
+        #     else # customer
+        #       @recent_restaurants = Restaurant.order(created_at: :desc).limit(5)
+        #       @recent_ratings = Rating.order(created_at: :desc).limit(10)
   end
 
   def timeline
@@ -29,5 +41,6 @@ class PagesController < ApplicationController
     @user = current_user
     @ratings_by_category = @user.ratings.includes(:restaurant)
                                 .group_by { |r| r.restaurant.category }
+
   end
 end
