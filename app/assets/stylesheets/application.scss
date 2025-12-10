@@ -11,20 +11,135 @@
 @import "components/index";
 @import "pages/index";
 
-.profile-menu {
-  display: flex;
-  gap: 20px;
-  list-style: none;
-  padding: 0;
-  margin: 20px 0;
+/* ===================== SNAPBITE UI SYSTEM ===================== */
+
+/* 🎨 Design Tokens */
+:root {
+  --sb-red: #F83B2F;
+  --sb-dark-gray: #3A3A3C;
+  --sb-white-text: #FBFBF1;
+  --sb-hover-blue: #05627A;
 }
 
-.profile-menu li a {
-  text-decoration: none;
-  font-weight: bold;
-  color: #333;
+/* ===================== TIPOGRAFIA ===================== */
+
+body {
+  font-family: "Embed Code", sans-serif !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: #2A2A2A;
 }
 
-.profile-menu li a:hover {
-  color: #007bff;
+h1, .h1 { font-weight: 700; font-size: 2rem; }
+h2, .h2 { font-weight: 600; font-size: 1.6rem; }
+h3, .h3 { font-weight: 600; font-size: 1.4rem; }
+h4, .h4 { font-weight: 500; font-size: 1.2rem; }
+
+p, .btn, .form-label, .form-control, .nav-link {
+  font-weight: 400;
+  font-size: 0.95rem;
+}
+
+/* Responsividade tipográfica */
+@media (max-width: 768px) {
+  h1, .h1 { font-size: 1.6rem; }
+  h2, .h2 { font-size: 1.4rem; }
+  h3, .h3 { font-size: 1.25rem; }
+  h4, .h4 { font-size: 1.1rem; }
+  p, .btn, .nav-link { font-size: 0.9rem; }
+}
+
+/* ===================== BOTÕES ===================== */
+
+.btn {
+  border-radius: 12px !important;
+  padding: 10px 20px !important;
+  font-weight: 600 !important;
+}
+
+.btn-outline-secondary {
+  border-width: 2px;
+}
+
+/* Botões ativos SnapBite */
+.btn-danger,
+.btn-danger:hover,
+.btn-danger:focus,
+.btn-danger:active {
+  background-color: var(--sb-red) !important;
+  border-color: var(--sb-red) !important;
+  color: var(--sb-white-text) !important;
+}
+
+/* Check-in & Menu Time (estados via Stimulus) */
+.checkin-btn.active,
+.menu-time-btn.active {
+  background-color: var(--sb-red) !important;
+  border-color: var(--sb-red) !important;
+  color: var(--sb-white-text) !important;
+}
+
+.checkin-btn.active:hover,
+.menu-time-btn.active:hover {
+  background-color: #F83B2F !important;
+  border-color: #F83B2F !important;
+  color: var(--sb-white-text) !important;
+
+}
+
+.publish-btn {
+  background-color: var(--sb-red) !important;
+  border-color: var(--sb-red) !important;
+  color: var(--sb-white-text) !important;
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+}
+
+.publish-btn:hover:enabled,
+.publish-btn:focus:enabled {
+  background-color: #F83B2F !important;
+  border-color: #F83B2F !important;
+  color: var(--sb-white-text) !important;
+}
+
+.publish-btn:disabled {
+  background-color: #ccc !important;
+  border-color: #ccc !important;
+  color: #666 !important;
+}
+
+/* ===================== STARS ===================== */
+
+.rating-stars i {
+  font-size: 1.35rem;
+  cursor: pointer;
+  transition: transform .15s, color .12s;
+  color: #F83B2F;
+}
+
+.rating-stars i.selected,
+.rating-stars i:hover {
+  transform: scale(1.15);
+  color: var(--sb-red) !important;
+}
+
+/* ===================== CARDS ===================== */
+
+/* Create Post Card */
+.create-post-card {
+  border-radius: 28px !important; /* Mais arredondado */
+  background-color: #ffffff !important;
+  border: 1px solid #e5e7eb;
+  overflow: hidden; /* Arredonda conteúdo interno */
+}
+
+.menu-time-btn.active {
+  background-color: var(--sb-red) !important;
+  border-color: var(--sb-red) !important;
+  color: var(--sb-white-text) !important;
+}
+
+.menu-time-btn.active:hover {
+  background-color: #d22e23 !important;
 }
