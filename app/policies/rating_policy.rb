@@ -5,14 +5,14 @@ class RatingPolicy < ApplicationPolicy
     end
   end
 
-  def create?
+ def create?
     user.customer?
   end
 
   def new?
     create?
   end
-
+  
   def destroy?
     user.customer? && record.user == user
   end
