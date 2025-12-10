@@ -81,9 +81,9 @@ selectCourse(event) {
   const field = container.dataset.field;
 
   // Atualiza JSON de ratings
-  let ratings = JSON.parse(this.ratingsFieldTarget.value || "{}");
+  let ratings = JSON.parse(this.courseFieldTarget.value || "{}");
   ratings[field] = value;
-  this.ratingsFieldTarget.value = JSON.stringify(ratings);
+  this.courseFieldTarget.value = JSON.stringify(ratings);
 
   // Re-renderiza o estado visual das estrelas
   container.querySelectorAll("i").forEach(star => {
