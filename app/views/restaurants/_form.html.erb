@@ -1,4 +1,4 @@
-<%= form_with model: @restaurant do |f| %>
+<%= form_with model: @restaurant, html: { multipart: true } do |f| %>
   <% if @restaurant.errors.any? %>
     <ul>
       <% @restaurant.errors.full_messages.each do |msg| %>
@@ -23,9 +23,15 @@
   </div>
 
   <div class="mb-3">
-  <%= f.label :average_price, "Preço médio por pessoa (R$)" %>
-  <%= f.number_field :average_price, class: "form-control", min: 0 %>
-  <small class="form-text text-muted">Opcional</small>
+    <%= f.label :average_price, "Preço médio por pessoa (R$)" %>
+    <%= f.number_field :average_price, class: "form-control", min: 0 %>
+    <small class="form-text text-muted">Opcional</small>
+  </div>
+
+  <!-- CAMPO DE FOTO -->
+  <div class="mb-3">
+    <%= f.label :photo, "Foto do restaurante" %><br>
+    <%= f.file_field :photo, class: "form-control" %>
   </div>
 
   <div>
