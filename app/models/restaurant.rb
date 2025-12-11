@@ -1,5 +1,5 @@
 class Restaurant < ApplicationRecord
-  CATEGORIES = %w[Italiano Francês Brasileiro Português Japonês Mexicano Chinês Indiano Mediterrâneo Vegetariano Árabe].freeze
+  CATEGORIES = %w[Italiano Francês Brasileiro Português Japonês Mexicano Chinês Indiano Mediterrâneo Vegetariano Africano Alemão Árabe].freeze
 
   has_many :ratings, dependent: :destroy
   belongs_to :user

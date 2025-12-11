@@ -1,58 +1,60 @@
-<h1> Explorar restaurantes</h1>
-<h3> Descubra novos sabores pela cidade </h3>
+<div class="explore-page">
 
-<%= form_with url: explore_path, method: :get, local: true do %>
-  <div class="row mb-3">
-    <div class="col">
-      <%= label_tag :query, "Buscar" %>
-      <%= text_field_tag :query,
-            params[:query],
-            class: "form-control",
-            placeholder: "Nome, infos, endereço..."
-          %>
-    </div>
+    <h1> Explorar restaurantes</h1>
+    <h4> Descubra novos sabores pela cidade </h4>
 
-    <div class="col">
-      <%= label_tag :max_price, "Preço médio até (R$)" %>
+    <%= form_with url: explore_path, method: :get, local: true do %>
+      <div class="row mb-3">
+        <div class="col">
+          <%= label_tag :query, "Buscar" %>
+          <%= text_field_tag :query,
+                params[:query],
+                class: "form-control",
+                placeholder: "Nome, infos, endereço..."
+              %>
+        </div>
 
-      <% price_options = [
-        ["Sem limite", ""],
-        ["Até R$ 50", 50],
-        ["Até R$ 100", 100],
-        ["Até R$ 150", 150],
-        ["Até R$ 200", 200]
-      ] %>
+        <div class="col">
+          <%= label_tag :max_price, "Preço médio até (R$)" %>
 
-      <%= select_tag :max_price,
-            options_for_select(price_options, params[:max_price]),
-            class: "form-select"
-          %>
-    </div>
-  </div>
+          <% price_options = [
+            ["Sem limite", ""],
+            ["Até R$ 50", 50],
+            ["Até R$ 100", 100],
+            ["Até R$ 150", 150],
+            ["Até R$ 200", 200]
+          ] %>
 
-  <!-- BOTÕES CATEGORIES -->
-  <div class="category-buttons mb-3">
-    <% Restaurant::CATEGORIES.each do |cat| %>
-      <% active = params[:category] == cat %>
+          <%= select_tag :max_price,
+                options_for_select(price_options, params[:max_price]),
+                class: "form-select"
+              %>
+        </div>
+      </div>
 
-      <%= button_tag type: :submit,
-            name: :category,
-            value: cat,
-            class: "category-btn #{'active' if active}" do %>
-        <%= cat %>
-      <% end %>
+      <!-- BOTÕES CATEGORIES -->
+              <!-- Botão "Todas" -->
+          <div class="category-buttons mb-3">
+            <%= button_tag type: :submit,
+              name: :category,
+              value: "",
+              class: "category-btn #{'active' if params[:category].blank?}" do %>
+               Todas
+             <% end %>
+         </div>
+
+      <div class="category-buttons mb-3">
+        <% Restaurant::CATEGORIES.each do |cat| %>
+          <% active = params[:category] == cat %>
+
+          <%= button_tag type: :submit,
+                name: :category,
+                value: cat,
+                class: "category-btn #{'active' if active}" do %>
+            <%= cat %>
+          <% end %>
+        <% end %>
+
+      <%= submit_tag "Filtrar", class: "btn-filtrar" %>
     <% end %>
-
-    <!-- Botão "Todas" -->
-    <%= button_tag type: :submit,
-          name: :category,
-          value: "",
-          class: "category-btn #{'active' if params[:category].blank?}" do %>
-      Todas
-    <% end %>
-  </div>
-
-  <%= submit_tag "Filtrar", class: "btn-filtrar" %>
-<% end %>
-
-<hr>
+</div>
