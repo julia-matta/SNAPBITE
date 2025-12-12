@@ -1,18 +1,26 @@
+/* pages/_explore.scss — substitua tudo por este conteúdo */
+
 .explore-results {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 22px;
+  gap: 32px;
   margin-top: 24px;
   padding-bottom: 40px;
+
+  max-width: 1800px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
 /* CARD PRINCIPAL */
 .explore-card {
   background: #ffffff;
   border-radius: 20px;
-  width: 100%;
-  max-width: 350px;
+  width: calc((100% - (3 * 32px)) / 4); /* 4 cards por linha com gap 32 */
+  max-width: none;         /* remove o limite antigo */
   overflow: hidden;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
   transition: transform 0.2s ease;
@@ -22,17 +30,31 @@
   }
 }
 
-/* FOTO SUPERIOR */
-.explore-card-image img {
+
+/* FOTO SUPERIOR – padronizada para todas as imagens */
+.explore-card-image {
   width: 100%;
-  height: 200px;
-  object-fit: cover;
-  display: block;
+  height: 220px; /* ajuste aqui se quiser a altura do Macaréu (ex: 240px) */
+  overflow: hidden;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  flex-shrink: 0; /* garante que a imagem não encolha */
+
+  /* estiliza a tag img com class card-photo */
+  img.card-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* corte profissional sem distorcer */
+    display: block;
+  }
 }
 
 /* CONTEÚDO DO CARD */
 .explore-card-content {
   padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1; /* faz o conteúdo preencher verticalmente */
 }
 
 /* NOME */
@@ -72,7 +94,7 @@
   color: #555;
 
   i {
-    color: #bd0e0e; /* ícone vermelho */
+    color: #F83B2F; /* ícone vermelho */
   }
 }
 
@@ -83,7 +105,7 @@
 
 .btn-checkin {
   width: 100%;
-  background: #bd0e0e;
+  background: #F83B2F;
   color: white;
   padding: 9px 0;
   border-radius: 12px;
@@ -99,4 +121,9 @@
   &:hover {
     opacity: 0.85;
   }
+}
+
+.explore-page {
+  padding-top: 20px;
+  padding-bottom: 40px;
 }
