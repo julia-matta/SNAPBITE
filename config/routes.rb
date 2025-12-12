@@ -6,12 +6,13 @@ Rails.application.routes.draw do
   get "timeline", to: "pages#timeline", as: :timeline
   get "explore",  to: "pages#explore",  as: :explore
   get "profile",  to: "pages#profile",  as: :profile
-  get "publish",  to: "ratings#new",   as: :publish
+  get "publish",  to: "ratings#new",    as: :publish
 
   resources :users, only: %i[show edit update]
 
   resources :restaurants do
-    resources :ratings, only: %i[index]
+    resources :checkins, only: [:create]   # <<< NOVA ROTA DE CHECK-IN
+    resources :ratings,  only: %i[index]
   end
 
   resources :ratings, only: %i[new create destroy]

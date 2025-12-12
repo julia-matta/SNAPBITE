@@ -1,0 +1,28 @@
+.category-buttons {
+  border-radius: 12px !important;
+  padding: 8px 18px;
+  font-weight: 600 !important;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.category-btn {
+  padding: 6px 14px;
+  border-radius: 12px;
+  border: 1px solid #ccc;
+  background: white;
+  cursor: pointer;
+  font-size: 14px;
+  transition: 0.2s;
+}
+
+.category-btn:hover {
+  background: #f2f2f2;
+}
+
+.category-btn.active {
+  background: #F83B2F;
+  color: white;
+  border-color: #F83B2F;
+}

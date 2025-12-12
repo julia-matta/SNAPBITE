@@ -9,6 +9,10 @@
 // Your CSS partials
 @import "components/index";
 @import "pages/index";
+@import "components/categories";
+@import "components/buttons";
+
+
 
 /* ===================== SNAPBITE UI SYSTEM ===================== */
 
@@ -23,7 +27,7 @@
 /* ===================== TIPOGRAFIA ===================== */
 
 body {
-  font-family: "Embed Code", sans-serif !important;
+  font-family: "Outfit", sans-serif !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2A2A2A;
@@ -192,4 +196,10 @@ p, .btn, .form-label, .form-control, .nav-link {
 .restaurant-select-wrapper i {
   left: 14px;
   pointer-events: none;
+}
+
+.explore-page {
+  font-family: "Outfit", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
 }
