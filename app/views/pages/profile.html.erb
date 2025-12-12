@@ -1,27 +1,53 @@
-<h2>Meu perfil</h2>
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-md-8 offset-md-2">
+      <div class="card-profile p-4 shadow-sm">
+        <h2 class="card-title text-center mb-4"> Meu Perfil</h2>
 
-<p><strong>Usuário:</strong> <%= @user.username || @user.email %></p>
-<p><strong>Tipo:</strong> <%= @user.owner? ? "Restaurante" : "Cliente" %></p>
+        <%# Exibição da Foto Atual %>
+        <div class="text-center mb-4">
+          <% if @user.profile_picture.attached? %>
+            <%# Assumindo que o método `profile_picture` anexa a foto. Use `url_for` para exibi-la. %>
+            <%= image_tag @user.profile_picture, class: "rounded-circle border border-primary", style: "width: 150px; height: 150px; object-fit: cover;" %>
+          <% else %>
+            <%# Placeholder se não houver foto %>
+            <%= image_tag "placeholder_profile.png", class: "rounded-circle border", style: "width: 150px; height: 150px; object-fit: cover;" %>
+          <% end %>
+          <p><strong>Usuário:</strong> <%= @user.username || @user.email %></p>
+          <p><strong>Tipo:</strong> <%= @user.owner? ? "Restaurante" : "Cliente" %></p>
+        </div>
 
-<%= link_to "Editar perfil", edit_user_path(@user), class: "btn btn-sm btn-outline-primary mb-3" %>
-<ul class="nav nav-tabs mb-3">
-  <li class="nav-item">
-    <%= link_to "Categorias", categories_user_path(@user), class: "nav-link" %>
-  </li>
 
-  <li class="nav-item">
-    <%= link_to "Seguidores", followers_user_path(@user), class: "nav-link" %>
-  </li>
+        <hr>
 
-  <li class="nav-item">
-    <%= link_to "Seguindo", following_user_path(@user), class: "nav-link" %>
-  </li>
+        <%# Retorno para o Perfil (Ajuste os links de navegação) %>
+        <div class="text-center">
+          <%= link_to "Editar perfil", edit_user_path(@user), class: "btn btn-outline-secondary mt-3" %>
+        <ul class="nav nav-tabs mb-3">
+          <li class="nav-item">
+          <%= link_to "Categorias", categories_user_path(@user), class: "nav-link" %>
+          </li>
 
-  <li class="nav-item">
-    <%= link_to "Amigos", friends_user_path(@user), class: "nav-link" %>
-  </li>
-</ul>
-<hr>
+          <li class="nav-item">
+          <%= link_to "Seguidores", followers_user_path(@user), class: "nav-link" %>
+          </li>
+
+          <li class="nav-item">
+          <%= link_to "Seguindo", following_user_path(@user), class: "nav-link" %>
+          </li>
+
+          <li class="nav-item">
+          <%= link_to "Amigos", friends_user_path(@user), class: "nav-link" %>
+          </li>
+        </ul>
+        <hr>
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
 <h3>Minhas avaliações por categoria</h3>
 

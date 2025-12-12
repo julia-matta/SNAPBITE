@@ -34,7 +34,7 @@ class UsersController < ApplicationController
     authorize @user if defined?(UserPolicy)
 
     if @user.update(user_params)
-      redirect_to timeline_path, notice: "Configurações atualizadas com sucesso."
+      redirect_to timeline_path, notice: "Perfil atualizado com sucesso."
     else
       render :edit, status: :unprocessable_entity
     end
@@ -49,5 +49,5 @@ end
   end
 
   def user_params
-    params.require(:user).permit(:username, :email, :role, :photo)
+    params.require(:user).permit(:username, :email, :role, :photo, :profile_picture)
   end

@@ -5,6 +5,8 @@ class User < ApplicationRecord
   has_many :friendships
   has_many :friends, through: :friendships
 
+  has_one_attached :profile_picture
+
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
@@ -24,5 +26,5 @@ class User < ApplicationRecord
   def following?(other_user)
     friends.include?(other_user)
   end
-  
+
 end
