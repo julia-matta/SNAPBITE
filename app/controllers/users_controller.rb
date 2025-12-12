@@ -32,12 +32,15 @@ class UsersController < ApplicationController
 
   def update
     authorize @user if defined?(UserPolicy)
-
     if @user.update(user_params)
-      redirect_to timeline_path, notice: "Perfil atualizado com sucesso."
+      redirect_to profile_path, notice: "Perfil atualizado com sucesso."
     else
       render :edit, status: :unprocessable_entity
     end
+  end
+
+  def set_user
+    @user = current_user
   end
 
 
