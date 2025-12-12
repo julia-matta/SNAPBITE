@@ -5,16 +5,17 @@
         <h2 class="card-title text-center mb-4"> Meu Perfil</h2>
 
         <%# Exibição da Foto Atual %>
+
         <div class="text-center mb-4">
-          <% if @user.profile_picture.attached? %>
+          <% if current_user.profile_picture.attached? %>
             <%# Assumindo que o método `profile_picture` anexa a foto. Use `url_for` para exibi-la. %>
-            <%= image_tag @user.profile_picture, class: "rounded-circle border border-primary", style: "width: 150px; height: 150px; object-fit: cover;" %>
+            <%= image_tag url_for(current_user.profile_picture), class: "rounded-circle border border-primary", style: "width: 150px; height: 150px; object-fit: cover;" %>
           <% else %>
             <%# Placeholder se não houver foto %>
             <%= image_tag "placeholder_profile.png", class: "rounded-circle border", style: "width: 150px; height: 150px; object-fit: cover;" %>
           <% end %>
-          <p><strong>Usuário:</strong> <%= @user.username || @user.email %></p>
-          <p><strong>Tipo:</strong> <%= @user.owner? ? "Restaurante" : "Cliente" %></p>
+          <p><strong>Usuário:</strong> <%= current_user.username || current_user.email %></p>
+          <p><strong>Tipo:</strong> <%= current_user.owner? ? "Restaurante" : "Cliente" %></p>
         </div>
 
 
