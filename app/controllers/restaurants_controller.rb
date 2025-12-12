@@ -61,6 +61,7 @@ class RestaurantsController < ApplicationController
       :category,
       :average_price,
       :infos,
+      :image_name,
       # :address,
       # :opening_hours,
       # :price_range

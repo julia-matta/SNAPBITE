@@ -1,129 +1,75 @@
-# This file should ensure the existence of records required to run the application in every environment (production,
-# development, test). The code here should be idempotent so that it can be executed at any point in every environment.
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-#
-# Example:
-#
-#   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
-#     MovieGenre.find_or_create_by!(name: genre_name)
-#   end
-# This file should ensure the existence of records required to run the application in every environment (production,
-# development, test).
 puts "Limpando banco..."
 Restaurant.destroy_all
 User.destroy_all
 
 puts "Criando usuário owner..."
 user = User.create!(email: "inventei@example.com", password: "123456", role: :owner)
+
 puts "Criando usuário customer..."
 customer = User.create!(email: "inventei2@example.com", password: "123456", role: :customer)
 
 puts "Criando restaurantes do Chef Léo Paixão..."
 
+# ------------------- NINITA -------------------
 Restaurant.create!(
   user: user,
   name: "Ninita",
   category: "Italiano",
-  average_price: 120, # R$ 120 por pessoa (exemplo)
+  average_price: 120,
+  image_name: "ninita.jpg",
   infos: <<~INFOS
     Cidade: Belo Horizonte
 
     Endereço:
     Rua Bárbara Heliodora, 71, Lourdes, Belo Horizonte, MG
-    Telefone: (31) 3292-4237
-
-    Horários:
-    - Segunda-feira: 18h–23h
-    - Terça a sábado: 12h–17h e 18h–23h
-    - Domingo: 12h–17h
 
     Descrição:
-    Restaurante ítalo-mineiro, com massas artesanais e ingredientes locais como ora-pro-nóbis e queijos mineiros.
-    Ambiente acolhedor e elegante no coração de Lourdes.
-
-    Destaques:
-    - Polenta cremosa
-    - Massas frescas com toques mineiros
+    Restaurante ítalo-mineiro com massas artesanais e ingredientes locais.
   INFOS
 )
 
+# ------------------- GLOUTON -------------------
 Restaurant.create!(
   user: user,
   name: "Glouton",
   category: "Francês",
-  average_price: 250, # exemplo
+  average_price: 250,
+  image_name: "glouton.jpg",
   infos: <<~INFOS
     Cidade: Belo Horizonte
 
-    Endereço:
-    Rua Bárbara Heliodora, 59, Lourdes, Belo Horizonte, MG
-    Telefone: (31) 3292-4237
-
-    Horários:
-    - Segunda-feira a sábado: 19h–23h
-
     Descrição:
-    Cozinha franco-mineira que rendeu destaque nacional ao chef Léo Paixão.
-    Proposta sofisticada com menu autoral e ingredientes regionais.
-
-    Destaques:
-    - Menu degustação com pratos sazonais
-    - Alta gastronomia em ambiente intimista
+    Cozinha franco-mineira sofisticada com menu autoral do chef Léo Paixão.
   INFOS
 )
 
+# ------------------- NICOLAU -------------------
 Restaurant.create!(
   user: user,
   name: "Nicolau Bar da Esquina",
   category: "Brasileiro",
-  average_price: 80, # exemplo
+  average_price: 80,
+  image_name: "nicolau.jpg",
   infos: <<~INFOS
     Cidade: Belo Horizonte
 
-    Endereço:
-    Rua Dicíola Horta, 77, Belvedere, Belo Horizonte, MG
-    Telefone: (31) 3292-4237
-
-    Horários:
-    - Terça a quinta: 19h–23h
-    - Sexta e sábado: 18h–23:30
-    - Domingo: 11h–17h
-
     Descrição:
-    Bar de culinária brasileira com releituras criativas, porções generosas e clima descontraído.
-    Referência em botecagem gourmet na capital mineira.
-
-    Destaques:
-    - Petiscos mineiros autorais
-    - Drinks exclusivos
+    Bar de culinária brasileira com releituras criativas e clima descontraído.
   INFOS
 )
 
+# ------------------- MACARÉU -------------------
 Restaurant.create!(
   user: user,
   name: "Macaréu",
   category: "Português",
-  average_price: 150, # exemplo
+  average_price: 150,
+  image_name: "macareu.jpg",
   infos: <<~INFOS
     Cidade: Belo Horizonte
 
-    Endereço:
-    Rua Dicíola Horta, 77, Belvedere, Belo Horizonte, MG
-    Telefone: (31) 3292-4237
-
-    Horários:
-    - Terça a quinta: 19h–23h
-    - Sexta: 19h–23:30
-    - Sábado: 12h–16h e 19h–23:30
-    - Domingo: 12h–17h
-
     Descrição:
-    Foco em peixes e frutos do mar com inspiração portuguesa e identidade brasileira.
-    Serviço elogiado e pratos autorais bem servidos.
-
-    Destaques:
-    - Bacalhau confitado
-    - Polvo grelhado
+    Foco em peixes e frutos do mar com inspiração portuguesa.
   INFOS
 )
 
