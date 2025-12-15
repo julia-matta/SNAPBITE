@@ -1,16 +1,42 @@
-<h2>Criar conta</h2>
+<!-- Navbar vem antes (como já está no layout) -->
 
-<%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-  <%= f.input :email, required: true %>
-  <%= f.input :password, required: true %>
-  <%= f.input :password_confirmation, required: true %>
+<div class="auth-page">
+  <div class="container-fluid">
+    <div class="row justify-content-center">
+      <div class="col-12 col-md-8 col-lg-5">
+        <div class="auth-card">
 
-  <%= f.input :role, as: :radio_buttons,
-              collection: [["Sou cliente", "customer"], ["Sou restaurante", "owner"]] %>
+          <h2 class="text-center mb-4">Criar conta</h2>
 
-  <%= f.button :submit, "Cadastrar", class: "btn btn-primary" %>
-<% end %>
+          <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
 
-<p>
-  <%= link_to "Já tenho conta", new_user_session_path %>
-</p>
+            <%= f.input :email, required: true %>
+            <%= f.input :username, required: true %>
+            <%= f.input :password, required: true %>
+            <%= f.input :password_confirmation, required: true %>
+
+            <div class="role-selector mb-3">
+              <%= f.input :role,
+                label: "Você é:",
+                label_html: { class: "d-block text-center mb-2" },
+                wrapper_html: { class: "text-center" },
+                as: :radio_buttons,
+                collection: [["Sou cliente", "customer"], ["Sou restaurante", "owner"]],
+                item_wrapper_class: "form-check form-check-inline" %>
+            </div>
+
+            <div class="d-grid">
+              <%= f.button :submit, "Cadastrar", class: "btn btn-primary btn-lg" %>
+            </div>
+
+          <% end %>
+
+          <p class="text-center mt-3 auth-link">
+            <%= link_to "Já tenho conta", new_user_session_path %>
+          </p>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
