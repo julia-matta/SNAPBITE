@@ -1,5 +1,4 @@
 <div class="explore-page">
-
   <div class="explore-container">
 
     <!-- ================= TÍTULOS ================= -->
@@ -9,33 +8,31 @@
     <!-- ================= FILTROS ================= -->
     <%= form_with url: explore_path, method: :get, local: true do %>
 
-      <div class="row mb-3">
-        <div class="col">
+      <!-- LINHA DE BUSCA + PREÇO + FILTRAR -->
+      <div class="filter-row mb-4">
+
+        <div class="filter-field">
           <%= label_tag :query, "Buscar" %>
           <%= text_field_tag :query,
                 params[:query],
-                class: "form-control",
+                class: "form-control form-control-sm",
                 placeholder: "Nome, infos, endereço..." %>
         </div>
 
-        <div class="col">
-          <%= label_tag :max_price, "Preço médio até (R$)" %>
+        <div class="filter-field small">
+          <%= label_tag :max_price, "Preço até (R$)" %>
           <%= select_tag :max_price,
                 options_for_select(@price_options, params[:max_price]),
-                class: "form-select" %>
+                class: "form-select form-select-sm" %>
         </div>
+
+        <div class="filter-action">
+          <%= submit_tag "Filtrar", class: "btn btn-filtrar" %>
+        </div>
+
       </div>
 
-      <!-- BOTÃO TODAS -->
-      <div class="category-buttons mb-3">
-        <%= button_tag "Todas",
-              type: :submit,
-              name: :category,
-              value: "",
-              class: "category-btn #{'active' if params[:category].blank?}" %>
-      </div>
-
-      <!-- CATEGORIAS -->
+      <!-- ================= CATEGORIAS ================= -->
       <div class="category-buttons mb-4">
         <% Restaurant::CATEGORIES.each do |cat| %>
           <%= button_tag cat,
@@ -45,8 +42,6 @@
                 class: "category-btn #{'active' if params[:category] == cat}" %>
         <% end %>
       </div>
-
-      <%= submit_tag "Filtrar", class: "btn-filtrar mb-4" %>
 
     <% end %>
 

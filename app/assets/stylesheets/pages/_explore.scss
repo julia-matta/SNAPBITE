@@ -1,8 +1,8 @@
 /* ================= EXPLORE PAGE ================= */
 
 .explore-page {
-  padding-top: 20px;
-  padding-bottom: 40px;
+  padding-top: 40px;
+  padding-bottom: 60px;
 }
 
 /* 🔑 CONTAINER ÚNICO (alinha tudo: títulos, filtros e cards) */
@@ -19,7 +19,7 @@
   flex-wrap: wrap;
   justify-content: center;
   gap: 32px;
-  margin-top: 24px;
+  margin-top: 40px;
 }
 
 /* ================= CARD ================= */
@@ -151,5 +151,84 @@
 @media (max-width: 576px) {
   .explore-card {
     width: 100%;
+  }
+}
+
+.category-buttons {
+  display: flex;
+  flex-wrap: nowrap;        /* 🔥 NÃO quebra linha */
+  gap: 12px;
+  overflow-x: auto;         /* 🔥 scroll horizontal se precisar */
+  padding-bottom: 6px;      /* espaço p/ scrollbar */
+  margin-bottom: 24px;
+  margin-top: 1.4rem;
+}
+
+.category-buttons::-webkit-scrollbar {
+  height: 6px;
+}
+
+.category-buttons::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.15);
+  border-radius: 10px;
+}
+
+.category-btn {
+  flex-shrink: 0;
+  white-space: nowrap;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 6px 14px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: #f5f5f5;
+  }
+
+  &.active {
+    background: #F83B2F;
+    color: #ffffff;
+    border-color: #F83B2F;
+  }
+}
+
+/* ================= FILTROS ================= */
+
+.filter-row {
+  display: flex;
+  align-items: flex-end;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.filter-field {
+  flex: 1;
+  min-width: 220px;
+}
+
+.filter-field.small {
+  max-width: 180px;
+}
+
+.filter-action {
+  display: flex;
+}
+
+.btn-filtrar {
+  background: #F83B2F;
+  color: #ffffff;
+  border: none;
+  border-radius: 12px;
+  padding: 8px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  height: 38px;
+
+  &:hover {
+    opacity: 0.9;
   }
 }
