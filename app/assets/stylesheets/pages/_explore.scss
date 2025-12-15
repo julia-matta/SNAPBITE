@@ -1,4 +1,18 @@
-/* pages/_explore.scss — substitua tudo por este conteúdo */
+/* ================= EXPLORE PAGE ================= */
+
+.explore-page {
+  padding-top: 20px;
+  padding-bottom: 40px;
+}
+
+/* 🔑 CONTAINER ÚNICO (alinha tudo: títulos, filtros e cards) */
+.explore-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* ================= RESULTADOS ================= */
 
 .explore-results {
   display: flex;
@@ -6,58 +20,56 @@
   justify-content: center;
   gap: 32px;
   margin-top: 24px;
-  padding-bottom: 40px;
-
-  max-width: 1800px;
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: 20px;
-  padding-right: 20px;
 }
 
-/* CARD PRINCIPAL */
+/* ================= CARD ================= */
+
 .explore-card {
   background: #ffffff;
   border-radius: 20px;
-  width: calc((100% - (3 * 32px)) / 4); /* 4 cards por linha com gap 32 */
-  max-width: none;         /* remove o limite antigo */
+  width: calc((100% - (3 * 32px)) / 4);
   overflow: hidden;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
   transition: transform 0.2s ease;
+
+
+  display: flex;
+  flex-direction: column;
+  min-height: 420px;
 
   &:hover {
     transform: translateY(-6px);
   }
 }
 
+/* ================= IMAGEM ================= */
 
-/* FOTO SUPERIOR – padronizada para todas as imagens */
 .explore-card-image {
   width: 100%;
-  height: 220px; /* ajuste aqui se quiser a altura do Macaréu (ex: 240px) */
+  height: 220px;
   overflow: hidden;
-  border-top-left-radius: 20px;
-  border-top-right-radius: 20px;
-  flex-shrink: 0; /* garante que a imagem não encolha */
+  border-radius: 20px 20px 0 0;
 
-  /* estiliza a tag img com class card-photo */
   img.card-photo {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* corte profissional sem distorcer */
+    object-fit: cover;
     display: block;
   }
 }
 
-/* CONTEÚDO DO CARD */
+/* ================= CONTEÚDO ================= */
+
 .explore-card-content {
   padding: 16px 18px;
   display: flex;
   flex-direction: column;
-  flex-grow: 1; /* faz o conteúdo preencher verticalmente */
+  flex: 1; /* 🔥 ESSENCIAL */
 }
 
-/* NOME */
+
+/* ================= TEXTOS ================= */
+
 .restaurant-name {
   font-size: 20px;
   font-weight: 700;
@@ -65,21 +77,20 @@
   color: #222;
 }
 
-/* PREÇO */
 .restaurant-price {
   font-size: 14px;
   color: #444;
   margin-bottom: 4px;
 }
 
-/* CATEGORIA */
 .restaurant-category {
   font-size: 14px;
   color: #666;
   margin-bottom: 12px;
 }
 
-/* CHECK-INS + COMENTÁRIOS */
+/* ================= STATS ================= */
+
 .restaurant-stats {
   display: flex;
   justify-content: space-between;
@@ -94,26 +105,26 @@
   color: #555;
 
   i {
-    color: #F83B2F; /* ícone vermelho */
+    color: #F83B2F;
   }
 }
 
-/* BOTÃO DE CHECK-IN */
+/* ================= AÇÕES ================= */
+
 .explore-card-actions {
-  margin-top: 14px;
+  margin-top: auto; /* 🔥 ISSO resolve 90% dos casos */
 }
 
 .btn-checkin {
   width: 100%;
   background: #F83B2F;
-  color: white;
+  color: #ffffff;
   padding: 9px 0;
   border-radius: 12px;
   font-size: 14px;
   font-weight: 600;
   border: none;
   text-decoration: none;
-  display: inline-block;
   text-align: center;
   cursor: pointer;
   transition: opacity 0.2s ease;
@@ -123,7 +134,22 @@
   }
 }
 
-.explore-page {
-  padding-top: 20px;
-  padding-bottom: 40px;
+/* ================= RESPONSIVO ================= */
+
+@media (max-width: 1200px) {
+  .explore-card {
+    width: calc((100% - (2 * 32px)) / 3);
+  }
+}
+
+@media (max-width: 992px) {
+  .explore-card {
+    width: calc((100% - 32px) / 2);
+  }
+}
+
+@media (max-width: 576px) {
+  .explore-card {
+    width: 100%;
+  }
 }

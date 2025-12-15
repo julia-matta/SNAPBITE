@@ -2,7 +2,7 @@
   <div class="container-fluid">
 
     <% if devise_page? %>
-      <!-- 🔒 NAVBAR SOMENTE LOGIN / CADASTRO -->
+      <!-- 🔒 NAVBAR LOGIN / CADASTRO -->
       <div class="mx-auto d-flex align-items-center justify-content-center">
         <%= image_tag "mini.png",
               class: "auth-navbar-icon",
@@ -11,12 +11,7 @@
 
     <% else %>
 
-      <!-- 🌍 NAVBAR NORMAL DO SITE -->
-
-      <!-- Logo -->
-      <%= link_to root_path, class: "navbar-brand" do %>
-        <%= image_tag "SnapBite.png", height: 32 %>
-      <% end %>
+      <!-- 🌍 NAVBAR NORMAL (SEM LOGO) -->
 
       <!-- Botão mobile -->
       <button class="navbar-toggler"
