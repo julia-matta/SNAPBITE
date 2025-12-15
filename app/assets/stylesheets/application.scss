@@ -11,13 +11,13 @@
 @import "pages/index";
 @import "components/categories";
 @import "components/buttons";
-@import "pages/explore"; 
+@import "pages/explore";
+@import "pages/profile";
 
 
 
-/* ===================== SNAPBITE UI SYSTEM ===================== */
 
-/* 🎨 Design Tokens */
+/* Design Tokens */
 :root {
   --sb-red: #F83B2F;
   --sb-dark-gray: #3A3A3C;
@@ -25,7 +25,6 @@
   --sb-hover-blue: #05627A;
 }
 
-/* ===================== TIPOGRAFIA ===================== */
 
 body {
   font-family: "Outfit", sans-serif !important;
@@ -53,7 +52,7 @@ p, .btn, .form-label, .form-control, .nav-link {
   p, .btn, .nav-link { font-size: 0.9rem; }
 }
 
-/* ===================== BOTÕES ===================== */
+/*  BOTÕES  */
 
 .btn {
   border-radius: 12px !important;
@@ -63,6 +62,14 @@ p, .btn, .form-label, .form-control, .nav-link {
 
 .btn-outline-secondary {
   border-width: 2px;
+}
+
+.preview-thumb {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 12px;
+  display: block;
 }
 
 /* Botões ativos SnapBite */
@@ -91,6 +98,12 @@ p, .btn, .form-label, .form-control, .nav-link {
 
 }
 
+.checkin-btn.checkin-active {
+  background-color: #F83B2F;
+  border-color: #F83B2F;
+  color: #fff;
+}
+
 .publish-btn {
   background-color: var(--sb-red) !important;
   border-color: var(--sb-red) !important;
@@ -113,7 +126,7 @@ p, .btn, .form-label, .form-control, .nav-link {
   color: #666 !important;
 }
 
-/* ===================== STARS ===================== */
+/*  STARS  */
 
 .rating-stars i {
   font-size: 1.35rem;
@@ -128,14 +141,14 @@ p, .btn, .form-label, .form-control, .nav-link {
   color: var(--sb-red) !important;
 }
 
-/* ===================== CARDS ===================== */
+/*  CARDS  */
 
 /* Create Post Card */
 .create-post-card {
-  border-radius: 28px !important; /* Mais arredondado */
+  border-radius: 28px !important; 
   background-color: #ffffff !important;
   border: 1px solid #e5e7eb;
-  overflow: hidden; /* Arredonda conteúdo interno */
+  overflow: hidden;
 }
 
 .menu-time-btn.active {
@@ -150,7 +163,7 @@ p, .btn, .form-label, .form-control, .nav-link {
 
 
 
-/* ===================== SNAPBITE INPUTS ===================== */
+/*  SNAPBITE INPUTS  */
 
 .upload-box {
   width: 100%;

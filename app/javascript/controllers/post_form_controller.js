@@ -1,100 +1,112 @@
-import { Controller } from "@hotwired/stimulus";
+// app/javascript/controllers/post_form_controller.js
+import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
   static targets = [
-    "photoInput", "previewContainer",
-    "checkInButton", "checkInField",
-    "courseButtons", "courseField",
-    "reviewSection", "ratingsField"
-  ];
+    "photoInput",
+    "previewContainer",
+    "courseField",
+    "checkInField",
+    "checkInButton",
+    "reviewSwitch",
+    "reviewSection",
+    "ratingField"
+  ]
 
   previewPhotos(event) {
-    const files = Array.from(event.target.files);
-    if (files.length > 6) {
-      alert("Máximo 6 imagens!");
-      this.photoInputTarget.value = "";
-      return;
-    }
+    const files = event.target.files
+    this.previewContainerTarget.innerHTML = ""
 
-    this.previewContainerTarget.innerHTML = "";
-    files.forEach(file => {
-      const img = document.createElement("img");
-      img.src = URL.createObjectURL(file);
-      img.classList.add("rounded", "shadow-sm", "object-fit-cover");
-      img.style.width = "80px";
-      img.style.height = "80px";
-      this.previewContainerTarget.appendChild(img);
-    });
+    Array.from(files).forEach((file) => {
+      const reader = new FileReader()
+      reader.onload = (e) => {
+        const img = document.createElement("img")
+        img.src = e.target.result
+        img.classList.add("preview-thumb") // miniatura
+        this.previewContainerTarget.appendChild(img)
+      }
+      reader.readAsDataURL(file)
+    })
   }
 
-    toggleCheckIn() {
-    const current = this.checkInFieldTarget.value === "true";
-    this.checkInFieldTarget.value = (!current).toString();
+  selectCourse(event) {
+    event.preventDefault()
+    const button = event.currentTarget
+    const value = button.dataset.value
 
-    this.checkInButtonTarget.classList.toggle("btn-outline-secondary", current);
-    this.checkInButtonTarget.classList.toggle("btn-danger", !current);
+    this.courseFieldTarget.value = value
 
-    if (!current) {
-      this.checkInButtonTarget.style.backgroundColor = "#F83B2F";
-      this.checkInButtonTarget.style.color = "#FBFBF1";
+    const buttons = button.parentElement.querySelectorAll(".menu-time-btn")
+    buttons.forEach((b) => b.classList.remove("active"))
+    button.classList.add("active")
+  }
+
+  toggleCheckIn(event) {
+  event.preventDefault()
+  const current = this.checkInFieldTarget.value === "true"
+  const next = !current
+
+  this.checkInFieldTarget.value = next
+
+  // adiciona/remove apenas a classe de estado ativo
+  this.checkInButtonTarget.classList.toggle("checkin-active", next)
+}
+
+  toggleReview(event) {
+    const checked = event.currentTarget.checked
+
+    if (checked) {
+      this.reviewSectionTarget.classList.remove("d-none")
     } else {
-      this.checkInButtonTarget.style.backgroundColor = "";
-      this.checkInButtonTarget.style.color = "";
+      this.reviewSectionTarget.classList.add("d-none")
+
+      // não manda 0, manda vazio (some o rating)
+      this.ratingFieldTarget.value = ""
+
+      this.element.querySelectorAll(".star-rating i").forEach((star) => {
+        star.classList.remove("fas")
+        star.classList.add("far")
+      })
     }
   }
-
-selectCourse(event) {
-  const button = event.currentTarget;
-  const value = button.dataset.value;
-  const field = this.courseFieldTarget;
-
-  // Alterna seleção visual
-  button.classList.toggle("active");
-
-  // Atualiza lista
-  let selected = Array.from(
-    this.element.querySelectorAll(".menu-time-btn.active")
-  ).map(btn => btn.dataset.value);
-
-  // Salva array no hidden field
-  field.value = JSON.stringify(selected);
-}
-
- toggleReview(event) {
-  const visible = event.target.checked;
-
-  this.reviewSectionTarget.classList.toggle("d-none", !visible);
-
-  if (!visible) {
-    this.ratingsFieldTarget.value = "";
-  } else {
-    // Reativa o clique das estrelas quando a seção aparece
-    this.reviewSectionTarget.querySelectorAll("i").forEach(star => {
-      star.addEventListener("click", (e) => this.rate(e));
-    });
-  }
-}
 
   rate(event) {
-  const value = parseInt(event.target.dataset.value);
-  const container = event.target.closest(".rating-stars");
-  const field = container.dataset.field;
+    event.preventDefault()
+    const clickedStar = event.currentTarget
+    const value = parseInt(clickedStar.dataset.value, 10)
 
-  // Atualiza JSON de ratings
-  let ratings = JSON.parse(this.courseFieldTarget.value || "{}");
-  ratings[field] = value;
-  this.courseFieldTarget.value = JSON.stringify(ratings);
+    const group = clickedStar.closest(".star-rating")
 
-  // Re-renderiza o estado visual das estrelas
-  container.querySelectorAll("i").forEach(star => {
-    const starValue = parseInt(star.dataset.value);
-    if (starValue <= value) {
-      star.classList.remove("far");
-      star.classList.add("fas");
-    } else {
-      star.classList.remove("fas");
-      star.classList.add("far");
-    }
-  });
-}
+    group.querySelectorAll("i").forEach((star) => {
+      const starValue = parseInt(star.dataset.value, 10)
+      if (starValue <= value) {
+        star.classList.remove("far")
+        star.classList.add("fas")
+      } else {
+        star.classList.remove("fas")
+        star.classList.add("far")
+      }
+    })
+
+    let total = 0
+    let count = 0
+
+    this.element.querySelectorAll(".star-rating").forEach((starGroup) => {
+      let groupScore = 0
+
+      starGroup.querySelectorAll("i").forEach((star) => {
+        if (star.classList.contains("fas")) {
+          groupScore = parseInt(star.dataset.value, 10)
+        }
+      })
+
+      if (groupScore > 0) {
+        total += groupScore
+        count += 1
+      }
+    })
+
+    const avg = count > 0 ? Math.round(total / count) : 0
+    this.ratingFieldTarget.value = avg
+  }
 }

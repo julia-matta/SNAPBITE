@@ -7,6 +7,8 @@ class User < ApplicationRecord
 
   has_one_attached :profile_picture
 
+  has_many :posts, dependent: :destroy
+
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
@@ -14,6 +16,8 @@ class User < ApplicationRecord
 
   validates :role, inclusion: { in: ROLES }, allow_nil: true
   validates :username, presence: true, on: :update
+
+  has_many :comments, dependent: :destroy
 
   def customer?
     role == "customer"

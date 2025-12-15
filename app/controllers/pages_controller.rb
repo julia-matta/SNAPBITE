@@ -59,11 +59,24 @@
   end
 end
 
+def timeline
+  ids = current_user.friends.pluck(:id)
+  ids << current_user.id
 
-  def profile
-    @user = current_user
-    @ratings_by_category = @user.ratings.includes(:restaurant)
-                                .group_by { |r| r.restaurant.category }
+  @posts = Post
+             .where(user_id: ids)
+             .includes(:user, :restaurant, photos_attachments: :blob)
+             .order(created_at: :desc)
+end
 
-  end
+def profile
+  @user = current_user
+  @ratings_by_category = @user.ratings
+                              .includes(:restaurant)
+                              .group_by { |r| r.restaurant.category }
+  @posts = @user.posts
+                .includes(:restaurant, photos_attachments: :blob)
+                .order(created_at: :desc)
+end
+
 end

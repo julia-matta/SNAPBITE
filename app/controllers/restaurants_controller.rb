@@ -23,6 +23,12 @@ class RestaurantsController < ApplicationController
     authorize @restaurant
 
     if @restaurant.save
+      Post.create!(
+        user: current_user,
+        restaurant: @restaurant,
+        caption: "Novo restaurante cadastrado: #{@restaurant.name}"
+      )
+
       redirect_to @restaurant, notice: "Restaurante criado com sucesso."
     else
       render :new, status: :unprocessable_entity

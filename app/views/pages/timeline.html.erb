@@ -1,38 +1,169 @@
-<h2>Timeline</h2>
+<div class="timeline-page">
+  <h2 class="timeline-title">Timeline</h2>
+  <p class="timeline-subtitle">Publicações para você!!</p>
 
-<% @ratings.each do |rating| %>
-  <div class="card mb-3">
-    <div class="card-body">
-      <p><strong><%= rating.user.username || rating.user.email %></strong> avaliou</p>
-      <p>
-        <strong><%= rating.restaurant.name %></strong>
-        (<%= rating.restaurant.category %>)
-      </p>
+  <% if @posts.blank? %>
+    <p class="timeline-empty">Ainda não há publicações na sua timeline.</p>
+  <% end %>
 
-      <p><strong>Score geral:</strong> <%= rating.score %>/5</p>
+  <div class="timeline-list">
+    <% @posts.each do |post| %>
+      <% user = post.user %>
+      <% restaurant = post.restaurant %>
 
-      <% if rating.recommended == true %>
-        <p>✅ Recomendo</p>
-      <% elsif rating.recommended == false %>
-        <p>❌ Não recomendo</p>
-      <% end %>
+      <div class="feed-card">
+        <!-- HEADER: avatar + nome + legenda + pill + lixeira -->
+        <div class="feed-card-header">
+          <div class="feed-user">
+            <% avatar =
+              if user.profile_picture.attached?
+                url_for(user.profile_picture)
+              else
+                asset_path("placeholder_profile.png")
+              end %>
 
-      <% if rating.comment.present? %>
-        <p><strong>Comentário:</strong> <%= rating.comment %></p>
-      <% end %>
+            <%= image_tag avatar, class: "feed-avatar" %>
 
-      <% if rating.enviroment.present? || rating.service.present? || rating.food_text.present? || rating.price.present? %>
-        <ul>
-          <% if rating.enviroment.present? %><li>Ambiente: <%= rating.enviroment %>/5</li><% end %>
-          <% if rating.service.present? %><li>Serviço: <%= rating.service %>/5</li><% end %>
-          <% if rating.food_text.present? %><li>Sabor da comida: <%= rating.food_text %></li><% end %>
-          <% if rating.price.present? %><li>Preço (custo-benefício): <%= rating.price %>/5</li><% end %>
-        </ul>
-      <% end %>
+            <div class="feed-user-text">
+              <span class="feed-user-name"><%= user.username || user.email %></span>
+              <% if post.caption.present? %>
+                <span class="feed-user-caption"><%= post.caption %></span>
+              <% end %>
+            </div>
+          </div>
 
-      <% if rating.user == current_user %>
-        <%= link_to "Excluir", rating_path(rating), data: { turbo_method: :delete, turbo_confirm: "Tem certeza?" }, class: "btn btn-sm btn-outline-danger" %>
-      <% end %>
-    </div>
+          <div class="feed-right">
+            <% if post.course.present? %>
+              <span class="feed-pill">
+                <%= post.course.to_s.tr('[]"', '').capitalize %>
+              </span>
+            <% end %>
+
+            <% if post.user == current_user %>
+              <%= button_to post_path(post),
+                    method: :delete,
+                    data: { confirm: "Tem certeza que deseja excluir esta publicação?" },
+                    class: "feed-delete-btn" do %>
+                <i class="fas fa-trash"></i>
+              <% end %>
+            <% end %>
+          </div>
+        </div>
+
+        <!-- FOTOS -->
+        <div class="feed-photos">
+          <% if post.photos.attached? %>
+            <% post.photos.first(2).each do |photo| %>
+              <a href="#"
+                 data-bs-toggle="modal"
+                 data-bs-target="#postPhotosModal-<%= post.id %>">
+                <%= image_tag photo, class: "feed-photo" %>
+              </a>
+            <% end %>
+          <% elsif restaurant&.image_name.present? %>
+            <a href="#"
+               data-bs-toggle="modal"
+               data-bs-target="#postPhotosModal-<%= post.id %>">
+              <%= image_tag restaurant.image_name, class: "feed-photo single" %>
+            </a>
+          <% end %>
+        </div>
+
+        <!-- RESTAURANTE + ESTRELAS -->
+        <% if restaurant %>
+          <div class="feed-restaurant">
+            <div>
+              <h4 class="restaurant-name"><%= restaurant.name %></h4>
+              <p class="restaurant-meta">
+                <%= restaurant.category %>
+              </p>
+            </div>
+
+            <% if post.rating.present? %>
+              <div class="feed-stars">
+                <% 5.times do |i| %>
+                  <% if i < post.rating.to_i %>
+                    <i class="fas fa-star"></i>
+                  <% else %>
+                    <i class="far fa-star"></i>
+                  <% end %>
+                <% end %>
+              </div>
+            <% end %>
+          </div>
+        <% end %>
+
+        <!-- FOOTER: Recomendo / Não recomendo + comentários -->
+        <% rating_value = post.rating %>
+        <% recommended =
+             if rating_value.nil?
+               true            # sem nota => trata como "Recomendo!"
+             else
+               rating_value >= 4
+             end %>
+
+        <div class="feed-footer">
+          <button
+            type="button"
+            class="btn-recommend <%= recommended ? 'btn-recommend--positive' : 'btn-recommend--negative' %>">
+            <% if recommended %>
+              <i class="far fa-thumbs-up"></i>
+              <span>Recomendo!</span>
+            <% else %>
+              <i class="far fa-thumbs-down"></i>
+              <span>Não recomendo</span>
+            <% end %>
+          </button>
+
+          <button
+            class="feed-comments-toggle"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#comments-<%= post.id %>">
+            <i class="far fa-comment"></i>
+            <span><%= post.comments.count %></span>
+          </button>
+        </div>
+
+        <!-- LISTA + FORM DE COMENTÁRIOS -->
+        <div class="collapse mt-2" id="comments-<%= post.id %>">
+          <div class="comments-list">
+            <% post.comments.each do |comment| %>
+              <p class="comment-item">
+                <strong><%= comment.user.username || comment.user.email %>:</strong>
+                <%= comment.content %>
+              </p>
+            <% end %>
+          </div>
+
+          <%= form_with(model: [post, Comment.new], local: true) do |f| %>
+            <div class="input-group mt-2">
+              <%= f.text_field :content,
+                    class: "form-control",
+                    placeholder: "Escreva um comentário..." %>
+              <button class="btn btn-outline-secondary" type="submit">Enviar</button>
+            </div>
+          <% end %>
+        </div>
+      </div>
+
+      <!-- FOTOS EM TELA MAIOR -->
+      <div class="modal fade" id="postPhotosModal-<%= post.id %>" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+          <div class="modal-content">
+            <div class="modal-body p-0">
+              <% if post.photos.attached? %>
+                <% post.photos.each do |photo| %>
+                  <%= image_tag photo, class: "w-100 d-block modal-photo" %>
+                <% end %>
+              <% elsif restaurant&.image_name.present? %>
+                <%= image_tag restaurant.image_name, class: "w-100 d-block modal-photo" %>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    <% end %>
   </div>
-<% end %>
+</div>

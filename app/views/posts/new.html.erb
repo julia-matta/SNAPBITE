@@ -18,10 +18,15 @@
       <label class="upload-box d-flex flex-column justify-content-center align-items-center gap-2">
         <i class="fas fa-camera fa-lg text-muted"></i>
         <span class="text-muted small">Clique ou arraste arquivos</span>
-        <input data-post-form-target="photoInput" type="file"
-              name="post[photos][]" multiple accept="image/*"
-              class="d-none"
-              data-action="change->post-form#previewPhotos">
+      <%= f.file_field :photos,
+            multiple: true,
+            accept: "image/*",
+            class: "d-none",
+            data: {
+              post_form_target: "photoInput",
+              action: "change->post-form#previewPhotos"
+            } %>
+
       </label>
 
       <small class="text-muted">Máximo: 6 imagens</small>
@@ -55,7 +60,6 @@
           </div>
         </div>
 
-        <!-- Curso -->
         <div class="mb-3">
           <label class="form-label fw-semibold text-dark">Tempo do Menu</label>
           <div class="d-flex gap-2 flex-wrap" data-post-form-target="courseButtons">
@@ -76,7 +80,7 @@
           <%= f.label :caption, "Legenda", class: "form-label fw-semibold text-dark" %>
           <%= f.text_area :caption, rows: 3,
                 class: "form-control rounded-3 text-dark",
-                placeholder: "Conte sobre sua experiência..." %>
+                placeholder: "Conte sobre..." %>
         </div>
 
         <!-- Avaliação -->
@@ -106,10 +110,16 @@
                 </div>
               </div>
             <% end %>
-          </div>
-        </div>
+             <!-- NOVO: nota média geral da avaliação -->
+            <%= f.hidden_field :rating,
+            data: { post_form_target: "ratingField" } %>
+            </div>
 
-        <%= f.hidden_field :course, multiple: true, name: "post[course][]" , data: { post_form_target: "courseField" } %>
+
+          </div>
+        <%# </div> %>
+
+        <%# <%= f.hidden_field :course, multiple: true, name: "post[course][]" , data: { post_form_target: "courseField" } %> %>
 
         <%= f.submit "PUBLICAR",
             class: "btn w-100 py-2 fw-semibold mt-3 publish-btn" %>

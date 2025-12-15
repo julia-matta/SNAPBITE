@@ -1,6 +1,77 @@
 .card-profile {
   border-radius: 28px !important; /* Mais arredondado */
-  background-color: #bd0e0e !important;
   border: 1px solid #6f90d3;
   overflow: hidden; /* Arredonda conteúdo interno */
+}
+
+.profile-posts-title {
+  margin: 40px 0 16px;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.profile-posts-section {
+  max-width: 900px;
+  margin: 0 auto 40px;
+}
+
+.profile-post-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  background: #f9f9f9;
+  border-radius: 18px;
+  padding: 12px 20px;
+  margin-bottom: 12px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.03);
+}
+
+.profile-post-main {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  min-width: 0;
+}
+
+.profile-post-thumb {
+  width: 90px;
+  height: 90px;
+  border-radius: 18px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.profile-post-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.profile-post-restaurant {
+  font-size: 15px;
+}
+
+.profile-post-caption {
+  margin: 0;
+  font-size: 14px;
+  color: #555;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.profile-post-actions {
+  flex-shrink: 0;
+}
+
+.profile-post-delete {
+  border: none;
+  background: transparent;
+  color: #d9534f;
+  font-size: 13px;
+  text-decoration: underline;
+  padding: 4px 8px;
+  cursor: pointer;
 }
