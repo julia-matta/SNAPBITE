@@ -1,26 +1,24 @@
 class PagesController < ApplicationController
   skip_before_action :authenticate_user!, only: [:home]
 
-  # ================= HOME =================
+  #  HOME
   def home
     redirect_to timeline_path and return if user_signed_in?
   end
 
-  # ================= TIMELINE =================
+  #  TIMELINE
   def timeline
-    if current_user.friends.any?
-      friend_ids = current_user.friends.pluck(:id)
-      @ratings = Rating.where(user_id: friend_ids)
-                       .order(created_at: :desc)
-                       .includes(:user, :restaurant)
-    else
-      @ratings = Rating.none
-    end
+    ids = current_user.friends.pluck(:id)
+    ids << current_user.id
+
+    @posts = Post
+               .where(user_id: ids)
+               .includes(:user, :restaurant, photos_attachments: :blob)
+               .order(created_at: :desc)
   end
 
-  # ================= EXPLORE =================
+  #  EXPLORE
   def explore
-    # 🔹 opções do filtro de preço (view)
     @price_options = [
       ["Sem limite", ""],
       ["Até R$ 50", 50],
@@ -31,7 +29,6 @@ class PagesController < ApplicationController
 
     @restaurants = Restaurant.all
 
-    # 🔍 Busca por texto
     if params[:query].present?
       @restaurants = @restaurants.where(
         "restaurants.name ILIKE :q
@@ -41,12 +38,10 @@ class PagesController < ApplicationController
       )
     end
 
-    # 🍽️ Categoria
     if params[:category].present?
       @restaurants = @restaurants.where(category: params[:category])
     end
 
-    # 💰 Preço médio (CORREÇÃO CRÍTICA)
     if params[:max_price].present? && params[:max_price].to_i.positive?
       @restaurants = @restaurants.where(
         "average_price <= ?",
@@ -54,26 +49,17 @@ class PagesController < ApplicationController
       )
     end
   end
-end
 
-def timeline
-  ids = current_user.friends.pluck(:id)
-  ids << current_user.id
+  #  PROFILE
+  def profile
+    @user = current_user
 
-  @posts = Post
-             .where(user_id: ids)
-             .includes(:user, :restaurant, photos_attachments: :blob)
-             .order(created_at: :desc)
-end
+    @ratings_by_category = @user.ratings
+                                .includes(:restaurant)
+                                .group_by { |r| r.restaurant.category }
 
-def profile
-  @user = current_user
-  @ratings_by_category = @user.ratings
-                              .includes(:restaurant)
-                              .group_by { |r| r.restaurant.category }
-  @posts = @user.posts
-                .includes(:restaurant, photos_attachments: :blob)
-                .order(created_at: :desc)
-end
-
+    @posts = @user.posts
+                  .includes(:restaurant, photos_attachments: :blob)
+                  .order(created_at: :desc)
+  end
 end
