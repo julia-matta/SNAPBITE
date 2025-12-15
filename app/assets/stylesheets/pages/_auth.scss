@@ -1,0 +1,90 @@
+/* === PÁGINA DE AUTENTICAÇÃO === */
+.auth-page {
+  min-height: 100svh;
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  position: relative;
+
+  background-image: image-url("fundo.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  .container-fluid {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+  }
+}
+
+/* === CARD === */
+.auth-card {
+  width: 100%;
+  max-width: 500px; // 🔽 diminui a largura (ajuste aqui)
+  margin: 0 auto;
+
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 32px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+
+  h2 {
+    font-weight: 700;
+    color: var(--sb-dark-gray);
+  }
+
+  .form-control {
+    border-radius: 10px;
+    padding: 10px 14px;
+  }
+
+  .btn-primary {
+    background-color: $sb-red !important;
+    border: none;
+
+    &:hover {
+      background-color: darken($sb-red, 8%);
+    }
+
+    &:focus,
+    &:active,
+    &:focus-visible {
+      box-shadow: none;
+      outline: none;
+    }
+  }
+}
+
+
+/* === ROLE SELECTOR === */
+.role-selector {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  text-align: center;
+
+  > label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    width: 100%;
+  }
+
+  .form-check-label {
+    font-weight: 500;
+    cursor: pointer;
+  }
+}
+
+/* === LINK === */
+.auth-link a {
+  color: $sb-red;
+  font-weight: 500;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}

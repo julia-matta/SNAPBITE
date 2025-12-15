@@ -1,6 +1,12 @@
-<h2>Entrar</h2>
+<div class="auth-page">
+  <div class="container-fluid">
+    <div class="row justify-content-center">
+      <div class="col-12 col-md-8 col-lg-5">
+        <div class="auth-card">
 
-<%= simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+          <h2 class="text-center mb-4">Entrar</h2>
+
+  <%= simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
   <%= f.input :email, required: true, autofocus: true %>
   <%= f.input :password, required: true %>
   <%= f.input :remember_me, as: :boolean if devise_mapping.rememberable? %>
@@ -16,3 +22,8 @@
 <p>
   <%= link_to "Esqueci minha senha", new_user_password_path %>
 </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> 

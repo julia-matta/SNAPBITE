@@ -7,6 +7,12 @@ class ApplicationController < ActionController::Base
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
   private
 
+
+  #MÉTODO DEVOLVER PARA PÁGINA DE LOGIN APÓS LOGOUT
+  def after_sign_out_path_for(resource_or_scope)
+    new_user_session_path
+  end
+
   def user_not_authorized
     flash[:alert] = "Você não tem permissão para fazer isso."
     redirect_to(request.referer || root_path)
