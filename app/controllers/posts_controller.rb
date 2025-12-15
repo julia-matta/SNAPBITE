@@ -18,11 +18,22 @@ class PostsController < ApplicationController
     end
   end
 
+  def destroy
+    @post = Post.find(params[:id])
+
+    if @post.user == current_user
+      @post.destroy
+      redirect_back fallback_location: timeline_path, notice: "Publicação apagada."
+    else
+      redirect_back fallback_location: timeline_path, alert: "Você não pode apagar esta publicação."
+    end
+  end
+
   private
 
   def post_params
     params.require(:post).permit(
-      :caption, :course, :restaurant_id, :check_in,
+      :caption, :course, :restaurant_id, :check_in,:rating,
       photos: []
     )
   end

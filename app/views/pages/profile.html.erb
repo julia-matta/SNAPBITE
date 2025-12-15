@@ -50,7 +50,8 @@
   </div>
 </div>
 
-<h3>Minhas avaliações por categoria</h3>
+
+<%# <h3>Minhas avaliações por categoria</h3> %>
 
 <% @ratings_by_category.each do |category, ratings| %>
   <h4><%= category %></h4>
@@ -72,3 +73,37 @@
     </div>
   <% end %>
 <% end %>
+
+<!-- TESTANDO AQUI -->
+<h3 class="profile-posts-title">Minhas publicações</h3>
+
+<div class="profile-posts-section">
+  <% @posts.each do |post| %>
+    <div class="profile-post-row">
+      <div class="profile-post-main">
+        <% if post.photos.attached? %>
+          <%= image_tag post.photos.first, class: "profile-post-thumb" %>
+        <% elsif post.restaurant&.image_name.present? %>
+          <%= image_tag post.restaurant.image_name, class: "profile-post-thumb" %>
+        <% end %>
+
+        <div class="profile-post-text">
+          <strong class="profile-post-restaurant">
+            <%= post.restaurant&.name || "Sem restaurante" %>
+          </strong>
+          <p class="profile-post-caption"><%= post.caption %></p>
+        </div>
+      </div>
+
+      <% if post.user == current_user %>
+        <div class="profile-post-actions">
+          <%= button_to "Excluir",
+                post_path(post),
+                method: :delete,
+                data: { confirm: "Tem certeza que deseja excluir esta publicação?" },
+                class: "profile-post-delete" %>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+</div>
