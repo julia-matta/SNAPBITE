@@ -32,13 +32,13 @@ class UsersController < ApplicationController
 
   def edit; end
 
-  def update
-    if @user.update(user_params)
-      redirect_to profile_path, notice: "Perfil atualizado com sucesso."
-    else
-      render :edit, status: :unprocessable_entity
-    end
+def update
+  if @user.update(user_params)
+    redirect_to user_path(@user), notice: "Perfil atualizado."
+  else
+    render :edit, status: :unprocessable_entity
   end
+end
 
   private
 

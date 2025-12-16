@@ -12,19 +12,82 @@ export default class extends Controller {
     "courseInputs"
   ]
 
+  connect() {
+    this.selectedFiles = []
+  }
+
   previewPhotos(event) {
-    const files = event.target.files
+    const incoming = Array.from(event.target.files || [])
+    const merged = [...this.selectedFiles, ...incoming]
+
+    const seen = new Set()
+    const unique = []
+    merged.forEach((file) => {
+      const key = `${file.name}-${file.size}-${file.lastModified}`
+      if (!seen.has(key)) {
+        seen.add(key)
+        unique.push(file)
+      }
+    })
+
+    this.selectedFiles = unique.slice(0, 6)
+    this.syncInputFiles()
+    this.renderPreviews()
+    this.photoInputTarget.value = ""
+  }
+
+  removePhoto(index) {
+    this.selectedFiles.splice(index, 1)
+    this.syncInputFiles()
+    this.renderPreviews()
+  }
+
+  syncInputFiles() {
+    const dt = new DataTransfer()
+    this.selectedFiles.forEach((file) => dt.items.add(file))
+    this.photoInputTarget.files = dt.files
+  }
+
+  renderPreviews() {
     this.previewContainerTarget.innerHTML = ""
 
-    Array.from(files).forEach((file) => {
+    this.selectedFiles.forEach((file, index) => {
+      const wrapper = document.createElement("div")
+      wrapper.style.position = "relative"
+      wrapper.style.display = "inline-block"
+
+      const btn = document.createElement("button")
+      btn.type = "button"
+      btn.textContent = "×"
+      btn.setAttribute("aria-label", "Remover foto")
+      btn.style.position = "absolute"
+      btn.style.top = "4px"
+      btn.style.right = "4px"
+      btn.style.width = "28px"
+      btn.style.height = "28px"
+      btn.style.borderRadius = "999px"
+      btn.style.border = "0"
+      btn.style.cursor = "pointer"
+      btn.style.fontSize = "18px"
+      btn.style.lineHeight = "28px"
+      btn.style.padding = "0"
+      btn.addEventListener("click", (e) => {
+        e.preventDefault()
+        this.removePhoto(index)
+      })
+
+      const img = document.createElement("img")
+      img.classList.add("preview-thumb")
+
       const reader = new FileReader()
       reader.onload = (e) => {
-        const img = document.createElement("img")
         img.src = e.target.result
-        img.classList.add("preview-thumb")
-        this.previewContainerTarget.appendChild(img)
       }
       reader.readAsDataURL(file)
+
+      wrapper.appendChild(img)
+      wrapper.appendChild(btn)
+      this.previewContainerTarget.appendChild(wrapper)
     })
   }
 
