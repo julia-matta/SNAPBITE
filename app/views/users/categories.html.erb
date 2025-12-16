@@ -1,1 +1,32 @@
-<h1>Categorias de <%= @user.username %></h1>
+<h1>Categorias de <%= @user.username.presence || @user.email %></h1>
+
+<% if @ratings_by_category.blank? %>
+  <p class="text-muted">Ainda não há avaliações para mostrar.</p>
+<% else %>
+  <% @ratings_by_category.each do |category, ratings| %>
+    <h3 class="mt-4"><%= category.presence || "Sem categoria" %></h3>
+
+    <% ratings.group_by(&:restaurant).each do |restaurant, restaurant_ratings| %>
+      <div class="card mb-2">
+        <div class="card-body">
+          <h5 class="mb-2">
+            <%= link_to restaurant.name, restaurant_path(restaurant), class: "text-decoration-none" %>
+          </h5>
+
+          <ul class="mb-0">
+            <% restaurant_ratings.each do |rating| %>
+              <li>
+                <% if rating.respond_to?(:score) && rating.score.present? %>
+                  <strong><%= rating.score %>/5</strong>
+                <% end %>
+                <% if rating.respond_to?(:content) && rating.content.present? %>
+                  — <%= rating.content %>
+                <% end %>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+<% end %>

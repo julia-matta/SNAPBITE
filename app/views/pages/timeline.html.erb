@@ -33,9 +33,18 @@
           </div>
 
           <div class="feed-right">
-            <% if post.course.present? %>
+            <% menu_times =
+              if post.respond_to?(:menu_times) && post.menu_times.present?
+                post.menu_times
+              elsif post.course.present?
+                [post.course.to_s.tr('[]"', '')]
+              else
+                []
+              end %>
+
+            <% if menu_times.any? %>
               <span class="feed-pill">
-                <%= post.course.to_s.tr('[]"', '').capitalize %>
+                <%= menu_times.map { |v| v.to_s.capitalize }.join(" • ") %>
               </span>
             <% end %>
 
@@ -69,7 +78,7 @@
           <% end %>
         </div>
 
-        <!-- RESTAURANTE + ESTRELAS -->
+        <!-- RESTAURANTE ESTRELAS -->
         <% if restaurant %>
           <div class="feed-restaurant">
             <div>
@@ -93,11 +102,11 @@
           </div>
         <% end %>
 
-        <!-- FOOTER: Recomendo / Não recomendo + comentários -->
+        <!-- FOOTER -->
         <% rating_value = post.rating %>
         <% recommended =
              if rating_value.nil?
-               true            # sem nota => trata como "Recomendo!"
+               true
              else
                rating_value >= 4
              end %>
@@ -125,7 +134,7 @@
           </button>
         </div>
 
-        <!-- LISTA + FORM DE COMENTÁRIOS -->
+        <!-- LISTA FORM DE COMENTÁRIOS -->
         <div class="collapse mt-2" id="comments-<%= post.id %>">
           <div class="comments-list">
             <% post.comments.each do |comment| %>
@@ -147,7 +156,7 @@
         </div>
       </div>
 
-      <!-- FOTOS EM TELA MAIOR -->
+      <!-- FOTOS -->
       <div class="modal fade" id="postPhotosModal-<%= post.id %>" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
           <div class="modal-content">

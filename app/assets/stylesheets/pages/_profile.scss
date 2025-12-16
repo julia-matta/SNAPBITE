@@ -75,3 +75,24 @@
   padding: 4px 8px;
   cursor: pointer;
 }
+
+.profile-photo-grid {
+  max-width: 900px;
+  margin: 0 auto 40px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 12px;
+}
+
+.profile-photo-link {
+  display: block;
+}
+
+.profile-photo {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 18px;
+  background: #f0f0f0;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.03);
+}

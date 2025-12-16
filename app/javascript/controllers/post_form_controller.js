@@ -1,16 +1,15 @@
-// app/javascript/controllers/post_form_controller.js
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
   static targets = [
     "photoInput",
     "previewContainer",
-    "courseField",
     "checkInField",
     "checkInButton",
     "reviewSwitch",
     "reviewSection",
-    "ratingField"
+    "ratingField",
+    "courseInputs"
   ]
 
   previewPhotos(event) {
@@ -22,35 +21,42 @@ export default class extends Controller {
       reader.onload = (e) => {
         const img = document.createElement("img")
         img.src = e.target.result
-        img.classList.add("preview-thumb") // miniatura
+        img.classList.add("preview-thumb")
         this.previewContainerTarget.appendChild(img)
       }
       reader.readAsDataURL(file)
     })
   }
 
-  selectCourse(event) {
+  toggleCourse(event) {
     event.preventDefault()
     const button = event.currentTarget
     const value = button.dataset.value
 
-    this.courseFieldTarget.value = value
+    button.classList.toggle("active")
 
-    const buttons = button.parentElement.querySelectorAll(".menu-time-btn")
-    buttons.forEach((b) => b.classList.remove("active"))
-    button.classList.add("active")
+    const existing = this.courseInputsTarget.querySelector(`input[data-value="${value}"]`)
+    if (existing) {
+      existing.remove()
+      return
+    }
+
+    const input = document.createElement("input")
+    input.type = "hidden"
+    input.name = "post[menu_times][]"
+    input.value = value
+    input.dataset.value = value
+    this.courseInputsTarget.appendChild(input)
   }
 
   toggleCheckIn(event) {
-  event.preventDefault()
-  const current = this.checkInFieldTarget.value === "true"
-  const next = !current
+    event.preventDefault()
+    const current = this.checkInFieldTarget.value === "true"
+    const next = !current
 
-  this.checkInFieldTarget.value = next
-
-  // adiciona/remove apenas a classe de estado ativo
-  this.checkInButtonTarget.classList.toggle("checkin-active", next)
-}
+    this.checkInFieldTarget.value = next
+    this.checkInButtonTarget.classList.toggle("checkin-active", next)
+  }
 
   toggleReview(event) {
     const checked = event.currentTarget.checked
@@ -59,8 +65,6 @@ export default class extends Controller {
       this.reviewSectionTarget.classList.remove("d-none")
     } else {
       this.reviewSectionTarget.classList.add("d-none")
-
-      // não manda 0, manda vazio (some o rating)
       this.ratingFieldTarget.value = ""
 
       this.element.querySelectorAll(".star-rating i").forEach((star) => {
