@@ -101,10 +101,9 @@
 
             <div class="explore-card-actions">
               <% if user_signed_in? %>
-                <%= button_to "Fazer check-in",
-                      restaurant_checkins_path(restaurant),
-                      method: :post,
-                      class: "btn btn-sm btn-checkin" %>
+                <%= link_to "Avaliar",
+                            new_post_path(restaurant_id: restaurant.id), # <--- MUDANÇA AQUI
+                            class: "btn btn-sm btn-checkin" %>
               <% else %>
                 <%= link_to "Entrar para fazer check-in",
                       new_user_session_path,
