@@ -13,7 +13,7 @@
 @import "components/buttons";
 @import "pages/explore";
 @import "pages/profile";
-
+@import "pages/account_settings";
 
 
 
@@ -145,7 +145,7 @@ p, .btn, .form-label, .form-control, .nav-link {
 
 /* Create Post Card */
 .create-post-card {
-  border-radius: 28px !important; 
+  border-radius: 28px !important;
   background-color: #ffffff !important;
   border: 1px solid #e5e7eb;
   overflow: hidden;

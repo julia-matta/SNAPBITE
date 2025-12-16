@@ -1,0 +1,47 @@
+.account-settings-page {
+  min-height: calc(100vh - 80px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 16px;
+}
+
+.account-settings-card {
+  width: 100%;
+  max-width: 520px;
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 32px 28px;
+
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+}
+
+.account-settings-card .form-group {
+  margin-bottom: 16px;
+}
+
+.account-settings-card .form-control {
+  font-size: 0.9rem;
+  padding: 8px 12px;
+}
+
+.account-settings-card .form-actions {
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.btn-save {
+  background-color: #F83B2F !important;
+  border-color: #F83B2F !important;
+  color: #ffffff !important;
+}
+
+.btn-save:hover,
+.btn-save:focus {
+  background-color: #e0352a !important; // um pouco mais escuro no hover
+  border-color: #e0352a !important;
+  color: #ffffff !important;
+}
