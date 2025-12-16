@@ -1,7 +1,14 @@
 Rails.application.routes.draw do
   devise_for :users
 
-  root to: "pages#home"
+  # Use devise_scope para definir a rota raiz especificamente para o mapeamento 'user'
+  devise_scope :user do
+    root to: "devise/sessions#new"
+  end
+
+  # get "timeline", to: "pages#timeline", as: :user_root
+
+  # root to: "pages#home"
 
   get "timeline", to: "pages#timeline", as: :timeline
   get "explore",  to: "pages#explore",  as: :explore
