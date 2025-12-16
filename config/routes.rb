@@ -11,8 +11,8 @@ Rails.application.routes.draw do
   resources :users, only: %i[show edit update]
 
   resources :restaurants do
-    resources :checkins, only: [:create]   # <<< NOVA ROTA DE CHECK-IN
-    resources :ratings,  only: %i[index]
+    resources :checkins, only: [:create]
+    resources :ratings,  only: [:index]
   end
 
   resources :ratings, only: %i[new create destroy]
@@ -26,5 +26,8 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :posts, only: [:new, :create]
+  resources :posts, only: %i[new create]
+
+  # Recomendações (IA)
+  resources :recommendations, only: [:index]
 end

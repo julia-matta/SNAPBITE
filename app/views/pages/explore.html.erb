@@ -1,7 +1,7 @@
 <div class="explore-page">
 
-  <h1> Explorar restaurantes</h1>
-  <h4> Descubra novos sabores pela cidade </h4>
+  <h1>Explorar restaurantes</h1>
+  <h4>Descubra novos sabores pela cidade</h4>
 
   <%= form_with url: explore_path, method: :get, local: true do %>
     <div class="row mb-3">
@@ -11,7 +11,7 @@
               params[:query],
               class: "form-control",
               placeholder: "Nome, infos, endereço..."
-            %>
+        %>
       </div>
 
       <div class="col">
@@ -28,29 +28,27 @@
         <%= select_tag :max_price,
               options_for_select(price_options, params[:max_price]),
               class: "form-select"
-            %>
+        %>
       </div>
     </div>
 
-    <!-- BOTÃO "Todas" -->
+    <!-- BOTÃO TODAS -->
     <div class="category-buttons mb-3">
       <%= button_tag type: :submit,
-        name: :category,
-        value: "",
-        class: "category-btn #{'active' if params[:category].blank?}" do %>
-         Todas
-       <% end %>
+            name: :category,
+            value: "",
+            class: "category-btn #{'active' if params[:category].blank?}" do %>
+        Todas
+      <% end %>
     </div>
 
-    <!-- CATEGORIAS DINÂMICAS -->
+    <!-- CATEGORIAS -->
     <div class="category-buttons mb-3">
       <% Restaurant::CATEGORIES.each do |cat| %>
-        <% active = params[:category] == cat %>
-
         <%= button_tag type: :submit,
               name: :category,
               value: cat,
-              class: "category-btn #{'active' if active}" do %>
+              class: "category-btn #{'active' if params[:category] == cat}" do %>
           <%= cat %>
         <% end %>
       <% end %>
@@ -59,54 +57,72 @@
     <%= submit_tag "Filtrar", class: "btn-filtrar" %>
   <% end %>
 
-  <!-- RESULTADOS DE RESTAURANTES → CARDS -->
+  <!-- RESULTADOS -->
   <div class="explore-results">
     <% @restaurants.each do |restaurant| %>
       <div class="explore-card">
 
+        <!-- 🤖 BADGE IA (SÓ NOS RECOMENDADOS) -->
+        <% if @recommended_ids&.include?(restaurant.id) %>
+          <span class="ai-badge">
+            🤖 IA recomenda
+          </span>
+        <% end %>
+
         <!-- IMAGEM -->
         <div class="explore-card-image">
-          <%= image_tag restaurant.image_name, alt: restaurant.name, class: "card-photo" %>
+          <% if restaurant.image_name.present? %>
+            <%= image_tag restaurant.image_name,
+                  alt: restaurant.name,
+                  class: "card-photo" %>
+          <% else %>
+            <%= image_tag "placeholder.jpg",
+                  alt: "Restaurante",
+                  class: "card-photo" %>
+          <% end %>
         </div>
 
         <!-- CONTEÚDO -->
         <div class="explore-card-content">
 
-          <!-- NOME -->
           <h3 class="restaurant-name"><%= restaurant.name %></h3>
 
-          <!-- PREÇO MÉDIO -->
           <% if restaurant.average_price.present? %>
-            <p class="restaurant-price">💵 Preço médio: R$ <%= restaurant.average_price %></p>
+            <p class="restaurant-price">
+              💵 Preço médio: R$ <%= restaurant.average_price %>
+            </p>
           <% end %>
 
-          <!-- CATEGORIA -->
-          <p class="restaurant-category">🍽️ <%= restaurant.category %></p>
+          <p class="restaurant-category">
+            🍽️ <%= restaurant.category %>
+          </p>
 
-          <!-- CHECK-INS + COMENTÁRIOS -->
           <div class="restaurant-stats">
             <div class="stat-item">
-              <i class="fas fa-map-marker-alt"></i>
-              <span><%= restaurant.checkins.count %> <%= "check-in".pluralize(restaurant.checkins.count) %></span>
+              📍 <%= restaurant.checkins.count %>
+              <%= "check-in".pluralize(restaurant.checkins.count) %>
             </div>
 
             <div class="stat-item">
-              <i class="fas fa-comment"></i>
-              <span><%= restaurant.ratings.count %> <%= "comentário".pluralize(restaurant.ratings.count) %></span>
+              💬 <%= restaurant.ratings.count %>
+              <%= "comentário".pluralize(restaurant.ratings.count) %>
             </div>
           </div>
 
-          <!-- BOTÃO DE CHECK-IN -->
           <div class="explore-card-actions">
             <% if user_signed_in? %>
-              <%= button_to "Fazer check-in", restaurant_checkins_path(restaurant), method: :post, class: "btn btn-sm btn-checkin" %>
+              <%= button_to "Fazer check-in",
+                    restaurant_checkins_path(restaurant),
+                    method: :post,
+                    class: "btn btn-sm btn-checkin" %>
             <% else %>
-              <%= link_to "Entrar para fazer check-in", new_user_session_path, class: "btn btn-sm btn-checkin" %>
+              <%= link_to "Entrar para fazer check-in",
+                    new_user_session_path,
+                    class: "btn btn-sm btn-checkin" %>
             <% end %>
           </div>
 
         </div>
-
       </div>
     <% end %>
   </div>
