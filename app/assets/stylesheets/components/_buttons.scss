@@ -10,3 +10,19 @@
 .btn-filtrar:hover {
   background-color: #c0bfbe;
 }
+
+.btn {
+  border-radius: 12px !important;
+  padding: 10px 20px !important;
+  font-weight: 600 !important;
+}
+
+.btn-save {
+  background-color: #F83B2F !important;
+  border-color: #F83B2F !important;
+  color: #fff !important;
+}
+
+.btn-save:hover {
+  background-color: #e0352a !important;
+}

@@ -1,84 +1,89 @@
+/* =====================================================
+   PROFILE PAGE – SNAPBITE
+   Compatível com Bootstrap + Le Wagon
+   ===================================================== */
+
+/* ===== CARD DO PERFIL ===== */
+
 .card-profile {
-  border-radius: 28px !important; /* Mais arredondado */
-  border: 1px solid #6f90d3;
-  overflow: hidden; /* Arredonda conteúdo interno */
+  background: #ffffff;
+  border: 1px solid #F83B2F;
+  border-radius: 28px;
+  overflow: hidden;
 }
+
+/* ===== HEADER (AVATAR + INFO) ===== */
+
+
+.card-profile img.rounded-circle {
+  border-color: #F83B2F !important;
+  border-width: 2px;
+}
+
+/* ===== BOOTSTRAP NAV TABS (estilo inspirado no TSX) ===== */
+
+.nav-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+
+  border-bottom: none;
+  margin-top: 24px;
+}
+
+.nav-tabs .nav-item {
+  margin-bottom: 0;
+}
+
+/* Aba padrão */
+.nav-tabs .nav-link {
+  border: none !important;
+  border-radius: 12px;
+
+  padding: 10px 18px;
+  font-weight: 700;
+  font-size: 0.9rem;
+
+  color: #475569;
+  background-color: #f8fafc;
+
+  transition: all 0.25s ease;
+}
+
+/* Aba ativa (gradiente igual ao TSX) */
+.nav-tabs .nav-link.active {
+  color: #ffffff !important;
+
+  background: linear-gradient(
+    90deg,
+    #f97316, /* orange-500 */
+    #ef4444  /* red-500 */
+  ) !important;
+
+  box-shadow: 0 6px 18px rgba(239, 68, 68, 0.35);
+}
+
+/* Hover nas abas inativas */
+.nav-tabs .nav-link:not(.active):hover {
+  background-color: #fff7ed;
+  color: #ea580c;
+}
+
+/* ===== TÍTULOS ===== */
 
 .profile-posts-title {
   margin: 40px 0 16px;
   font-size: 24px;
   font-weight: 600;
+  text-align: center;
 }
 
-.profile-posts-section {
-  max-width: 900px;
-  margin: 0 auto 40px;
-}
-
-.profile-post-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  background: #f9f9f9;
-  border-radius: 18px;
-  padding: 12px 20px;
-  margin-bottom: 12px;
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.03);
-}
-
-.profile-post-main {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  min-width: 0;
-}
-
-.profile-post-thumb {
-  width: 90px;
-  height: 90px;
-  border-radius: 18px;
-  object-fit: cover;
-  flex-shrink: 0;
-}
-
-.profile-post-text {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  min-width: 0;
-}
-
-.profile-post-restaurant {
-  font-size: 15px;
-}
-
-.profile-post-caption {
-  margin: 0;
-  font-size: 14px;
-  color: #555;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.profile-post-actions {
-  flex-shrink: 0;
-}
-
-.profile-post-delete {
-  border: none;
-  background: transparent;
-  color: #d9534f;
-  font-size: 13px;
-  text-decoration: underline;
-  padding: 4px 8px;
-  cursor: pointer;
-}
+/* ===== GRID DE FOTOS ===== */
 
 .profile-photo-grid {
   max-width: 900px;
   margin: 0 auto 40px;
+
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
   gap: 12px;
@@ -91,8 +96,38 @@
 .profile-photo {
   width: 100%;
   aspect-ratio: 1 / 1;
+
   object-fit: cover;
   border-radius: 18px;
+
   background: #f0f0f0;
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.03);
+  border: 1px solid #e5e7eb;
+
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.profile-photo:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+}
+
+/* ===== POSTS (caso use lista futuramente) ===== */
+
+.profile-posts-section {
+  max-width: 900px;
+  margin: 0 auto 40px;
+}
+
+/* ===== RESPONSIVO ===== */
+
+@media (max-width: 576px) {
+  .nav-tabs {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .nav-tabs .nav-link {
+    padding: 8px 14px;
+    font-size: 0.85rem;
+  }
 }
