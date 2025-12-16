@@ -16,6 +16,10 @@
         <%= form.text_field :username,
               class: "form-control form-control-sm",
               placeholder: "Insira seu nome de usuário" %>
+    
+       <% if @user.errors[:username].present? %>
+      <div class="text-danger mt-1">Para salvar a foto, preencha o Nome de Usuário.</div>
+      <% end %>
       </div>
 
       <div class="form-group">
