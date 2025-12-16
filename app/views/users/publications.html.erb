@@ -34,13 +34,11 @@
             <li class="nav-item">
               <%= link_to (current_user == @user ? "Minhas publicações" : "Publicações"),
                 publications_user_path(@user),
-                class: "nav-link #{current_page?(publications_user_path(@user)) ? "active" : ""}" %>
+                class: "nav-link active" %>
             </li>
 
             <li class="nav-item">
-              <%= link_to "Fotos",
-                user_path(@user),
-                class: "nav-link #{current_page?(user_path(@user)) ? "active" : ""}" %>
+              <%= link_to "Fotos", user_path(@user), class: "nav-link" %>
             </li>
 
             <li class="nav-item">
@@ -52,7 +50,6 @@
             </li>
           </ul>
 
-
           <hr>
         </div>
       </div>
@@ -60,27 +57,56 @@
   </div>
 </div>
 
-<h3 class="profile-posts-title">Fotos</h3>
+<h3 class="profile-posts-title"><%= current_user == @user ? "Minhas publicações" : "Publicações" %></h3>
 
 <% if @posts.blank? %>
   <div class="profile-posts-section">
     <p class="text-muted">Ainda não há publicações.</p>
   </div>
 <% else %>
-  <div class="profile-photo-grid">
+  <div class="container" style="max-width: 900px;">
     <% @posts.each do |post| %>
-      <% thumb =
-        if post.photos.attached?
-          post.photos.first
-        elsif post.restaurant&.image_name.present?
-          post.restaurant.image_name
+      <% text =
+        if post.respond_to?(:caption)
+          post.caption
+        elsif post.respond_to?(:content)
+          post.content
         end %>
 
-      <% next if thumb.blank? %>
+      <div class="card mb-3 p-3">
+        <div class="d-flex justify-content-between align-items-center mb-2">
+          <div>
+            <% if post.restaurant.present? %>
+              <strong><%= post.restaurant.name %></strong>
+            <% end %>
+          </div>
 
-      <%= link_to post_path(post), class: "profile-photo-link" do %>
-        <%= image_tag thumb, class: "profile-photo" %>
-      <% end %>
+          <div class="d-flex align-items-center gap-3">
+            <small class="text-muted"><%= time_ago_in_words(post.created_at) %> atrás</small>
+
+            <% if current_user == @user %>
+              <%= button_to "Excluir",
+                post_path(post),
+                method: :delete,
+                data: { turbo_confirm: "Tem certeza que deseja excluir esta publicação?" },
+                class: "btn btn-link text-danger p-0",
+                form: { class: "d-inline" } %>
+            <% end %>
+          </div>
+        </div>
+
+        <% if post.photos.attached? %>
+          <%= link_to post_path(post) do %>
+            <%= image_tag post.photos.first, class: "w-100 d-block mb-2", style: "border-radius: 18px; object-fit: cover;" %>
+          <% end %>
+        <% end %>
+
+        <% if text.present? %>
+          <p class="mb-2"><%= text %></p>
+        <% end %>
+
+        <%= link_to "Ver publicação", post_path(post), class: "btn btn-outline-secondary btn-sm" %>
+      </div>
     <% end %>
   </div>
 <% end %>

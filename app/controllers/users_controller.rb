@@ -1,37 +1,38 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: %i[show edit update]
+  before_action :set_user, only: %i[show followers following publications edit update]
+  before_action :ensure_current_user!, only: %i[edit update]
 
-  def show
-    # Perfil público do usuário
-    @ratings_by_restaurant = @user.ratings.includes(:restaurant).group_by(&:restaurant)
+  def index
+    @users = User.where.not(id: current_user.id).order(created_at: :desc)
+    if params[:query].present?
+      q = "%#{params[:query]}%"
+      @users = @users.where("username ILIKE ? OR email ILIKE ?", q, q)
+    end
   end
 
   def show
-    @user = User.find(params[:id])
+    @posts = @user.posts.includes(:restaurant, photos_attachments: :blob).order(created_at: :desc)
   end
 
   def categories
-    @user = User.find(params[:id])
+    @ratings_by_category = @user.ratings.includes(:restaurant).group_by { |r| r.restaurant.category }
+  end
+
+  def publications
+  @posts = @user.posts.includes(:restaurant, photos_attachments: :blob).order(created_at: :desc)
   end
 
   def followers
-     @user = User.find(params[:id])
+    @followers = @user.followers
   end
 
   def following
-     @user = User.find(params[:id])
+    @following = @user.following
   end
 
-  def friends
-     @user = User.find(params[:id])
-  end
-
-  def edit
-    authorize @user if defined?(UserPolicy)
-  end
+  def edit; end
 
   def update
-    authorize @user if defined?(UserPolicy)
     if @user.update(user_params)
       redirect_to profile_path, notice: "Perfil atualizado com sucesso."
     else
@@ -39,18 +40,17 @@ class UsersController < ApplicationController
     end
   end
 
-  def set_user
-    @user = current_user
-  end
-
-
-end
   private
 
   def set_user
-    @user = params[:id] ? User.find(params[:id]) : current_user
+    @user = User.find(params[:id])
+  end
+
+  def ensure_current_user!
+    redirect_to user_path(@user), alert: "Você não tem permissão para fazer isso." unless @user == current_user
   end
 
   def user_params
-    params.require(:user).permit(:username, :email, :role, :photo, :profile_picture)
+    params.require(:user).permit(:username, :email, :profile_picture)
   end
+end

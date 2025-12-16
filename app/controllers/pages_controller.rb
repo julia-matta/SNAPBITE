@@ -8,7 +8,7 @@ class PagesController < ApplicationController
 
   #  TIMELINE
   def timeline
-    ids = current_user.friends.pluck(:id)
+    ids = current_user.following.pluck(:id)
     ids << current_user.id
 
     @posts = Post
@@ -53,6 +53,8 @@ class PagesController < ApplicationController
   #  PROFILE
   def profile
     @user = current_user
+    redirect_to publications_user_path(current_user)
+
 
     @ratings_by_category = @user.ratings
                                 .includes(:restaurant)

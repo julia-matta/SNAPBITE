@@ -6,6 +6,10 @@ class PostsController < ApplicationController
     @restaurants = Restaurant.all
   end
 
+  def show
+    @post = Post.includes(:user, :restaurant, photos_attachments: :blob, comments: :user).find(params[:id])
+  end
+
   def create
     @post = Post.new(post_params)
     @post.user = current_user
@@ -19,14 +23,9 @@ class PostsController < ApplicationController
   end
 
   def destroy
-    @post = Post.find(params[:id])
-
-    if @post.user == current_user
-      @post.destroy
-      redirect_back fallback_location: timeline_path, notice: "Publicação apagada."
-    else
-      redirect_back fallback_location: timeline_path, alert: "Você não pode apagar esta publicação."
-    end
+    @post = current_user.posts.find(params[:id])
+    @post.destroy
+    redirect_back fallback_location: user_path(current_user), notice: "Publicação excluída."
   end
 
   private
@@ -34,7 +33,7 @@ class PostsController < ApplicationController
   def post_params
     params.require(:post).permit(
       :caption, :course, :restaurant_id, :check_in,:rating,
-      photos: []
+      photos: [], menu_times: []
     )
   end
 end

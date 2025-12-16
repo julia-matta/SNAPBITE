@@ -1,12 +1,14 @@
 <div class="explore-page">
   <div class="explore-container">
 
-    <!-- ================= TÍTULOS ================= -->
+    <%= link_to "Buscar pessoas", users_path, class: "btn btn-outline-primary mb-3" %>
+
     <h1>Explorar restaurantes</h1>
     <h4>Descubra novos sabores pela cidade</h4>
 
-    <!-- ================= FILTROS ================= -->
+    <!--  FILTROS  -->
     <%= form_with url: explore_path, method: :get, local: true do %>
+
 
       <!-- LINHA DE BUSCA + PREÇO + FILTRAR -->
       <div class="filter-row mb-4">
@@ -32,7 +34,7 @@
 
       </div>
 
-      <!-- ================= CATEGORIAS ================= -->
+      <!--  CATEGORIAS  -->
       <div class="category-buttons mb-4">
         <% Restaurant::CATEGORIES.each do |cat| %>
           <%= button_tag cat,
@@ -45,7 +47,7 @@
 
     <% end %>
 
-    <!-- ================= RESULTADOS ================= -->
+    <!-- RESULTADOS  -->
     <div class="explore-results">
       <% @restaurants.each do |restaurant| %>
 

@@ -1,6 +1,6 @@
 class Friendship < ApplicationRecord
-  belongs_to :user
-  belongs_to :friend, class_name: "User"
+  belongs_to :follower, class_name: "User", foreign_key: :user_id
+  belongs_to :followed, class_name: "User", foreign_key: :friend_id
 
-  validates :friend, uniqueness: { scope: :user }
+  validates :followed, uniqueness: { scope: :follower }
 end

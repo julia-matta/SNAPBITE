@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   devise_for :users
-  
+
   root to: "pages#home"
 
   get "timeline", to: "pages#timeline", as: :timeline
@@ -17,16 +17,18 @@ Rails.application.routes.draw do
 
   resources :ratings, only: %i[new create destroy]
 
-  resources :users do
+  resources :users, only: %i[index show edit update] do
     member do
       get :followers
       get :following
-      get :friends
-      get :categories
+      get :publications
     end
   end
 
-  resources :posts, only: [:new, :create, :destroy] do
+  resources :friendships, only: %i[create destroy]
+
+
+  resources :posts, only: [:new, :create, :show, :destroy] do
     resources :comments, only: :create
   end
 end
