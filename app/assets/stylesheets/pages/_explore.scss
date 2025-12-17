@@ -264,3 +264,16 @@
     font-weight: 400;
   }
 }
+
+.btn-search-people {
+  color: #F83B2F;
+  border-color: #F83B2F;
+  background-color: transparent;
+
+  &:hover,
+  &:focus {
+    background-color: #F83B2F;
+    color: #fff;
+    border-color: #F83B2F;
+  }
+}
