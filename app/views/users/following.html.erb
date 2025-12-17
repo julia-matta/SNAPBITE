@@ -27,11 +27,12 @@
             </div>
           </div>
 
+          <% friendship = Friendship.find_by(user_id: current_user.id, friend_id: u.id) %>
           <div class="follower-actions">
             <% if current_user && current_user == @user %>
-              <%= button_to "Deixar de seguir", friendship_path(u), method: :delete,
-                  class: "btn-unfollow",
-                  data: { confirm: "Tem certeza que deseja deixar de seguir?" } %>
+              <%= button_to "Deixar de seguir", friendship_path(friendship), method: :delete,
+                  class: "btn-unfollow"
+              %>
             <% end %>
           </div>
         </div>
