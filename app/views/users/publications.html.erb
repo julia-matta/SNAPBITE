@@ -95,9 +95,14 @@
           </div>
         </div>
 
-        <% if post.photos.attached? %>
+        <% photos = post.photos %>
+        <% if photos.any? %>
           <%= link_to post_path(post) do %>
-            <%= image_tag post.photos.first, class: "w-100 d-block mb-2", style: "border-radius: 18px; object-fit: cover;" %>
+            <%= image_tag url_for(photos.first), class: "w-100 d-block mb-2", style: "border-radius: 18px; object-fit: cover;" %>
+          <% end %>
+        <% elsif post.restaurant&.image_name.present? %>
+          <%= link_to post_path(post) do %>
+            <%= image_tag post.restaurant.image_name, class: "w-100 d-block mb-2", style: "border-radius: 18px; object-fit: cover;" %>
           <% end %>
         <% end %>
 

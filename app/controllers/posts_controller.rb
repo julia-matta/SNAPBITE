@@ -4,10 +4,15 @@ class PostsController < ApplicationController
   def new
     @post = Post.new
     @restaurants = Restaurant.all
+    # if params[:restaurant_id].present?
+    #   @restaurant = Restaurant.find(params[:restaurant_id])
+    #   @post.restaurant = @restaurant
+    #   # @selected_restaurant = params[:restaurant_id]
+    # end
   end
 
   def show
-    @post = Post.includes(:user, :restaurant, photos_attachments: :blob, comments: :user).find(params[:id])
+    @post = Post.includes(:user, :restaurant, :post_reactions, photos_attachments: :blob, comments: :user).find(params[:id])
   end
 
   def create

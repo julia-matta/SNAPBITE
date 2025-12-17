@@ -1,98 +1,93 @@
-<div class="container mt-4">
-  <div class="row">
-    <div class="col-md-8 offset-md-2">
-      <div class="card-profile p-4 shadow-sm">
-        <h2 class="card-title text-center mb-4"> Meu Perfil</h2>
+<div class="profile-page">
+  <div class="profile-card">
 
-        <%# Exibição da Foto Atual %>
+    <h2 class="profile-title text-center mb-4">Meu Perfil</h2>
 
-        <div class="text-center mb-4">
-          <% if current_user.profile_picture.attached? %>
-            <%# Assumindo que o método `profile_picture` anexa a foto. Use `url_for` para exibi-la. %>
-            <%= image_tag url_for(current_user.profile_picture), class: "rounded-circle border border-primary", style: "width: 150px; height: 150px; object-fit: cover;" %>
-          <% else %>
-            <%# Placeholder se não houver foto %>
-            <%= image_tag "placeholder_profile.png", class: "rounded-circle border", style: "width: 150px; height: 150px; object-fit: cover;" %>
-          <% end %>
-          <p><strong>Usuário:</strong> <%= current_user.username || current_user.email %></p>
-          <p><strong>Tipo:</strong> <%= current_user.owner? ? "Restaurante" : "Cliente" %></p>
-        </div>
+    <!-- FOTO + INFO -->
+    <div class="profile-header text-center">
+      <% if current_user.profile_picture.attached? %>
+        <%= image_tag url_for(current_user.profile_picture),
+              class: "profile-avatar" %>
+      <% else %>
+        <%= image_tag "placeholder_profile.png",
+              class: "profile-avatar" %>
+      <% end %>
 
-
-        <hr>
-
-        <%# Retorno para o Perfil (Ajuste os links de navegação) %>
-        <div class="text-center">
-          <%= link_to "Editar perfil", edit_user_path(@user), class: "btn btn-outline-secondary mt-3" %>
-        <ul class="nav nav-tabs mb-3">
-          <li class="nav-item">
-          <%= link_to "Categorias", categories_user_path(@user), class: "nav-link" %>
-          </li>
-
-          <li class="nav-item">
-          <%= link_to "Seguidores", followers_user_path(@user), class: "nav-link" %>
-          </li>
-
-          <li class="nav-item">
-          <%= link_to "Seguindo", following_user_path(@user), class: "nav-link" %>
-          </li>
-        </ul>
-        <hr>
-
-
-        </div>
-      </div>
+      <p><strong>Usuário:</strong> <%= current_user.username || current_user.email %></p>
+      <p><strong>Tipo:</strong> <%= current_user.owner? ? "Restaurante" : "Cliente" %></p>
     </div>
+
+    <div class="text-center mb-3">
+      <%= link_to "Editar perfil", edit_user_path(@user),
+            class: "btn btn-outline-secondary btn-sm" %>
+    </div>
+
+    <hr>
+
+        <!-- BOTÕES / ABAS -->
+<div class="profile-tabs-wrapper">
+  <div class="profile-tabs-card">
+
+    <%= link_to "Minhas publicações",
+          "#posts",
+          class: "profile-tab-btn active" %>
+
+    <%= link_to "Fotos",
+          "#photos",
+          class: "profile-tab-btn" %>
+
+    <%= link_to "Seguidores",
+          followers_user_path(@user),
+          class: "profile-tab-btn followers" %>
+
+    <%= link_to "Seguindo",
+          following_user_path(@user),
+          class: "profile-tab-btn following" %>
+
   </div>
 </div>
 
+    <hr>
 
-<%# <h3>Minhas avaliações por categoria</h3> %>
+    <!-- AVALIAÇÕES -->
+    <% @ratings_by_category.each do |category, ratings| %>
+      <h4 class="profile-section-title"><%= category %></h4>
 
-<% @ratings_by_category.each do |category, ratings| %>
-  <h4><%= category %></h4>
-
-  <% ratings.group_by(&:restaurant).each do |restaurant, restaurant_ratings| %>
-    <div class="card mb-2">
-      <div class="card-body">
-        <h5><%= restaurant.name %></h5>
-        <ul>
-          <% restaurant_ratings.each do |rating| %>
-            <li>
-              <strong><%= rating.score %>/5</strong>
-              <% if rating.recommended == true %> (Recomendo)<% end %>
-              <% if rating.recommended == false %> (Não recomendo)<% end %>
-            </li>
-          <% end %>
-        </ul>
-      </div>
-    </div>
-  <% end %>
-<% end %>
-
-<!-- TESTANDO AQUI -->
-<h3 class="profile-posts-title">Minhas publicações</h3>
-
-<div class="profile-posts-section">
-  <% @posts.each do |post| %>
-    <div class="profile-post-row">
-      <div class="profile-post-main">
-        <% if post.photos.attached? %>
-          <%= image_tag post.photos.first, class: "profile-post-thumb" %>
-        <% elsif post.restaurant&.image_name.present? %>
-          <%= image_tag post.restaurant.image_name, class: "profile-post-thumb" %>
-        <% end %>
-
-        <div class="profile-post-text">
-          <strong class="profile-post-restaurant">
-            <%= post.restaurant&.name || "Sem restaurante" %>
-          </strong>
-          <p class="profile-post-caption"><%= post.caption %></p>
+      <% ratings.group_by(&:restaurant).each do |restaurant, restaurant_ratings| %>
+        <div class="profile-rating-card">
+          <h5><%= restaurant.name %></h5>
+          <ul>
+            <% restaurant_ratings.each do |rating| %>
+              <li>
+                <strong><%= rating.score %>/5</strong>
+              </li>
+            <% end %>
+          </ul>
         </div>
-      </div>
+      <% end %>
+    <% end %>
 
-      <% if post.user == current_user %>
-        <div class="profile-post-actions">
+    <hr>
+
+    <!-- PUBLICAÇÕES -->
+    <h3 class="profile-posts-title" id="posts">Minhas publicações</h3>
+
+    <div class="profile-posts-section">
+      <% @posts.each do |post| %>
+        <div class="profile-post-row">
+          <div class="profile-post-main">
+            <% if post.photos.attached? %>
+              <%= image_tag post.photos.first, class: "profile-post-thumb" %>
+            <% elsif post.restaurant&.image_name.present? %>
+              <%= image_tag post.restaurant.image_name, class: "profile-post-thumb" %>
+            <% end %>
+
+            <div class="profile-post-text">
+              <strong><%= post.restaurant&.name || "Sem restaurante" %></strong>
+              <p><%= post.caption %></p>
+            </div>
+          </div>
+
           <%= button_to "Excluir",
                 post_path(post),
                 method: :delete,
@@ -101,5 +96,6 @@
         </div>
       <% end %>
     </div>
-  <% end %>
+
+  </div>
 </div>

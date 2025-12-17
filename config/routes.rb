@@ -1,7 +1,14 @@
 Rails.application.routes.draw do
   devise_for :users
 
-  root to: "pages#home"
+  # Use devise_scope para definir a rota raiz especificamente para o mapeamento 'user'
+  devise_scope :user do
+    root to: "devise/sessions#new"
+  end
+
+  # get "timeline", to: "pages#timeline", as: :user_root
+
+  # root to: "pages#home"
 
   # PÁGINAS
   get "timeline", to: "pages#timeline", as: :timeline
@@ -9,7 +16,19 @@ Rails.application.routes.draw do
   get "profile",  to: "pages#profile",  as: :profile
   get "publish",  to: "ratings#new",    as: :publish
 
-  # USUÁRIOS
+
+  resources :users, only: %i[show edit update]
+
+  resources :restaurants do
+    resources :checkins, only: [:create]   # <<< NOVA ROTA DE CHECK-IN
+    resources :ratings,  only: %i[index]
+  end
+
+  resources :ratings, only: %i[new create destroy]
+
+  resources :friendships, only: [:create, :destroy]
+
+
   resources :users, only: %i[index show edit update] do
     member do
       get :followers
@@ -27,10 +46,7 @@ Rails.application.routes.draw do
   # AVALIAÇÕES
   resources :ratings, only: %i[new create destroy]
 
-  # POSTS
-  resources :posts, only: %i[new create show destroy] do
-    resources :comments, only: [:create]
-  end
+ 
 
   # AMIZADES
   resources :friendships, only: %i[create destroy]
@@ -40,4 +56,14 @@ Rails.application.routes.draw do
   # =========================
   resources :chats, only: [:show]
   post "chats/:id/message", to: "chats#message"
+
+  resources :posts, only: [:new, :create, :show, :destroy] do
+    member do
+      post :recommend, to: "post_reactions#recommend"
+      post :not_recommend, to: "post_reactions#not_recommend"
+      delete :reaction, to: "post_reactions#destroy"
+    end
+    resources :comments, only: :create
+  end
+
 end

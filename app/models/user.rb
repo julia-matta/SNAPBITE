@@ -3,13 +3,14 @@ class User < ApplicationRecord
   has_many :ratings, dependent: :destroy
   has_many :posts, dependent: :destroy
   has_many :comments, dependent: :destroy
+  has_many :post_reactions, dependent: :destroy
 
   has_one_attached :profile_picture
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
- ROLES = %w[customer owner].freeze
+  ROLES = %w[customer owner].freeze
   validates :role, inclusion: { in: ROLES }, allow_nil: true
   validates :username, presence: true, on: :update
 

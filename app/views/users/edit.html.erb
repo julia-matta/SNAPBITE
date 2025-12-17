@@ -1,40 +1,50 @@
-<h2>Configurações da Conta</h2>
+<div class="account-settings-page">
+  <div class="account-settings-card">
 
-<%# <%= simple_form_for(@user) do |f| %>
-  <%= form_with(model: @user, url: user_path(@user), method: :patch, local: true, html: { multipart: true }) do |form| %>
+    <h2 class="text-center mb-4">Configurações da Conta</h2>
 
-          <%# Campo de E-mail/Nome de Usuário (Exemplo) %>
-   <div class="mb-3">
-     <%= form.label :username, "Nome de Usuário", class: "form-label" %>
-     <%= form.text_field :username, class: "form-control", placeholder: "Insira seu nome de usuário" %>
-   </div>
+    <%= form_with(
+          model: @user,
+          url: user_path(@user),
+          method: :patch,
+          local: true,
+          html: { multipart: true }
+        ) do |form| %>
 
-   <div class="mb-3">
-     <%= form.label :email, "E-mail", class: "form-label" %>
-     <%= form.email_field :email, class: "form-control", placeholder: "Insira seu e-mail" %>
-   </div>
+      <div class="form-group">
+        <%= form.label :username, "Nome de Usuário", class: "form-label" %>
+        <%= form.text_field :username,
+              class: "form-control form-control-sm",
+              placeholder: "Insira seu nome de usuário" %>
+    
+       <% if @user.errors[:username].present? %>
+      <div class="text-danger mt-1">Para salvar a foto, preencha o Nome de Usuário.</div>
+      <% end %>
+      </div>
 
-          <%# Campo de Upload de Foto de Perfil %>
-   <div class="mb-3">
-     <%= form.label :profile_picture, "Nova Foto de Perfil", class: "form-label" %>
-            <%# O `file_field` é essencial para o upload de arquivos %>
-     <%= form.file_field :profile_picture, class: "form-control", accept: 'image/png,image/jpeg,image/jpg' %>
-     <div class="form-text">Formatos aceitos: JPG, JPEG, PNG.</div>
-   </div>
+      <div class="form-group">
+        <%= form.label :email, "E-mail", class: "form-label" %>
+        <%= form.email_field :email,
+              class: "form-control form-control-sm",
+              placeholder: "Insira seu e-mail" %>
+      </div>
 
-          <%# Botão de Envio %>
-   <div class="d-grid gap-2">
-     <%= form.submit "Salvar Alterações", class: "btn btn-primary" %>
-     <%= link_to "Voltar para o Perfil", user_path(@user), class: "btn btn-outline-secondary mt-3" %>
-   </div>
+      <div class="form-group">
+        <%= form.label :profile_picture, "Nova Foto de Perfil", class: "form-label" %>
+        <%= form.file_field :profile_picture,
+              class: "form-control form-control-sm",
+              accept: "image/png,image/jpeg,image/jpg" %>
+        <div class="form-text">Formatos aceitos: JPG, JPEG, PNG.</div>
+      </div>
 
-   <%# <div class="mb-3">
-    <%= form.input :role,
-                as: :radio_buttons,
-                collection: [["Sou cliente", "customer"], ["Sou restaurante", "owner"]],
-                label: "Tipo de conta" %>
-   <%# </div> %>
+      <div class="form-actions">
+  <%= form.submit "Salvar Alterações", class: "btn btn-save btn-sm" %>
+  <%= link_to "Voltar para o Perfil",
+        user_path(@user),
+        class: "btn btn-outline-secondary btn-sm" %>
+</div>
 
-    <%# <%= form.submit, "Salvar", class: "btn btn-primary" %> 
-<%# <% end %>
- <% end %>
+    <% end %>
+
+  </div>
+</div>
