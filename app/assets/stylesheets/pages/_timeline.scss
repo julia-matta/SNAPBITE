@@ -222,3 +222,20 @@
     font-size: 18px;
   }
 }
+
+.timeline-page .timeline-title {
+  font-family: "Rubik Mono One", sans-serif;
+
+  font-size: 4rem;          // 🔼 aumenta o tamanho
+  color: #F83B2F;           // 🎨 muda a cor
+  text-align: center;       // 📍 centraliza
+
+  margin-bottom: 8px;       // ajuste fino de espaçamento
+}
+
+.timeline-empty {
+  text-align: center;     // centraliza horizontalmente
+  margin-top: 32px;       // afasta do título
+  color: #6b7280;         // tom suave (opcional)
+  font-size: 1rem;
+}
