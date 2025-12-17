@@ -20,8 +20,8 @@ class FriendshipsController < ApplicationController
   end
 
   def destroy
-    followed = User.find(params[:id])
-    current_user.active_friendships.find_by(followed: followed)&.destroy
-    redirect_back fallback_location: user_path(followed)
+    friendship = Friendship.find_by!(id: params[:id], user_id: current_user.id)
+    friendship.destroy
+    redirect_back(fallback_location: users_path)
   end
 end
