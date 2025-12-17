@@ -232,3 +232,48 @@
     opacity: 0.9;
   }
 }
+
+.explore-search-card {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 28px 32px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+
+  h1 {
+    margin-bottom: 4px;
+  }
+
+  h4 {
+    color: #6b7280;
+    font-weight: 400;
+  }
+}
+
+.explore-search-header {
+  display: flex;
+  justify-content: space-between; // empurra o botão pra direita
+  align-items: flex-start;
+  gap: 16px;
+
+  h1 {
+    margin-bottom: 4px;
+  }
+
+  h4 {
+    color: #6b7280;
+    font-weight: 400;
+  }
+}
+
+.btn-search-people {
+  color: #F83B2F;
+  border-color: #F83B2F;
+  background-color: transparent;
+
+  &:hover,
+  &:focus {
+    background-color: #F83B2F;
+    color: #fff;
+    border-color: #F83B2F;
+  }
+}

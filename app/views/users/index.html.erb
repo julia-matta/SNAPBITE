@@ -1,49 +1,66 @@
-<h1>Encontrar pessoas e restaurantes</h1>
+<div class="users-index-wrapper mx-auto px-3">
 
-<%= form_with url: users_path, method: :get, local: true do %>
-  <div class="d-flex gap-2 mb-3">
-    <%= text_field_tag :query, params[:query], class: "form-control", placeholder: "Buscar por username ou email..." %>
-    <%= submit_tag "Buscar", class: "btn btn-primary" %>
-  </div>
-<% end %>
+  <h1 class="mb-4">Encontrar pessoas e restaurantes</h1>
 
-<% if @users.blank? %>
-  <p class="text-muted">Nenhum usuário encontrado.</p>
-<% else %>
-  <% @users.each do |u| %>
-    <div class="card p-3 mb-2">
-      <div class="d-flex justify-content-between align-items-center">
-        <div class="d-flex align-items-center gap-2">
-          <% if u.profile_picture.attached? %>
-            <%= image_tag url_for(u.profile_picture), class: "rounded-circle", style: "width:40px;height:40px;object-fit:cover;" %>
-          <% else %>
-            <div class="rounded-circle bg-light" style="width:40px;height:40px;"></div>
-          <% end %>
+  <%= form_with url: users_path, method: :get, local: true do %>
+    <div class="d-flex gap-2 mb-3 pe-3">
+      <%= text_field_tag :query, params[:query],
+            class: "form-control",
+            placeholder: "Buscar por username ou email..." %>
 
-          <div>
-            <div>
-              <%= link_to (u.username.presence || u.email), user_path(u), class: "text-decoration-none" %>
-            </div>
-            <small class="text-muted"><%= u.owner? ? "Restaurante" : "Cliente" %></small>
-          </div>
-        </div>
-
-        <% if current_user && current_user != u %>
-          <% friendship = Friendship.find_by(user_id: current_user.id, friend_id: u.id) %>
-
-          <% if friendship.present? %>
-            <%= button_to "Deixar de seguir",
-                  friendship_path(friendship),
-                  method: :delete,
-                  class: "btn btn-outline-danger btn-sm" %>
-          <% else %>
-            <%= button_to "Seguir",
-                  friendships_path(friend_id: u.id),
-                  method: :post,
-                  class: "btn btn-primary btn-sm" %>
-          <% end %>
-        <% end %>
-      </div>
+      <%= submit_tag "Buscar", class: "btn btn-primary" %>
     </div>
   <% end %>
-<% end %>
+
+  <% if @users.blank? %>
+    <p class="text-muted">Nenhum usuário encontrado.</p>
+  <% else %>
+    <% @users.each do |u| %>
+      <div class="card p-3 mb-2">
+        <div class="d-flex justify-content-between align-items-center">
+
+          <div class="d-flex align-items-center gap-2">
+            <% if u.profile_picture.attached? %>
+              <%= image_tag url_for(u.profile_picture),
+                    class: "rounded-circle",
+                    style: "width:40px;height:40px;object-fit:cover;" %>
+            <% else %>
+              <div class="rounded-circle bg-light"
+                   style="width:40px;height:40px;"></div>
+            <% end %>
+
+            <div>
+              <div>
+                <%= link_to (u.username.presence || u.email),
+                      user_path(u),
+                      class: "text-decoration-none fw-semibold" %>
+              </div>
+
+              <small class="text-muted">
+                <%= u.owner? ? "Restaurante" : "Cliente" %>
+              </small>
+            </div>
+          </div>
+
+          <% if current_user && current_user != u %>
+            <% friendship = Friendship.find_by(user_id: current_user.id, friend_id: u.id) %>
+
+            <% if friendship.present? %>
+              <%= button_to "Deixar de seguir",
+                    friendship_path(friendship),
+                    method: :delete,
+                    class: "btn btn-outline-danger btn-sm" %>
+            <% else %>
+              <%= button_to "Seguir",
+                    friendships_path(friend_id: u.id),
+                    method: :post,
+                    class: "btn btn-primary btn-sm" %>
+            <% end %>
+          <% end %>
+
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+
+</div>

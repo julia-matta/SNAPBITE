@@ -1,0 +1,40 @@
+.create-post-card {
+  width: 100%;
+  max-width: 700px; // 👈 volta ao tamanho original
+  margin: 0 auto;
+
+  position: relative;
+  z-index: 1;
+}
+
+
+
+.create-post-page {
+  min-height: 100vh;
+  width: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding: 60px 16px;
+
+  /* BACKGROUND */
+  background-image: image-url("prato.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  position: relative;
+}
+
+/* overlay para legibilidade */
+.create-post-page::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+  z-index: 0;
+}
+
+/* garante que o card fique acima do overlay */
