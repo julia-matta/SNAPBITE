@@ -1,0 +1,55 @@
+.users-index-wrapper {
+  max-width: 1200px;
+  margin-top: 42px;
+  // Botão principal (Buscar / Seguir)
+  .btn-primary {
+    background-color: #F83B2F;
+    border-color: #F83B2F;
+
+    &:hover,
+    &:focus,
+    &:active {
+      background-color: darken(#F83B2F, 6%);
+      border-color: darken(#F83B2F, 6%);
+    }
+  }
+
+  // Botão outline (Deixar de seguir)
+  .btn-outline-danger {
+    color: #F83B2F;
+    border-color: #F83B2F;
+
+    &:hover,
+    &:focus,
+    &:active {
+      background-color: #F83B2F;
+      border-color: #F83B2F;
+      color: #fff;
+    }
+  }
+
+  input.form-control {
+    background-color: #f83d2f16; // tom claro (ajustável)
+    border-color: #F83B2F;
+    border-radius: 8px;
+
+    &:focus {
+      background-color: #ffffff;
+      border-color: #F83B2F;
+      box-shadow: 0 0 0 0.15rem rgba(248, 59, 47, 0.25);
+    }
+  }
+
+  /* ================= CARDS DE RESULTADO ================= */
+  .card {
+    background-color: #ffffff; // fundo do card
+    border: 1px solid #f1f1f1;
+    border-radius: 16px;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+
+    &:hover {
+      background-color: #fdf3f2; // leve rosado no hover
+      transform: translateY(-2px);
+    }
+  }
+}
