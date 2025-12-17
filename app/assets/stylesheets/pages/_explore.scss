@@ -232,3 +232,19 @@
     opacity: 0.9;
   }
 }
+
+.explore-search-card {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 28px 32px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+
+  h1 {
+    margin-bottom: 4px;
+  }
+
+  h4 {
+    color: #6b7280;
+    font-weight: 400;
+  }
+}

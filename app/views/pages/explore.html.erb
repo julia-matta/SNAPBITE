@@ -1,53 +1,61 @@
 <div class="explore-page">
   <div class="explore-container">
 
-    <%= link_to "Buscar pessoas", users_path, class: "btn btn-outline-primary mb-3" %>
+    <!-- ================= CARD DE BUSCA ================= -->
+    <div class="explore-search-card mb-5">
 
-    <h1>Explorar restaurantes</h1>
-    <h4>Descubra novos sabores pela cidade</h4>
+      <%= link_to "Buscar pessoas",
+            users_path,
+            class: "btn btn-outline-primary mb-3" %>
 
-    <!--  FILTROS  -->
-    <%= form_with url: explore_path, method: :get, local: true do %>
+      <h1>Explorar restaurantes</h1>
+      <h4 class="mb-4">Descubra novos sabores pela cidade</h4>
 
+      <%= form_with url: explore_path, method: :get, local: true do %>
 
-      <!-- LINHA DE BUSCA + PREÇO + FILTRAR -->
-      <div class="filter-row mb-4">
+        <!-- BUSCA + PREÇO + FILTRAR -->
+        <div class="filter-row">
 
-        <div class="filter-field">
-          <%= label_tag :query, "Buscar" %>
-          <%= text_field_tag :query,
-                params[:query],
-                class: "form-control form-control-sm",
-                placeholder: "Nome, infos, endereço..." %>
+          <div class="filter-field">
+            <%= label_tag :query, "Buscar" %>
+            <%= text_field_tag :query,
+                  params[:query],
+                  class: "form-control form-control-sm",
+                  placeholder: "Nome, infos, endereço..." %>
+          </div>
+
+          <div class="filter-field small">
+            <%= label_tag :max_price, "Preço até (R$)" %>
+            <%= select_tag :max_price,
+                  options_for_select(@price_options, params[:max_price]),
+                  class: "form-select form-select-sm" %>
+          </div>
+
+          <div class="filter-action">
+            <%= submit_tag "Filtrar", class: "btn btn-filtrar" %>
+          </div>
+
         </div>
 
-        <div class="filter-field small">
-          <%= label_tag :max_price, "Preço até (R$)" %>
-          <%= select_tag :max_price,
-                options_for_select(@price_options, params[:max_price]),
-                class: "form-select form-select-sm" %>
-        </div>
+      <% end %>
+    </div>
+    <!-- ================= FIM CARD DE BUSCA ================= -->
 
-        <div class="filter-action">
-          <%= submit_tag "Filtrar", class: "btn btn-filtrar" %>
-        </div>
 
-      </div>
+    <!-- ================= CATEGORIAS ================= -->
+    <div class="category-buttons mb-5">
+      <% Restaurant::CATEGORIES.each do |cat| %>
+        <%= button_tag cat,
+              type: :submit,
+              name: :category,
+              value: cat,
+              class: "category-btn #{'active' if params[:category] == cat}" %>
+      <% end %>
+    </div>
+    <!-- ================= FIM CATEGORIAS ================= -->
 
-      <!--  CATEGORIAS  -->
-      <div class="category-buttons mb-4">
-        <% Restaurant::CATEGORIES.each do |cat| %>
-          <%= button_tag cat,
-                type: :submit,
-                name: :category,
-                value: cat,
-                class: "category-btn #{'active' if params[:category] == cat}" %>
-        <% end %>
-      </div>
 
-    <% end %>
-
-    <!-- RESULTADOS  -->
+    <!-- ================= RESULTADOS ================= -->
     <div class="explore-results">
       <% @restaurants.each do |restaurant| %>
 
@@ -102,8 +110,8 @@
             <div class="explore-card-actions">
               <% if user_signed_in? %>
                 <%= link_to "Avaliar",
-                            new_post_path(restaurant_id: restaurant.id), # <--- MUDANÇA AQUI
-                            class: "btn btn-sm btn-checkin" %>
+                      new_post_path(restaurant_id: restaurant.id),
+                      class: "btn btn-sm btn-checkin" %>
               <% else %>
                 <%= link_to "Entrar para fazer check-in",
                       new_user_session_path,
@@ -116,6 +124,7 @@
 
       <% end %>
     </div>
+    <!-- ================= FIM RESULTADOS ================= -->
 
   </div>
 </div>
