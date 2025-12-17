@@ -10,6 +10,9 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
+   has_many :checkins, dependent: :destroy
+
+
   ROLES = %w[customer owner].freeze
   validates :role, inclusion: { in: ROLES }, allow_nil: true
   validates :username, presence: true, on: :update
