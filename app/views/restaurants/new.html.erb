@@ -1,5 +1,20 @@
-<h1>Novo restaurante</h1>
+<div class="restaurant-new-page">
+  <div class="container mt-5">
+    <div class="card shadow-sm restaurant-form-card">
 
-<%= render "form" %>
+      <!-- HEADER -->
+      <div class="card-header d-flex align-items-center gap-2 border-0 bg-white">
+        <%= link_to restaurants_path, class: "btn p-0 back-button" do %>
+          <i class="fas fa-arrow-left fs-4"></i>
+        <% end %>
+        <h5 class="mb-0 text-dark">Novo restaurante</h5>
+      </div>
 
-<%= link_to "Voltar", restaurants_path %>
+      <!-- BODY -->
+      <div class="card-body">
+        <%= render "form" %>
+      </div>
+
+    </div>
+  </div>
+</div>
