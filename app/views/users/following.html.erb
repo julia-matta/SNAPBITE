@@ -1,30 +1,41 @@
-<h1>Quem <%= @user.username.presence || @user.email %> está seguindo</h1>
+<div class="followers-container">
+  <div class="header-section">
+    <h1>Quem <span><%= @user.username.presence || @user.email %></span> está seguindo</h1>
+    <p class="text-muted"><%= @following.count %> pessoas</p>
+  </div>
 
-<% if @following.blank? %>
-  <p class="text-muted">Ainda não está seguindo ninguém.</p>
-<% else %>
-  <% @following.each do |u| %>
-    <div class="card p-3 mb-2">
-      <div class="d-flex justify-content-between align-items-center">
-        <div class="d-flex align-items-center gap-2">
-          <% if u.profile_picture.attached? %>
-            <%= image_tag url_for(u.profile_picture), class: "rounded-circle", style: "width:40px;height:40px;object-fit:cover;" %>
-          <% else %>
-            <div class="rounded-circle bg-light" style="width:40px;height:40px;"></div>
-          <% end %>
+  <% if @following.blank? %>
+    <div class="empty-state">
+      <p>Ainda não está seguindo ninguém.</p>
+    </div>
+  <% else %>
+    <div class="followers-grid">
+      <% @following.each do |u| %>
+        <div class="follower-card">
+          <div class="follower-info">
+            <% if u.profile_picture.attached? %>
+              <%= image_tag url_for(u.profile_picture), class: "follower-avatar" %>
+            <% else %>
+              <div class="follower-avatar placeholder-avatar"></div>
+            <% end %>
 
-          <div>
-            <div>
-              <%= link_to (u.username.presence || u.email), user_path(u), class: "text-decoration-none" %>
+            <div class="follower-details">
+              <%= link_to (u.username.presence || u.email), user_path(u), class: "follower-name" %>
+              <span class="badge-role <%= u.owner? ? 'role-restaurante' : 'role-cliente' %>">
+                <%= u.owner? ? "Restaurante" : "Cliente" %>
+              </span>
             </div>
-            <small class="text-muted"><%= u.owner? ? "Restaurante" : "Cliente" %></small>
+          </div>
+
+          <div class="follower-actions">
+            <% if current_user && current_user == @user %>
+              <%= button_to "Deixar de seguir", friendship_path(u), method: :delete,
+                  class: "btn-unfollow",
+                  data: { confirm: "Tem certeza que deseja deixar de seguir?" } %>
+            <% end %>
           </div>
         </div>
-
-        <% if current_user && current_user == @user %>
-          <%= button_to "Deixar de seguir", friendship_path(u), method: :delete, class: "btn btn-outline-danger btn-sm" %>
-        <% end %>
-      </div>
+      <% end %>
     </div>
   <% end %>
-<% end %>
+</div>

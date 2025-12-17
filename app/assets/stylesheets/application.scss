@@ -223,3 +223,151 @@ html, body {
   padding: 0;
   width: 100%;
 }
+
+/* Container e Paleta */
+:root {
+  --bg-color: #FBFBF1;
+  --primary-color: #F83B2F;
+  --card-bg: #FFFFFF;
+}
+
+.followers-container {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+/* Título */
+.header-section h1 {
+  font-weight: 800;
+  color: #333;
+  margin-bottom: 2.5rem;
+  letter-spacing: -0.5px;
+}
+
+.header-section span {
+  color: var(--primary-color);
+}
+
+.header-section {
+  max-width: 800px; /* Mesma largura da lista de usuários */
+  margin: 0 auto 2rem auto; /* Centraliza e dá espaço para os cards abaixo */
+  text-align: center; /* Mantém o texto alinhado à esquerda dentro dos 800px */
+}
+
+/* Grid de Cards */
+.followers-grid {
+  display: flex;
+  flex-direction: column; /* Força um embaixo do outro */
+  gap: 1rem;
+  max-width: 800px;       /* Limita a largura para não esticar demais na tela de 1200px */
+  margin: 0 auto;         /* Centraliza a lista na tela */
+}
+
+
+.follower-card {
+  background: var(--card-bg);
+  border-radius: 16px;
+  padding: 1.25rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid rgba(0,0,0,0.04);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+  width: 100%;
+}
+
+.follower-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 20px rgba(0,0,0,0.06);
+}
+
+/* Avatar e Texto */
+.follower-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.follower-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.placeholder-avatar {
+  background-color: #f0f0f0;
+}
+
+.follower-name {
+  display: block;
+  font-weight: 700;
+  color: #222;
+  text-decoration: none;
+  font-size: 1rem;
+}
+
+/* Badges de Categoria */
+.badge-role {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-weight: 600;
+}
+
+.role-restaurante {
+  background-color: #fff0ef;
+  color: var(--primary-color);
+}
+
+.role-cliente {
+  background-color: #f4f4f4;
+  color: #777;
+}
+
+/* Botão Deixar de Seguir */
+.btn-unfollow {
+  padding: 8px 14px;
+  border-radius: 10px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  background: transparent;
+  color: #999;
+  border: 1.5px solid #eee;
+  transition: all 0.2s;
+}
+
+.btn-unfollow:hover {
+  background-color: var(--primary-color);
+  color: white;
+  border-color: var(--primary-color);
+}
+
+.btn-follow {
+  padding: 8px 14px;
+  border-radius: 10px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  background: transparent;
+  color: #999;
+  border: 1.5px solid #eee;
+  transition: all 0.2s;
+}
+
+.btn-follow:hover {
+  background-color: var(--primary-color);
+  color: white;
+  border-color: var(--primary-color);
+}
+
+/* Estado Vazio */
+.empty-state {
+  text-align: center;
+  background: white;
+  padding: 3rem;
+  border-radius: 16px;
+  border: 2px dashed #eee;
+}
