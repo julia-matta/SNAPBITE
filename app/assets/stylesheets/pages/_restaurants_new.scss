@@ -1,0 +1,69 @@
+/* ===== PÁGINA ===== */
+.restaurant-new-page {
+  min-height: 100vh;
+  width: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding: 60px 16px;
+
+  /* BACKGROUND */
+  background-image: image-url("pancake.jpg"); // use seu nome real
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  position: relative;
+}
+
+/* Overlay */
+.restaurant-new-page::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+  z-index: 0;
+}
+
+/* ===== CARD (RESTAURADO) ===== */
+.restaurant-form-card {
+  position: relative;
+  z-index: 1;               // fica acima do overlay
+
+  width: 100%;
+  max-width: 500px;         // 👈 tamanho original
+  margin: 0 auto;
+
+  background-color: #ffffff; // 👈 cor original
+  border-radius: 16px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+}
+
+/* ===== BOTÃO VOLTAR ===== */
+.back-button {
+  color: #F83B2F;
+
+  &:hover {
+    color: #463635;
+  }
+}
+
+/* ===== BOTÃO SALVAR ===== */
+.restaurant-form-card .btn-primary {
+  background-color: #F83B2F;
+  border-color: #F83B2F;
+  color: #fff;
+
+  &:hover,
+  &:focus {
+    background-color: #d22e23;
+    border-color: #d22e23;
+    color: #fff;
+  }
+}
+
+.card-header {
+  margin-top: 16px;
+}
