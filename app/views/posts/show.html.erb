@@ -30,6 +30,60 @@
 
     <hr>
 
+    <% user_reaction = @post.post_reactions.detect { |r| r.user_id == current_user.id } %>
+    <% reaction_type = user_reaction&.reaction_type %>
+    <% negative = reaction_type == "not_recommend" %>
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <div class="dropdown">
+        <button
+          type="button"
+          class="btn-recommend <%= negative ? 'btn-recommend--negative' : 'btn-recommend--positive' %>"
+          data-bs-toggle="dropdown"
+          aria-expanded="false">
+
+          <% if negative %>
+            <i class="far fa-thumbs-down"></i>
+            <span>Não recomendo</span>
+          <% elsif reaction_type == "recommend" %>
+            <i class="far fa-thumbs-up"></i>
+            <span>Recomendo!</span>
+          <% else %>
+            <i class="far fa-thumbs-up"></i>
+            <span>Recomendar</span>
+          <% end %>
+        </button>
+
+        <ul class="dropdown-menu">
+          <li>
+            <%= button_to "Recomendo!",
+                  recommend_post_path(@post),
+                  method: :post,
+                  class: "dropdown-item",
+                  form: { class: "d-block" } %>
+          </li>
+          <li>
+            <%= button_to "Não recomendo",
+                  not_recommend_post_path(@post),
+                  method: :post,
+                  class: "dropdown-item",
+                  form: { class: "d-block" } %>
+          </li>
+
+          <% if user_reaction.present? %>
+            <li><hr class="dropdown-divider"></li>
+            <li>
+              <%= button_to "Remover reação",
+                    reaction_post_path(@post),
+                    method: :delete,
+                    class: "dropdown-item text-muted",
+                    form: { class: "d-block" } %>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+
 
     <h5>Comentários</h5>
 

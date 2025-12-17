@@ -60,8 +60,6 @@
             <% restaurant_ratings.each do |rating| %>
               <li>
                 <strong><%= rating.score %>/5</strong>
-                <% if rating.recommended == true %> (Recomendo)<% end %>
-                <% if rating.recommended == false %> (Não recomendo)<% end %>
               </li>
             <% end %>
           </ul>

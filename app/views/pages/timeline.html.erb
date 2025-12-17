@@ -12,7 +12,6 @@
       <% restaurant = post.restaurant %>
 
       <div class="feed-card">
-        <!-- HEADER: avatar + nome + legenda + pill + lixeira -->
         <div class="feed-card-header">
           <div class="feed-user">
             <% avatar =
@@ -59,14 +58,14 @@
           </div>
         </div>
 
-        <!-- FOTOS -->
+        <!-- FOTOS: se tiver upload, usa upload; se não tiver, aí sim cai no restaurante -->
         <div class="feed-photos">
           <% if post.photos.attached? %>
             <% post.photos.first(2).each do |photo| %>
               <a href="#"
                  data-bs-toggle="modal"
                  data-bs-target="#postPhotosModal-<%= post.id %>">
-                <%= image_tag photo, class: "feed-photo" %>
+                <%= image_tag url_for(photo), class: "feed-photo" %>
               </a>
             <% end %>
           <% elsif restaurant&.image_name.present? %>
@@ -78,14 +77,11 @@
           <% end %>
         </div>
 
-        <!-- RESTAURANTE ESTRELAS -->
         <% if restaurant %>
           <div class="feed-restaurant">
             <div>
               <h4 class="restaurant-name"><%= restaurant.name %></h4>
-              <p class="restaurant-meta">
-                <%= restaurant.category %>
-              </p>
+              <p class="restaurant-meta"><%= restaurant.category %></p>
             </div>
 
             <% if post.rating.present? %>
@@ -102,27 +98,66 @@
           </div>
         <% end %>
 
-        <!-- FOOTER -->
-        <% rating_value = post.rating %>
-        <% recommended =
-             if rating_value.nil?
-               true
-             else
-               rating_value >= 4
-             end %>
+        <!-- FOOTER: agora depende da interação (PostReaction), não da nota -->
+        <% user_reaction = post.post_reactions.detect { |r| r.user_id == current_user.id } %>
+        <% reaction_type = user_reaction&.reaction_type %>
+
+        <% btn_class =
+            if reaction_type == "recommend"
+              "btn-recommend btn-recommend--positive"
+            elsif reaction_type == "not_recommend"
+              "btn-recommend btn-recommend--negative"
+            else
+              "btn-recommend"
+            end %>
 
         <div class="feed-footer">
-          <button
-            type="button"
-            class="btn-recommend <%= recommended ? 'btn-recommend--positive' : 'btn-recommend--negative' %>">
-            <% if recommended %>
-              <i class="far fa-thumbs-up"></i>
-              <span>Recomendo!</span>
-            <% else %>
-              <i class="far fa-thumbs-down"></i>
-              <span>Não recomendo</span>
-            <% end %>
-          </button>
+          <div class="dropdown">
+            <button
+              type="button"
+              class="<%= btn_class %>"
+              data-bs-toggle="dropdown"
+              aria-expanded="false">
+              <% if reaction_type == "recommend" %>
+                <i class="far fa-thumbs-up"></i>
+                <span>Recomendo!</span>
+              <% elsif reaction_type == "not_recommend" %>
+                <i class="far fa-thumbs-down"></i>
+                <span>Não recomendo</span>
+              <% else %>
+                <i class="far fa-thumbs-up"></i>
+                <span>Recomendar</span>
+              <% end %>
+            </button>
+
+            <ul class="dropdown-menu">
+              <li>
+                <%= button_to "Recomendo!",
+                      recommend_post_path(post),
+                      method: :post,
+                      class: "dropdown-item",
+                      form: { class: "d-block" } %>
+              </li>
+              <li>
+                <%= button_to "Não recomendo",
+                      not_recommend_post_path(post),
+                      method: :post,
+                      class: "dropdown-item",
+                      form: { class: "d-block" } %>
+              </li>
+
+              <% if user_reaction.present? %>
+                <li><hr class="dropdown-divider"></li>
+                <li>
+                  <%= button_to "Remover reação",
+                        reaction_post_path(post),
+                        method: :delete,
+                        class: "dropdown-item text-muted",
+                        form: { class: "d-block" } %>
+                </li>
+              <% end %>
+            </ul>
+          </div>
 
           <button
             class="feed-comments-toggle"
@@ -134,7 +169,6 @@
           </button>
         </div>
 
-        <!-- LISTA FORM DE COMENTÁRIOS -->
         <div class="collapse mt-2" id="comments-<%= post.id %>">
           <div class="comments-list">
             <% post.comments.each do |comment| %>
@@ -156,14 +190,13 @@
         </div>
       </div>
 
-      <!-- FOTOS -->
       <div class="modal fade" id="postPhotosModal-<%= post.id %>" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
           <div class="modal-content">
             <div class="modal-body p-0">
               <% if post.photos.attached? %>
                 <% post.photos.each do |photo| %>
-                  <%= image_tag photo, class: "w-100 d-block modal-photo" %>
+                  <%= image_tag url_for(photo), class: "w-100 d-block modal-photo" %>
                 <% end %>
               <% elsif restaurant&.image_name.present? %>
                 <%= image_tag restaurant.image_name, class: "w-100 d-block modal-photo" %>
