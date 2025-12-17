@@ -213,20 +213,26 @@
 <button id="open-ai-chat"
   style="
     position: fixed;
-    bottom: 20px;
+    bottom: 30px;
     right: 20px;
     border-radius: 50%;
-    width: 60px;
-    height: 60px;
-    background: #F83B2F;
+    width: 100px;
+    height: 100px;
     color: white;
     font-size: 24px;
     border: none;
     z-index: 9999;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    padding: 0;
   ">
-  🤖
-</button> 
+  <img src="<%= asset_path('emoji_chat.png') %>"
+       alt="Chef Bot"
+       style="width: 100%; height: 100%; object-fit: cover;">
+</button>
 
 <!-- MODAL DA IA -->
 <div id="ai-modal"
@@ -243,15 +249,16 @@
     z-index: 9999;
   ">
 
-  <h5>Recomendação de restaurantes</h5>
+  <h5><strong>Precisando de recomendações?</strong></h5>
 
   <textarea id="ai-message"
     class="form-control mb-2"
-    placeholder="Ex: me recomenda um restaurante arabe"></textarea>
+    placeholder="Ex: me recomende um restaurante ..."></textarea>
 
   <button id="send-ai"
-    class="btn btn-primary btn-sm w-100">
-    Perguntar
+    class="btn btn-primary btn-sm w-100"
+    style="background-color: #F83B2F; border-color: #F83B2F;">
+    ENVIAR
   </button>
 
   <div id="ai-response" class="mt-2"
