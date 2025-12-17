@@ -18,6 +18,10 @@ export default class extends Controller {
 
   previewPhotos(event) {
     const incoming = Array.from(event.target.files || [])
+
+    // Limpa o input ANTES de sincronizar (pra permitir escolher o mesmo arquivo novamente)
+    this.photoInputTarget.value = ""
+
     const merged = [...this.selectedFiles, ...incoming]
 
     const seen = new Set()
@@ -33,7 +37,6 @@ export default class extends Controller {
     this.selectedFiles = unique.slice(0, 6)
     this.syncInputFiles()
     this.renderPreviews()
-    this.photoInputTarget.value = ""
   }
 
   removePhoto(index) {

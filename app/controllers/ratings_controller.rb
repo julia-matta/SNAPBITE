@@ -40,8 +40,7 @@ class RatingsController < ApplicationController
       :service,
       :food_text,
       :price,
-      :comment,
-      :recommended
+      :comment
     )
   end
 end

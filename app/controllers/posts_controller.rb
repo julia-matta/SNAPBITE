@@ -7,7 +7,7 @@ class PostsController < ApplicationController
   end
 
   def show
-    @post = Post.includes(:user, :restaurant, photos_attachments: :blob, comments: :user).find(params[:id])
+    @post = Post.includes(:user, :restaurant, :post_reactions, photos_attachments: :blob, comments: :user).find(params[:id])
   end
 
   def create

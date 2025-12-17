@@ -13,11 +13,6 @@
         label: "Nota geral (1 a 5)",
         input_html: { min: 1, max: 5 } %>
 
-  <%= f.input :recommended,
-              as: :radio_buttons,
-              collection: [["Recomendo", true], ["Não recomendo", false]],
-              label: "Recomendação" %>
-
   <hr>
 
   <p><strong>Avaliar aspectos específicos (opcional):</strong></p>

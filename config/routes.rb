@@ -32,10 +32,13 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :friendships, only: %i[create destroy]
-
-
   resources :posts, only: [:new, :create, :show, :destroy] do
+    member do
+      post :recommend, to: "post_reactions#recommend"
+      post :not_recommend, to: "post_reactions#not_recommend"
+      delete :reaction, to: "post_reactions#destroy"
+    end
     resources :comments, only: :create
   end
+
 end

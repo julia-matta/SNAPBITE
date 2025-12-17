@@ -27,11 +27,6 @@
       <div class="card-body">
         <p><strong><%= rating.user.username || rating.user.email %></strong></p>
         <p>Score geral: <%= rating.score %>/5</p>
-        <% if rating.recommended == true %>
-          <p>✅ Recomendo</p>
-        <% elsif rating.recommended == false %>
-          <p>❌ Não recomendo</p>
-        <% end %>
         <% if rating.comment.present? %>
           <p><%= rating.comment %></p>
         <% end %>
