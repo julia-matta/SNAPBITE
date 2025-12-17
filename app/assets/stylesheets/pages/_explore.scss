@@ -248,3 +248,19 @@
     font-weight: 400;
   }
 }
+
+.explore-search-header {
+  display: flex;
+  justify-content: space-between; // empurra o botão pra direita
+  align-items: flex-start;
+  gap: 16px;
+
+  h1 {
+    margin-bottom: 4px;
+  }
+
+  h4 {
+    color: #6b7280;
+    font-weight: 400;
+  }
+}

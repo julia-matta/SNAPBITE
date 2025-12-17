@@ -1,20 +1,26 @@
 <div class="explore-page">
   <div class="explore-container">
 
-    <!-- ================= CARD DE BUSCA ================= -->
     <div class="explore-search-card mb-5">
 
-      <%= link_to "Buscar pessoas",
-            users_path,
-            class: "btn btn-outline-primary mb-3" %>
+      <!-- ===== HEADER (título + botão à direita) ===== -->
+      <div class="explore-search-header mb-4">
+        <div class="explore-search-titles">
+          <h1>Explorar restaurantes</h1>
+          <h4>Descubra novos sabores pela cidade</h4>
+        </div>
 
-      <h1>Explorar restaurantes</h1>
-      <h4 class="mb-4">Descubra novos sabores pela cidade</h4>
+        <%= link_to "Buscar pessoas",
+              users_path,
+              class: "btn btn-outline-primary" %>
+      </div>
+      <!-- ===== FIM HEADER ===== -->
 
+      <!-- ===== FILTROS ===== -->
       <%= form_with url: explore_path, method: :get, local: true do %>
 
         <!-- BUSCA + PREÇO + FILTRAR -->
-        <div class="filter-row">
+        <div class="filter-row mb-4">
 
           <div class="filter-field">
             <%= label_tag :query, "Buscar" %>
@@ -37,25 +43,23 @@
 
         </div>
 
+        <!-- CATEGORIAS -->
+        <div class="category-buttons mb-4">
+          <% Restaurant::CATEGORIES.each do |cat| %>
+            <%= button_tag cat,
+                  type: :submit,
+                  name: :category,
+                  value: cat,
+                  class: "category-btn #{'active' if params[:category] == cat}" %>
+          <% end %>
+        </div>
+
       <% end %>
+      <!-- ===== FIM FILTROS ===== -->
+
     </div>
-    <!-- ================= FIM CARD DE BUSCA ================= -->
 
-
-    <!-- ================= CATEGORIAS ================= -->
-    <div class="category-buttons mb-5">
-      <% Restaurant::CATEGORIES.each do |cat| %>
-        <%= button_tag cat,
-              type: :submit,
-              name: :category,
-              value: cat,
-              class: "category-btn #{'active' if params[:category] == cat}" %>
-      <% end %>
-    </div>
-    <!-- ================= FIM CATEGORIAS ================= -->
-
-
-    <!-- ================= RESULTADOS ================= -->
+    <!-- ===== RESULTADOS ===== -->
     <div class="explore-results">
       <% @restaurants.each do |restaurant| %>
 
@@ -124,7 +128,7 @@
 
       <% end %>
     </div>
-    <!-- ================= FIM RESULTADOS ================= -->
+    <!-- ===== FIM RESULTADOS ===== -->
 
   </div>
 </div>
