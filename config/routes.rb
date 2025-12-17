@@ -24,6 +24,8 @@ Rails.application.routes.draw do
 
   resources :ratings, only: %i[new create destroy]
 
+  resources :friendships, only: [:create, :destroy]
+
   resources :users, only: %i[index show edit update] do
     member do
       get :followers
