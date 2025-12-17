@@ -4,6 +4,11 @@ class PostsController < ApplicationController
   def new
     @post = Post.new
     @restaurants = Restaurant.all
+    # if params[:restaurant_id].present?
+    #   @restaurant = Restaurant.find(params[:restaurant_id])
+    #   @post.restaurant = @restaurant
+    #   # @selected_restaurant = params[:restaurant_id]
+    # end
   end
 
   def show
