@@ -176,3 +176,84 @@
     <% end %>
   </div>
 </div>
+<!-- BOTÃO FLUTUANTE DA IA -->
+<button id="open-ai-chat"
+  style="
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    background: #ff7a00;
+    color: white;
+    font-size: 24px;
+    border: none;
+    z-index: 9999;
+    cursor: pointer;
+  ">
+  🤖
+</button>
+
+<!-- MODAL DA IA -->
+<div id="ai-modal"
+  style="
+    display: none;
+    position: fixed;
+    bottom: 100px;
+    right: 20px;
+    width: 320px;
+    background: white;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+    z-index: 9999;
+  ">
+
+  <h5>Recomendação de restaurantes</h5>
+
+  <textarea id="ai-message"
+    class="form-control mb-2"
+    placeholder="Ex: Quero um japonês barato"></textarea>
+
+  <button id="send-ai"
+    class="btn btn-primary btn-sm w-100">
+    Perguntar
+  </button>
+
+  <div id="ai-response" class="mt-2"
+    style="white-space: pre-wrap;"></div>
+</div>
+
+<script>
+  const openBtn = document.getElementById("open-ai-chat");
+  const modal = document.getElementById("ai-modal");
+  const sendBtn = document.getElementById("send-ai");
+
+  openBtn.addEventListener("click", () => {
+    modal.style.display =
+      modal.style.display === "none" ? "block" : "none";
+  });
+
+  sendBtn.addEventListener("click", () => {
+    const message = document.getElementById("ai-message").value;
+
+    if (message.trim() === "") return;
+
+    document.getElementById("ai-response").innerText = "Pensando... 🤔";
+
+    fetch("/chats/1/message", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRF-Token": document
+          .querySelector("meta[name='csrf-token']").content
+      },
+      body: JSON.stringify({ message: message })
+    })
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById("ai-response").innerText = data.reply;
+      });
+  });
+</script>
