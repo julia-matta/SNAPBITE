@@ -6,15 +6,24 @@ class Restaurant < ApplicationRecord
 
   belongs_to :user
 
-  # Associações
   has_many :ratings, dependent: :destroy
-  has_many :checkins, dependent: :destroy   # <<< ADICIONADO
+  has_many :checkins, dependent: :destroy
+  has_many :posts, dependent: :destroy
   has_one_attached :photo
 
-  # Validações
   validates :name, presence: true
   validates :category, presence: true, inclusion: { in: CATEGORIES }
   validates :infos, presence: true
 
-  # price_range será um número (1 barato, 2 médio, 3 caro)
+  after_create_commit :create_owner_post
+
+  private
+
+  def create_owner_post
+    Post.create!(
+      user: user,
+      restaurant: self,
+      caption: "Novo restaurante cadastrado: #{name}"
+    )
+  end
 end

@@ -3,7 +3,6 @@
 
     <h2 class="profile-title text-center mb-4">Meu Perfil</h2>
 
-    <!-- FOTO + INFO -->
     <div class="profile-header text-center">
       <% if current_user.profile_picture.attached? %>
         <%= image_tag url_for(current_user.profile_picture),
@@ -24,32 +23,32 @@
 
     <hr>
 
-        <!-- BOTÕES / ABAS -->
-<div class="profile-tabs-wrapper">
-  <div class="profile-tabs-card">
+    <% posts_tab_label = current_user.owner? ? "Meus restaurantes" : "Minhas publicações" %>
 
-    <%= link_to "Minhas publicações",
-          "#posts",
-          class: "profile-tab-btn active" %>
+    <div class="profile-tabs-wrapper">
+      <div class="profile-tabs-card">
 
-    <%= link_to "Fotos",
-          "#photos",
-          class: "profile-tab-btn" %>
+        <%= link_to posts_tab_label,
+              "#posts",
+              class: "profile-tab-btn active" %>
 
-    <%= link_to "Seguidores",
-          followers_user_path(@user),
-          class: "profile-tab-btn followers" %>
+        <%= link_to "Fotos",
+              "#photos",
+              class: "profile-tab-btn" %>
 
-    <%= link_to "Seguindo",
-          following_user_path(@user),
-          class: "profile-tab-btn following" %>
+        <%= link_to "Seguidores",
+              followers_user_path(@user),
+              class: "profile-tab-btn followers" %>
 
-  </div>
-</div>
+        <%= link_to "Seguindo",
+              following_user_path(@user),
+              class: "profile-tab-btn following" %>
+
+      </div>
+    </div>
 
     <hr>
 
-    <!-- AVALIAÇÕES -->
     <% @ratings_by_category.each do |category, ratings| %>
       <h4 class="profile-section-title"><%= category %></h4>
 
@@ -69,8 +68,7 @@
 
     <hr>
 
-    <!-- PUBLICAÇÕES -->
-    <h3 class="profile-posts-title" id="posts">Minhas publicações</h3>
+    <h3 class="profile-posts-title" id="posts"><%= posts_tab_label %></h3>
 
     <div class="profile-posts-section">
       <% @posts.each do |post| %>
@@ -78,6 +76,8 @@
           <div class="profile-post-main">
             <% if post.photos.attached? %>
               <%= image_tag post.photos.first, class: "profile-post-thumb" %>
+            <% elsif post.restaurant&.photo&.attached? %>
+              <%= image_tag url_for(post.restaurant.photo), class: "profile-post-thumb" %>
             <% elsif post.restaurant&.image_name.present? %>
               <%= image_tag post.restaurant.image_name, class: "profile-post-thumb" %>
             <% end %>
@@ -88,8 +88,9 @@
             </div>
           </div>
 
+          <% is_owner_restaurant_post = current_user.owner? && post.restaurant.present? && post.restaurant.user_id == current_user.id %>
           <%= button_to "Excluir",
-                post_path(post),
+                (is_owner_restaurant_post ? restaurant_path(post.restaurant) : post_path(post)),
                 method: :delete,
                 data: { confirm: "Tem certeza que deseja excluir esta publicação?" },
                 class: "profile-post-delete" %>

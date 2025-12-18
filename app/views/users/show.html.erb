@@ -30,9 +30,16 @@
             <% end %>
           <% end %>
 
+          <% tab_label =
+            if @user.owner?
+              "Meus restaurantes"
+            else
+              (current_user == @user ? "Minhas publicações" : "Publicações")
+            end %>
+
           <ul class="nav nav-tabs mb-3 mt-4">
             <li class="nav-item">
-              <%= link_to (current_user == @user ? "Minhas publicações" : "Publicações"),
+              <%= link_to tab_label,
                 publications_user_path(@user),
                 class: "nav-link #{current_page?(publications_user_path(@user)) ? "active" : ""}" %>
             </li>
@@ -51,7 +58,6 @@
               <%= link_to "Seguindo", following_user_path(@user), class: "nav-link" %>
             </li>
           </ul>
-
 
           <hr>
         </div>
@@ -72,6 +78,8 @@
       <% thumb =
         if post.photos.attached?
           post.photos.first
+        elsif post.restaurant&.photo&.attached?
+          post.restaurant.photo
         elsif post.restaurant&.image_name.present?
           post.restaurant.image_name
         end %>
