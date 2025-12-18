@@ -77,7 +77,7 @@ class AiRecommendationService
     return "Não encontramos restaurantes com esse preço 😕" if filtered.empty?
 
     # RESPOSTA
-    response = "Recomendo estes restaurantes:\n\n"
+    response = "Recomendo estes restaurantes:\n"
 
     filtered.first(3).each do |r|
       response += "• #{r.name} (#{r.category} – preço médio: #{r.average_price})\n"
