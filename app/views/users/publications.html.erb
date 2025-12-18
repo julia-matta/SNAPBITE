@@ -30,9 +30,16 @@
             <% end %>
           <% end %>
 
+          <% tab_label =
+            if @user.owner?
+              "Meus restaurantes"
+            else
+              (current_user == @user ? "Minhas publicações" : "Publicações")
+            end %>
+
           <ul class="nav nav-tabs mb-3 mt-4">
             <li class="nav-item">
-              <%= link_to (current_user == @user ? "Minhas publicações" : "Publicações"),
+              <%= link_to tab_label,
                 publications_user_path(@user),
                 class: "nav-link active" %>
             </li>
@@ -57,7 +64,14 @@
   </div>
 </div>
 
-<h3 class="profile-posts-title"><%= current_user == @user ? "Minhas publicações" : "Publicações" %></h3>
+<% title_label =
+  if @user.owner?
+    "Meus restaurantes"
+  else
+    (current_user == @user ? "Minhas publicações" : "Publicações")
+  end %>
+
+<h3 class="profile-posts-title"><%= title_label %></h3>
 
 <% if @posts.blank? %>
   <div class="profile-posts-section">
@@ -85,8 +99,9 @@
             <small class="text-muted"><%= time_ago_in_words(post.created_at) %> atrás</small>
 
             <% if current_user == @user %>
+              <% is_owner_restaurant_post = current_user.owner? && post.restaurant.present? && post.restaurant.user_id == current_user.id %>
               <%= button_to "Excluir",
-                post_path(post),
+                (is_owner_restaurant_post ? restaurant_path(post.restaurant) : post_path(post)),
                 method: :delete,
                 data: { turbo_confirm: "Tem certeza que deseja excluir esta publicação?" },
                 class: "btn btn-link text-danger p-0",
@@ -99,6 +114,10 @@
         <% if photos.any? %>
           <%= link_to post_path(post) do %>
             <%= image_tag url_for(photos.first), class: "w-100 d-block mb-2", style: "border-radius: 18px; object-fit: cover;" %>
+          <% end %>
+        <% elsif post.restaurant&.photo&.attached? %>
+          <%= link_to post_path(post) do %>
+            <%= image_tag url_for(post.restaurant.photo), class: "w-100 d-block mb-2", style: "border-radius: 18px; object-fit: cover;" %>
           <% end %>
         <% elsif post.restaurant&.image_name.present? %>
           <%= link_to post_path(post) do %>

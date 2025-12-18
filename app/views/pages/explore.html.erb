@@ -66,16 +66,32 @@
         <div class="explore-card">
 
           <!-- IMAGEM -->
-          <div class="explore-card-image">
-            <% if restaurant.image_name.present? %>
+          <div class="explore-card-image" style="position: relative;">
+            <% if restaurant.photo.attached? %>
+              <%= image_tag url_for(restaurant.photo),
+                    class: "card-photo",
+                    alt: restaurant.name %>
+            <% elsif restaurant.image_name.present? %>
               <%= image_tag restaurant.image_name,
                     class: "card-photo",
                     alt: restaurant.name %>
             <% else %>
-              <%= image_tag "placeholder.jpg",
+              <%= image_tag "placeholder_profile.png",
                     class: "card-photo",
                     alt: "Imagem não disponível" %>
             <% end %>
+
+              <% if user_signed_in? && current_user.owner? && restaurant.user_id == current_user.id %>
+                <%= button_to "Excluir",
+                      restaurant_path(restaurant),
+                      method: :delete,
+                      data: { turbo_confirm: "Tem certeza que deseja excluir este restaurante?" },
+                      class: "btn btn-sm btn-outline-danger",
+                      form: { class: "d-inline" },
+                      style: "position:absolute; top:10px; right:12px; padding:2px 6px; font-size:12px; line-height:1; z-index:5;" ,
+                      aria: { label: "Excluir restaurante" } %>
+              <% end %>
+
           </div>
 
           <!-- CONTEÚDO -->

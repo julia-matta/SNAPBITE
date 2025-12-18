@@ -7,6 +7,8 @@
 
   <div class="timeline-list">
     <% @posts.each do |post| %>
+      <% next if post.user&.owner? && post.caption.to_s.start_with?("Novo restaurante cadastrado:") %>
+
       <% user = post.user %>
       <% restaurant = post.restaurant %>
 
@@ -47,7 +49,8 @@
             <% end %>
 
             <% if post.user == current_user %>
-              <%= button_to post_path(post),
+              <% is_owner_restaurant_post = current_user.owner? && restaurant.present? && restaurant.user_id == current_user.id %>
+              <%= button_to (is_owner_restaurant_post ? restaurant_path(restaurant) : post_path(post)),
                     method: :delete,
                     data: { confirm: "Tem certeza que deseja excluir esta publicação?" },
                     class: "feed-delete-btn" do %>
@@ -208,6 +211,7 @@
     <% end %>
   </div>
 </div>
+
 <!-- BOTÃO FLUTUANTE DA IA -->
 <div data-controller="chat">
   <button data-action="click->chat#toggle"
