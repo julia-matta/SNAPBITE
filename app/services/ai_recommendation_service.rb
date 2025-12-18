@@ -3,6 +3,23 @@ class AiRecommendationService
     message = normalize(user_message)
     filtered = restaurants
 
+    # CIDADE
+    city = nil
+
+    if message.include?("sao paulo") || message.include?("sp")
+      city = "sao paulo"
+    elsif message.include?("belo horizonte") || message.include?("bh")
+      city = "belo horizonte"
+    end
+
+    if city
+      filtered = filtered.select do |r|
+        normalize(r.city).include?(city)
+      end
+
+      return "Não encontramos restaurantes nessa cidade 😕" if filtered.empty?
+    end
+
     # CATEGORIAS
     categories = {
       "italiano" => "ital",

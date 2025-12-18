@@ -56,7 +56,8 @@ Restaurant.create!(
   category: "Italiano",
   average_price: 120,
   image_name: "ninita.jpg",
-  infos: "Restaurante italiano em Belo Horizonte."
+  infos: "Restaurante italiano em Belo Horizonte.",
+  city: "belo horizonte"
 )
 
 # ------------------- GLOUTON -------------------
@@ -66,7 +67,8 @@ Restaurant.create!(
   category: "Francês",
   average_price: 250,
   image_name: "glouton.jpg",
-  infos: "Cozinha franco-mineira contemporânea."
+  infos: "Cozinha franco-mineira contemporânea.",
+  city: "belo horizonte"
 )
 
 # ------------------- NICOLAU BAR DA ESQUINA -------------------
@@ -76,7 +78,8 @@ Restaurant.create!(
   category: "Brasileiro",
   average_price: 80,
   image_name: "nicolau.jpg",
-  infos: "Bar brasileiro moderno e descontraído."
+  infos: "Bar brasileiro moderno e descontraído.",
+  city: "belo horizonte"
 )
 
 # ------------------- MACARÉU -------------------
@@ -86,7 +89,8 @@ Restaurant.create!(
   category: "Português",
   average_price: 150,
   image_name: "macareu.jpg",
-  infos: "Peixes e frutos do mar com inspiração portuguesa."
+  infos: "Peixes e frutos do mar com inspiração portuguesa.",
+  city: "belo horizonte"
 )
 
 # ------------------- TASTE VIN -------------------
@@ -96,7 +100,8 @@ Restaurant.create!(
   category: "Francês",
   average_price: 200,
   image_name: "taste_vin.webp",
-  infos: "Bistrô francês clássico."
+  infos: "Bistrô francês clássico.",
+  city: "belo horizonte"
 )
 
 # ------------------- KEI -------------------
@@ -106,7 +111,8 @@ Restaurant.create!(
   category: "Japonês",
   average_price: 300,
   image_name: "kei.jpg",
-  infos: "Alta gastronomia japonesa contemporânea."
+  infos: "Alta gastronomia japonesa contemporânea.",
+  city: "belo horizonte"
 )
 
 # ------------------- ANCHO -------------------
@@ -116,7 +122,8 @@ Restaurant.create!(
   category: "Brasileiro",
   average_price: 180,
   image_name: "ancho.jpg",
-  infos: "Carnes nobres e parrilla."
+  infos: "Carnes nobres e parrilla.",
+  city: "belo horizonte"
 )
 
 puts "Criando restaurantes Owner2..."
@@ -128,7 +135,8 @@ Restaurant.create!(
   category: "Mexicano",
   average_price: 130,
   image_name: "el_matador.jpg",
-  infos: "Culinária mexicana tradicional."
+  infos: "Culinária mexicana tradicional.",
+  city: "belo horizonte"
 )
 
 # ------------------- MACAU -------------------
@@ -138,7 +146,8 @@ Restaurant.create!(
   category: "Chinês",
   average_price: 140,
   image_name: "macau.jpg",
-  infos: "Cozinha chinesa contemporânea."
+  infos: "Cozinha chinesa contemporânea.",
+  city: "belo horizonte"
 )
 
 # ------------------- NAMASTÊ -------------------
@@ -148,7 +157,8 @@ Restaurant.create!(
   category: "Indiano",
   average_price: 110,
   image_name: "namaste.jpg",
-  infos: "Culinária indiana aromática e tradicional."
+  infos: "Culinária indiana aromática e tradicional.",
+  city: "belo horizonte"
 )
 
 # ------------------- MITRA -------------------
@@ -158,7 +168,8 @@ Restaurant.create!(
   category: "Mediterrâneo",
   average_price: 160,
   image_name: "mitra.jpg",
-  infos: "Cozinha mediterrânea moderna com massas artesanais."
+  infos: "Cozinha mediterrânea moderna com massas artesanais.",
+  city: "belo horizonte"
 )
 
 # ------------------- BEJÍ SUSHI -------------------
@@ -168,7 +179,8 @@ Restaurant.create!(
   category: "Japonês",
   average_price: 120,
   image_name: "beji_sushi.jpg",
-  infos: "Sushi contemporâneo."
+  infos: "Sushi contemporâneo.",
+  city: "belo horizonte"
 )
 
 # ------------------- HOFBRÄUHAUS -------------------
@@ -178,7 +190,8 @@ Restaurant.create!(
   category: "Alemão",
   average_price: 170,
   image_name: "hofbrauhaus.webp",
-  infos: "Cervejaria alemã tradicional."
+  infos: "Cervejaria alemã tradicional.",
+  city: "belo horizonte"
 )
 
 # ------------------- VILA ÁRABE -------------------
@@ -188,7 +201,8 @@ Restaurant.create!(
   category: "Árabe",
   average_price: 130,
   image_name: "vila_arabe.jpg",
-  infos: "Culinária árabe tradicional."
+  infos: "Culinária árabe tradicional.",
+  city: "belo horizonte"
 )
 
 puts "Criando restaurantes Owner3..."
@@ -200,7 +214,8 @@ Restaurant.create!(
   category: "Brasileiro",
   average_price: 110,
   image_name: "mocoto.webp",
-  infos: "Culinária nordestina brasileira tradicional."
+  infos: "Culinária nordestina brasileira tradicional.",
+  city: "sao paulo"
 )
 
 # ------------------- LE BIFE -------------------
@@ -210,7 +225,8 @@ Restaurant.create!(
   category: "Francês",
   average_price: 180,
   image_name: "le_bife.webp",
-  infos: "Steakhouse de inspiração francesa."
+  infos: "Steakhouse de inspiração francesa.",
+  city: "sao paulo"
 )
 
 # ------------------- MODERN MAMMA OSTERIA -------------------
@@ -220,7 +236,8 @@ Restaurant.create!(
   category: "Italiano",
   average_price: 160,
   image_name: "Modern-Mamma-Osteria.webp",
-  infos: "Cozinha italiana moderna com massas artesanais."
+  infos: "Cozinha italiana moderna com massas artesanais.",
+  city: "sao paulo"
 )
 
 # ------------------- MANI -------------------
@@ -230,7 +247,8 @@ Restaurant.create!(
   category: "Italiano",
   average_price: 220,
   image_name: "mani.jpg",
-  infos: "Alta gastronomia italiana contemporânea."
+  infos: "Alta gastronomia italiana contemporânea.",
+  city: "sao paulo"
 )
 
 # ------------------- COCO BAMBU -------------------
@@ -240,7 +258,8 @@ Restaurant.create!(
   category: "Brasileiro",
   average_price: 150,
   image_name: "Coco-Bambu.webp",
-  infos: "Especializado em frutos do mar."
+  infos: "Especializado em frutos do mar.",
+  city: "sao paulo"
 )
 
 # ------------------- SUSHI MAKOTO -------------------
@@ -250,7 +269,8 @@ Restaurant.create!(
   category: "Japonês",
   average_price: 240,
   image_name: "sushi-makoto.jpg",
-  infos: "Sushi tradicional japonês."
+  infos: "Sushi tradicional japonês.",
+  city: "sao paulo"
 )
 
 # ------------------- KADO -------------------
@@ -260,7 +280,8 @@ Restaurant.create!(
   category: "Japonês",
   average_price: 200,
   image_name: "kado.jpeg",
-  infos: "Culinária japonesa tradicional."
+  infos: "Culinária japonesa tradicional.",
+  city: "sao paulo"
 )
 
 puts "Finalizado! #{Restaurant.count} restaurantes criados!"

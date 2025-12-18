@@ -16,7 +16,6 @@ Rails.application.routes.draw do
   get "profile",  to: "pages#profile",  as: :profile
   get "publish",  to: "ratings#new",    as: :publish
 
-
   resources :users, only: %i[show edit update]
 
   resources :restaurants do
@@ -27,7 +26,6 @@ Rails.application.routes.draw do
   resources :ratings, only: %i[new create destroy]
 
   resources :friendships, only: [:create, :destroy]
-
 
   resources :users, only: %i[index show edit update] do
     member do
@@ -46,14 +44,11 @@ Rails.application.routes.draw do
   # AVALIAÇÕES
   resources :ratings, only: %i[new create destroy]
 
- 
-
   # AMIZADES
   resources :friendships, only: %i[create destroy]
 
-  # =========================
   # 🤖 CHAT DA IA (IMPORTANTE)
-  # =========================
+
   resources :chats, only: [:show]
   post "chats/:id/message", to: "chats#message"
 
