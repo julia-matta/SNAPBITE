@@ -19,7 +19,9 @@ class UsersController < ApplicationController
   end
 
   def publications
-  @posts = @user.posts.includes(:restaurant, photos_attachments: :blob).order(created_at: :desc)
+    @posts = @user.posts
+                  .includes(:user, :restaurant, :post_reactions, photos_attachments: :blob)
+                  .order(created_at: :desc)
   end
 
   def followers
@@ -32,13 +34,13 @@ class UsersController < ApplicationController
 
   def edit; end
 
-def update
-  if @user.update(user_params)
-    redirect_to user_path(@user), notice: "Perfil atualizado."
-  else
-    render :edit, status: :unprocessable_entity
+  def update
+    if @user.update(user_params)
+      redirect_to user_path(@user), notice: "Perfil atualizado."
+    else
+      render :edit, status: :unprocessable_entity
+    end
   end
-end
 
   private
 
