@@ -13,11 +13,13 @@
             <%= image_tag "placeholder_profile.png", class: "rounded-circle border", style: "width: 150px; height: 150px; object-fit: cover;" %>
           <% end %>
 
-          <p><strong>Usuário:</strong> <%= @user.username.presence || @user.email %></p>
-          <p><strong>Tipo:</strong> <%= @user.owner? ? "Restaurante" : "Cliente" %></p>
+          <div class="mt-4 mb-4">
+            <p class="mb-1 fs-6"><strong>Usuário:</strong> <%= @user.username.presence || @user.email %></p>
+            <p class="mb-0 fs-6"><strong>Tipo:</strong> <%= @user.owner? ? "Restaurante" : "Cliente" %></p>
+          </div>
+
         </div>
 
-        <hr>
 
         <div class="text-center">
           <% if current_user == @user %>
@@ -29,7 +31,7 @@
               <%= button_to "Seguir", friendships_path(friend_id: @user.id), method: :post, class: "btn btn-primary mt-3" %>
             <% end %>
           <% end %>
-
+          <hr>
           <% tab_label =
             if @user.owner?
               "Meus restaurantes"
