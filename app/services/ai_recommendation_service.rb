@@ -3,9 +3,7 @@ class AiRecommendationService
     message = normalize(user_message)
     filtered = restaurants
 
-    # =====================
     # CATEGORIAS
-    # =====================
     categories = {
       "italiano" => "ital",
       "japon" => "japon",
@@ -31,9 +29,7 @@ class AiRecommendationService
       return "Não encontramos restaurantes dessa categoria 😕" if filtered.empty?
     end
 
-    # =====================
     # PREÇO (barato / caro)
-    # =====================
     max_price = nil
     min_price = nil
 
@@ -45,18 +41,14 @@ class AiRecommendationService
       min_price = 150
     end
 
-    # =====================
     # PREÇO "ATÉ X"
-    # =====================
     number = message.scan(/\d+/).first
     if number
       number = number.to_i
       max_price = max_price ? [max_price, number].min : number
     end
 
-    # =====================
     # APLICA FILTRO DE PREÇO
-    # =====================
     if max_price
       filtered = filtered.select { |r| r.average_price.to_i <= max_price }
     end

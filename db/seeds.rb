@@ -69,7 +69,7 @@ Restaurant.create!(
   name: "Taste Vin",
   category: "Francês",
   average_price: 200,
-  image_name: "taste_vin.jpg",
+  image_name: "taste_vin.webp",
   infos: "Bistrô francês clássico."
 )
 
@@ -161,6 +161,76 @@ Restaurant.create!(
   average_price: 130,
   image_name: "vila_arabe.jpg",
   infos: "Culinária árabe tradicional."
+)
+
+# ------------------- MOCOTÓ -------------------
+Restaurant.create!(
+  user: user,
+  name: "Mocotó",
+  category: "Brasileiro",
+  average_price: 110,
+  image_name: "mocoto.webp",
+  infos: "Culinária nordestina brasileira tradicional."
+)
+
+# ------------------- LE BIFE -------------------
+Restaurant.create!(
+  user: user,
+  name: "Le Bife",
+  category: "Francês",
+  average_price: 180,
+  image_name: "le_bife.webp",
+  infos: "Steakhouse de inspiração francesa."
+)
+
+# ------------------- MODERN MAMMA OSTERIA -------------------
+Restaurant.create!(
+  user: user,
+  name: "Modern Mamma Osteria",
+  category: "Italiano",
+  average_price: 160,
+  image_name: "Modern-Mamma-Osteria.webp",
+  infos: "Cozinha italiana moderna com massas artesanais."
+)
+
+# ------------------- MANI -------------------
+Restaurant.create!(
+  user: user,
+  name: "Mani",
+  category: "Italiano",
+  average_price: 220,
+  image_name: "mani.jpg",
+  infos: "Alta gastronomia italiana contemporânea."
+)
+
+# ------------------- COCO BAMBU -------------------
+Restaurant.create!(
+  user: user,
+  name: "Coco Bambu",
+  category: "Brasileiro",
+  average_price: 150,
+  image_name: "Coco-Bambu.webp",
+  infos: "Especializado em frutos do mar."
+)
+
+# ------------------- SUSHI MAKOTO -------------------
+Restaurant.create!(
+  user: user,
+  name: "Sushi Makoto",
+  category: "Japonês",
+  average_price: 240,
+  image_name: "sushi-makoto.jpg",
+  infos: "Sushi tradicional japonês."
+)
+
+# ------------------- KADO -------------------
+Restaurant.create!(
+  user: user,
+  name: "Kado",
+  category: "Japonês",
+  average_price: 200,
+  image_name: "kado.jpeg",
+  infos: "Culinária japonesa tradicional."
 )
 
 puts "Finalizado! #{Restaurant.count} restaurantes criados!"
