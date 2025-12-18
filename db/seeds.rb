@@ -7,25 +7,51 @@ Friendship.destroy_all
 Restaurant.destroy_all
 User.destroy_all
 
-puts "Criando usuários..."
+puts "Criando usuários Owners..."
 
-user = User.create!(
-  email: "inventei@example.com",
+owner1 = User.create!(
+  email: "inventei_owner1@example.com",
   password: "123456",
   role: :owner
 )
 
-customer = User.create!(
-  email: "inventei2@example.com",
+owner2 = User.create!(
+  email: "inventei_owner2@example.com",
+  password: "123456",
+  role: :owner
+)
+
+owner3 = User.create!(
+  email: "inventei_owner3@example.com",
+  password: "123456",
+  role: :owner
+)
+
+puts "Criando usuários Customers..."
+
+customer1 = User.create!(
+  email: "inventei_customer1@example.com",
   password: "123456",
   role: :customer
 )
 
-puts "Criando restaurantes..."
+customer2 = User.create!(
+  email: "inventei_customer2@example.com",
+  password: "123456",
+  role: :customer
+)
+
+customer3 = User.create!(
+  email: "inventei_customer3@example.com",
+  password: "123456",
+  role: :customer
+)
+
+puts "Criando restaurantes Owner1..."
 
 # ------------------- NINITA -------------------
 Restaurant.create!(
-  user: user,
+  user: owner1,
   name: "Ninita",
   category: "Italiano",
   average_price: 120,
@@ -35,7 +61,7 @@ Restaurant.create!(
 
 # ------------------- GLOUTON -------------------
 Restaurant.create!(
-  user: user,
+  user: owner1,
   name: "Glouton",
   category: "Francês",
   average_price: 250,
@@ -45,7 +71,7 @@ Restaurant.create!(
 
 # ------------------- NICOLAU BAR DA ESQUINA -------------------
 Restaurant.create!(
-  user: user,
+  user: owner1,
   name: "Nicolau Bar da Esquina",
   category: "Brasileiro",
   average_price: 80,
@@ -55,7 +81,7 @@ Restaurant.create!(
 
 # ------------------- MACARÉU -------------------
 Restaurant.create!(
-  user: user,
+  user: owner1,
   name: "Macaréu",
   category: "Português",
   average_price: 150,
@@ -65,7 +91,7 @@ Restaurant.create!(
 
 # ------------------- TASTE VIN -------------------
 Restaurant.create!(
-  user: user,
+  user: owner1,
   name: "Taste Vin",
   category: "Francês",
   average_price: 200,
@@ -75,7 +101,7 @@ Restaurant.create!(
 
 # ------------------- KEI -------------------
 Restaurant.create!(
-  user: user,
+  user: owner1,
   name: "Kei",
   category: "Japonês",
   average_price: 300,
@@ -85,7 +111,7 @@ Restaurant.create!(
 
 # ------------------- ANCHO -------------------
 Restaurant.create!(
-  user: user,
+  user: owner1,
   name: "Ancho",
   category: "Brasileiro",
   average_price: 180,
@@ -93,9 +119,11 @@ Restaurant.create!(
   infos: "Carnes nobres e parrilla."
 )
 
+puts "Criando restaurantes Owner2..."
+
 # ------------------- EL MATADOR -------------------
 Restaurant.create!(
-  user: user,
+  user: owner2,
   name: "El Matador",
   category: "Mexicano",
   average_price: 130,
@@ -105,7 +133,7 @@ Restaurant.create!(
 
 # ------------------- MACAU -------------------
 Restaurant.create!(
-  user: user,
+  user: owner2,
   name: "Macau",
   category: "Chinês",
   average_price: 140,
@@ -115,7 +143,7 @@ Restaurant.create!(
 
 # ------------------- NAMASTÊ -------------------
 Restaurant.create!(
-  user: user,
+  user: owner2,
   name: "Namastê",
   category: "Indiano",
   average_price: 110,
@@ -125,17 +153,17 @@ Restaurant.create!(
 
 # ------------------- MITRA -------------------
 Restaurant.create!(
-  user: user,
+  user: owner2,
   name: "Mitra",
   category: "Mediterrâneo",
   average_price: 160,
   image_name: "mitra.jpg",
-  infos: "Cozinha mediterrânea moderna."
+  infos: "Cozinha mediterrânea moderna com massas artesanais."
 )
 
 # ------------------- BEJÍ SUSHI -------------------
 Restaurant.create!(
-  user: user,
+  user: owner2,
   name: "Bejí Sushi",
   category: "Japonês",
   average_price: 120,
@@ -145,7 +173,7 @@ Restaurant.create!(
 
 # ------------------- HOFBRÄUHAUS -------------------
 Restaurant.create!(
-  user: user,
+  user: owner2,
   name: "Hofbräuhaus",
   category: "Alemão",
   average_price: 170,
@@ -155,7 +183,7 @@ Restaurant.create!(
 
 # ------------------- VILA ÁRABE -------------------
 Restaurant.create!(
-  user: user,
+  user: owner2,
   name: "Vila Árabe",
   category: "Árabe",
   average_price: 130,
@@ -163,9 +191,11 @@ Restaurant.create!(
   infos: "Culinária árabe tradicional."
 )
 
+puts "Criando restaurantes Owner3..."
+
 # ------------------- MOCOTÓ -------------------
 Restaurant.create!(
-  user: user,
+  user: owner3,
   name: "Mocotó",
   category: "Brasileiro",
   average_price: 110,
@@ -175,7 +205,7 @@ Restaurant.create!(
 
 # ------------------- LE BIFE -------------------
 Restaurant.create!(
-  user: user,
+  user: owner3,
   name: "Le Bife",
   category: "Francês",
   average_price: 180,
@@ -185,7 +215,7 @@ Restaurant.create!(
 
 # ------------------- MODERN MAMMA OSTERIA -------------------
 Restaurant.create!(
-  user: user,
+  user: owner3,
   name: "Modern Mamma Osteria",
   category: "Italiano",
   average_price: 160,
@@ -195,7 +225,7 @@ Restaurant.create!(
 
 # ------------------- MANI -------------------
 Restaurant.create!(
-  user: user,
+  user: owner3,
   name: "Mani",
   category: "Italiano",
   average_price: 220,
@@ -205,7 +235,7 @@ Restaurant.create!(
 
 # ------------------- COCO BAMBU -------------------
 Restaurant.create!(
-  user: user,
+  user: owner3,
   name: "Coco Bambu",
   category: "Brasileiro",
   average_price: 150,
@@ -215,7 +245,7 @@ Restaurant.create!(
 
 # ------------------- SUSHI MAKOTO -------------------
 Restaurant.create!(
-  user: user,
+  user: owner3,
   name: "Sushi Makoto",
   category: "Japonês",
   average_price: 240,
@@ -225,7 +255,7 @@ Restaurant.create!(
 
 # ------------------- KADO -------------------
 Restaurant.create!(
-  user: user,
+  user: owner3,
   name: "Kado",
   category: "Japonês",
   average_price: 200,
