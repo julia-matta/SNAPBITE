@@ -78,59 +78,224 @@
     <p class="text-muted">Ainda não há publicações.</p>
   </div>
 <% else %>
-  <div class="container" style="max-width: 900px;">
-    <% @posts.each do |post| %>
-      <% text =
-        if post.respond_to?(:caption)
-          post.caption
-        elsif post.respond_to?(:content)
-          post.content
-        end %>
+  <div class="timeline-page">
+    <div class="timeline-list">
+      <% @posts.each do |post| %>
+        <% user = post.user %>
+        <% restaurant = post.restaurant %>
 
-      <div class="card mb-3 p-3">
-        <div class="d-flex justify-content-between align-items-center mb-2">
-          <div>
-            <% if post.restaurant.present? %>
-              <strong><%= post.restaurant.name %></strong>
+        <div class="feed-card">
+          <div class="feed-card-header">
+            <div class="feed-user">
+              <% avatar =
+                if user.profile_picture.attached?
+                  url_for(user.profile_picture)
+                else
+                  asset_path("placeholder_profile.png")
+                end %>
+
+              <%= image_tag avatar, class: "feed-avatar" %>
+
+              <div class="feed-user-text">
+                <span class="feed-user-name"><%= user.username || user.email %></span>
+                <% if post.caption.present? %>
+                  <span class="feed-user-caption"><%= post.caption %></span>
+                <% end %>
+              </div>
+            </div>
+
+            <div class="feed-right">
+              <% menu_times =
+                if post.respond_to?(:menu_times) && post.menu_times.present?
+                  post.menu_times
+                elsif post.course.present?
+                  [post.course.to_s.tr('[]"', '')]
+                else
+                  []
+                end %>
+
+              <% if menu_times.any? %>
+                <span class="feed-pill">
+                  <%= menu_times.map { |v| v.to_s.capitalize }.join(" • ") %>
+                </span>
+              <% end %>
+
+              <% if current_user == @user %>
+                <% is_owner_restaurant_post = current_user.owner? && restaurant.present? && restaurant.user_id == current_user.id %>
+                <%= button_to (is_owner_restaurant_post ? restaurant_path(restaurant) : post_path(post)),
+                      method: :delete,
+                      data: { confirm: "Tem certeza que deseja excluir esta publicação?" },
+                      class: "feed-delete-btn" do %>
+                  <i class="fas fa-trash"></i>
+                <% end %>
+              <% end %>
+            </div>
+          </div>
+
+          <!-- ✅ AQUI está a correção: usa restaurant.photo (upload) antes de image_name -->
+          <div class="feed-photos">
+            <% if post.photos.attached? %>
+              <% post.photos.first(2).each do |photo| %>
+                <a href="#"
+                   data-bs-toggle="modal"
+                   data-bs-target="#postPhotosModal-<%= post.id %>">
+                  <%= image_tag url_for(photo), class: "feed-photo" %>
+                </a>
+              <% end %>
+
+            <% elsif restaurant&.photo&.attached? %>
+              <a href="#"
+                 data-bs-toggle="modal"
+                 data-bs-target="#postPhotosModal-<%= post.id %>">
+                <%= image_tag url_for(restaurant.photo), class: "feed-photo single" %>
+              </a>
+
+            <% elsif restaurant&.image_name.present? %>
+              <a href="#"
+                 data-bs-toggle="modal"
+                 data-bs-target="#postPhotosModal-<%= post.id %>">
+                <%= image_tag restaurant.image_name, class: "feed-photo single" %>
+              </a>
+
+            <% else %>
+              <%= image_tag "placeholder.jpg", class: "feed-photo single" %>
             <% end %>
           </div>
 
-          <div class="d-flex align-items-center gap-3">
-            <small class="text-muted"><%= time_ago_in_words(post.created_at) %> atrás</small>
+          <% if restaurant %>
+            <div class="feed-restaurant">
+              <div>
+                <h4 class="restaurant-name"><%= restaurant.name %></h4>
+                <p class="restaurant-meta"><%= restaurant.category %></p>
+              </div>
 
-            <% if current_user == @user %>
-              <% is_owner_restaurant_post = current_user.owner? && post.restaurant.present? && post.restaurant.user_id == current_user.id %>
-              <%= button_to "Excluir",
-                (is_owner_restaurant_post ? restaurant_path(post.restaurant) : post_path(post)),
-                method: :delete,
-                data: { turbo_confirm: "Tem certeza que deseja excluir esta publicação?" },
-                class: "btn btn-link text-danger p-0",
-                form: { class: "d-inline" } %>
+              <% if post.rating.present? %>
+                <div class="feed-stars">
+                  <% 5.times do |i| %>
+                    <% if i < post.rating.to_i %>
+                      <i class="fas fa-star"></i>
+                    <% else %>
+                      <i class="far fa-star"></i>
+                    <% end %>
+                  <% end %>
+                </div>
+              <% end %>
+            </div>
+          <% end %>
+
+          <% user_reaction = post.post_reactions.detect { |r| r.user_id == current_user.id } %>
+          <% reaction_type = user_reaction&.reaction_type %>
+
+          <% btn_class =
+              if reaction_type == "recommend"
+                "btn-recommend btn-recommend--positive"
+              elsif reaction_type == "not_recommend"
+                "btn-recommend btn-recommend--negative"
+              else
+                "btn-recommend"
+              end %>
+
+          <div class="feed-footer">
+            <div class="dropdown">
+              <button
+                type="button"
+                class="<%= btn_class %>"
+                data-bs-toggle="dropdown"
+                aria-expanded="false">
+                <% if reaction_type == "recommend" %>
+                  <i class="far fa-thumbs-up"></i>
+                  <span>Recomendo!</span>
+                <% elsif reaction_type == "not_recommend" %>
+                  <i class="far fa-thumbs-down"></i>
+                  <span>Não recomendo</span>
+                <% else %>
+                  <i class="far fa-thumbs-up"></i>
+                  <span>Recomendar</span>
+                <% end %>
+              </button>
+
+              <ul class="dropdown-menu">
+                <li>
+                  <%= button_to "Recomendo!",
+                        recommend_post_path(post),
+                        method: :post,
+                        class: "dropdown-item",
+                        form: { class: "d-block" } %>
+                </li>
+                <li>
+                  <%= button_to "Não recomendo",
+                        not_recommend_post_path(post),
+                        method: :post,
+                        class: "dropdown-item",
+                        form: { class: "d-block" } %>
+                </li>
+
+                <% if user_reaction.present? %>
+                  <li><hr class="dropdown-divider"></li>
+                  <li>
+                    <%= button_to "Remover reação",
+                          reaction_post_path(post),
+                          method: :delete,
+                          class: "dropdown-item text-muted",
+                          form: { class: "d-block" } %>
+                  </li>
+                <% end %>
+              </ul>
+            </div>
+
+            <button
+              class="feed-comments-toggle"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#comments-<%= post.id %>">
+              <i class="far fa-comment"></i>
+              <span><%= post.comments.count %></span>
+            </button>
+          </div>
+
+          <div class="collapse mt-2" id="comments-<%= post.id %>">
+            <div class="comments-list">
+              <% post.comments.each do |comment| %>
+                <p class="comment-item">
+                  <strong><%= comment.user.username || comment.user.email %>:</strong>
+                  <%= comment.content %>
+                </p>
+              <% end %>
+            </div>
+
+            <%= form_with(model: [post, Comment.new], local: true) do |f| %>
+              <div class="input-group mt-2">
+                <%= f.text_field :content,
+                      class: "form-control",
+                      placeholder: "Escreva um comentário..." %>
+                <button class="btn btn-outline-secondary" type="submit">Enviar</button>
+              </div>
             <% end %>
           </div>
         </div>
 
-        <% photos = post.photos %>
-        <% if photos.any? %>
-          <%= link_to post_path(post) do %>
-            <%= image_tag url_for(photos.first), class: "w-100 d-block mb-2", style: "border-radius: 18px; object-fit: cover;" %>
-          <% end %>
-        <% elsif post.restaurant&.photo&.attached? %>
-          <%= link_to post_path(post) do %>
-            <%= image_tag url_for(post.restaurant.photo), class: "w-100 d-block mb-2", style: "border-radius: 18px; object-fit: cover;" %>
-          <% end %>
-        <% elsif post.restaurant&.image_name.present? %>
-          <%= link_to post_path(post) do %>
-            <%= image_tag post.restaurant.image_name, class: "w-100 d-block mb-2", style: "border-radius: 18px; object-fit: cover;" %>
-          <% end %>
-        <% end %>
+        <!-- ✅ Modal também com o mesmo fallback -->
+        <div class="modal fade" id="postPhotosModal-<%= post.id %>" tabindex="-1" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+              <div class="modal-body p-0">
+                <% if post.photos.attached? %>
+                  <% post.photos.each do |photo| %>
+                    <%= image_tag url_for(photo), class: "w-100 d-block modal-photo" %>
+                  <% end %>
+                <% elsif restaurant&.photo&.attached? %>
+                  <%= image_tag url_for(restaurant.photo), class: "w-100 d-block modal-photo" %>
+                <% elsif restaurant&.image_name.present? %>
+                  <%= image_tag restaurant.image_name, class: "w-100 d-block modal-photo" %>
+                <% else %>
+                  <%= image_tag "placeholder.jpg", class: "w-100 d-block modal-photo" %>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
 
-        <% if text.present? %>
-          <p class="mb-2"><%= text %></p>
-        <% end %>
-
-        <%= link_to "Ver publicação", post_path(post), class: "btn btn-outline-secondary btn-sm" %>
-      </div>
-    <% end %>
+      <% end %>
+    </div>
   </div>
 <% end %>

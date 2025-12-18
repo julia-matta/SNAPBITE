@@ -68,7 +68,7 @@
 }
 
 .feed-user-caption {
-  font-size: 12px;
+  font-size: 16px;
   color: #333;
   line-height: 1.2;
 }
@@ -133,7 +133,7 @@
 }
 
 .restaurant-meta {
-  font-size: 12px;
+  font-size: 14px;
   color: #777;
   margin: 0;
 }
@@ -195,7 +195,7 @@
 }
 
 .comment-item {
-  font-size: 12px;
+  font-size: 16px;
   margin-bottom: 2px;
 }
 
@@ -218,9 +218,12 @@
     height: 130px;
   }
 
-  .restaurant-name {
-    font-size: 18px;
-  }
+.restaurant-name {
+  font-size: 20px;
+  font-weight: 900;
+  margin: 0;
+  margin-bottom: 2px;
+}
 }
 
 .timeline-page .timeline-title {
