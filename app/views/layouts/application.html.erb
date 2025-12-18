@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <%= favicon_link_tag "favicon.ico" %>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
@@ -9,8 +11,20 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Rubik+Mono+One&display=swap" rel="stylesheet">
 
+    <% default_title = "SnapBite - sua rede de restaurantes" %>
+    <% default_description = "Descubra, avalie e compartilhe experiências em restaurantes com seus amigos no SnapBite." %>
+    <% default_image = "og_snapbite.png" %>
 
-    <title>SnapBite</title>
+    <title><%= content_for?(:title) ? yield(:title) : default_title %></title>
+
+    <meta name="description" content="<%= content_for?(:meta_description) ? yield(:meta_description) : default_description %>">
+
+    <meta property="og:title" content="<%= content_for?(:meta_title) ? yield(:meta_title) : (content_for?(:title) ? yield(:title) : default_title) %>">
+    <meta property="og:description" content="<%= content_for?(:meta_description) ? yield(:meta_description) : default_description %>">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="<%= request.original_url %>">
+    <meta property="og:image" content="<%= request.base_url + image_path(content_for?(:meta_image) ? yield(:meta_image) : default_image) %>">
+
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
@@ -22,8 +36,6 @@
   <body>
     <%= render "shared/navbar" %>
     <%= render "shared/flashes" %>
-
-      <%= yield %>
-
+    <%= yield %>
   </body>
 </html>
