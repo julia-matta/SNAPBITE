@@ -14,6 +14,7 @@ export default class extends Controller {
 
   connect() {
     this.selectedFiles = []
+    console.log("PostFormController connected")
   }
 
   previewPhotos(event) {
