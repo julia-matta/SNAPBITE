@@ -23,12 +23,6 @@ class RestaurantsController < ApplicationController
     authorize @restaurant
 
     if @restaurant.save
-      Post.create!(
-        user: current_user,
-        restaurant: @restaurant,
-        caption: "Novo restaurante cadastrado: #{@restaurant.name}"
-      )
-
       redirect_to @restaurant, notice: "Restaurante criado com sucesso."
     else
       render :new, status: :unprocessable_entity
@@ -52,7 +46,7 @@ class RestaurantsController < ApplicationController
   def destroy
     authorize @restaurant
     @restaurant.destroy
-    redirect_to restaurants_path, notice: "Restaurante apagado com sucesso."
+    redirect_back fallback_location: explore_path, notice: "Restaurante apagado com sucesso."
   end
 
   private
@@ -68,9 +62,7 @@ class RestaurantsController < ApplicationController
       :average_price,
       :infos,
       :image_name,
-      # :address,
-      # :opening_hours,
-      # :price_range
+      :photo
     )
   end
 end
